@@ -1,0 +1,2443 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Filtros, motobombas, aquecedores, geradores de cloro e ozônio e iluminação LED para piscinas em Recife.">
+  <title>Veneza Piscinas | Equipamentos para Piscinas em Recife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #000;
+      --muted: #082f49;
+      --blue: #027da5;
+      --blue-dark: #056184;
+      --cyan: #05b7c4;
+      --green: #119e68;
+      --white: #fff;
+      --glass: rgba(249, 254, 255, .51);
+      --glass-dark: rgba(3, 35, 53, .59);
+      --line: rgba(255, 255, 255, .27);
+      --shadow: 0 8px 21px rgba(0, 42, 65, .06);
+      --lg: 26px;
+      --md: 18px
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 105px
+    }
+
+    body {
+      min-width: 320px;
+      overflow-x: hidden;
+      color: var(--ink);
+      background-color: #e8faff;
+      background-image: linear-gradient(180deg, rgba(218, 247, 253, .18), rgba(11, 154, 190, .12)), url("assets/images/backgrounds/textura-agua-piscina.jpg");
+      background-repeat: no-repeat, no-repeat;
+      background-size: cover, cover;
+      background-position: center, center;
+      background-attachment: fixed, fixed;
+      font-family: "DM Sans", Arial, sans-serif;
+      font-weight: 700;
+      line-height: 1.55
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button {
+      font: inherit
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    :focus-visible {
+      outline: 3px solid #ffdc73;
+      outline-offset: 3px
+    }
+
+    .nav-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      padding: 0 7px;
+      border: 1px solid rgba(2, 125, 165, .24);
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: rgba(214, 241, 248, .88);
+      transition: background-color .7s ease, color .7s ease;
+    }
+
+    .main-nav .nav-link:hover {
+      color: #fff;
+      background: var(--blue-dark);
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin-inline: auto
+    }
+
+    .glass {
+      border: 1px solid var(--line);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(7.5px) saturate(109.4%);
+      backdrop-filter: blur(7.5px) saturate(109.4%)
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .23);
+      background: rgba(242, 253, 255, .54);
+      box-shadow: 0 3px 11px rgba(0, 54, 77, .04);
+      -webkit-backdrop-filter: blur(8.25px) saturate(111.25%);
+      backdrop-filter: blur(8.25px) saturate(111.25%)
+    }
+
+    .nav-shell {
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+      position: relative
+    }
+
+    .brand {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center
+    }
+
+    .brand img {
+      width: 172px;
+      height: auto;
+      object-fit: contain
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(9px, 1.3vw, 17px);
+      color: #214c5b;
+      font-size: .9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      position: absolute;
+      left: 62.5%;
+      transform: translateX(-50%)
+    }
+
+    .main-nav a:hover {
+      color: var(--blue)
+    }
+
+    .header-cta,
+    .btn {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 12px 21px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center
+    }
+
+    .header-cta {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 10px 17px;
+      color: #fff;
+      background: var(--green);
+      font-size: .85rem
+    }
+
+    .header-cta:hover,
+    .btn-whatsapp:hover {
+      background: #087d51
+    }
+
+    main,
+    footer {
+      position: relative
+    }
+
+    section {
+      padding: 94px 0;
+      background: transparent
+    }
+
+    .hero {
+      padding: 20px 0 72px
+    }
+
+    .hero-panel {
+      overflow: hidden;
+      border-radius: 32px;
+      padding: clamp(28px, 5vw, 60px)
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(350px, .98fr);
+      align-items: center;
+      gap: clamp(36px, 5vw, 70px)
+    }
+
+    .hero-grid>* {
+      min-width: 0
+    }
+
+    .eyebrow,
+    .kicker,
+    .product-type {
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      font-size: .72rem;
+      font-weight: 800
+    }
+
+    .eyebrow {
+      max-width: 100%;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(0, 132, 156, .18);
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: #056d81;
+      background: rgba(204, 245, 244, .7);
+      line-height: 1.35
+    }
+
+    .eyebrow:before {
+      flex: 0 0 auto;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+      content: ""
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Manrope, "DM Sans", Arial, sans-serif;
+      line-height: 1.12
+    }
+
+    h1 {
+      max-width: 700px;
+      margin-bottom: 22px;
+      font-size: clamp(1.52rem, 3.23vw, 2.89rem);
+      letter-spacing: -.045em
+    }
+
+    h1 span {
+      color: var(--blue)
+    }
+
+    .hero-copy {
+      max-width: 630px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.13rem)
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 12px 24px rgba(0, 102, 137, .2)
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark)
+    }
+
+    .btn-secondary {
+      border-color: rgba(4, 106, 139, .25);
+      color: var(--blue-dark);
+      background: rgba(255, 255, 255, .7)
+    }
+
+    .btn-secondary:hover {
+      background: #fff
+    }
+
+    .hero-media {
+      position: relative;
+      min-height: 445px
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 445px;
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 24px;
+      object-fit: cover;
+      filter: saturate(.82) contrast(.94);
+      box-shadow: 0 9px 17px rgba(0, 49, 67, .075);
+      opacity: .9
+    }
+
+    .hero-note {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      left: 18px;
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 16px;
+      padding: 15px 17px;
+      color: #0b3c4c;
+      background: rgba(247, 254, 255, .56);
+      -webkit-backdrop-filter: blur(5.25px);
+      backdrop-filter: blur(5.25px)
+    }
+
+    .hero-note strong,
+    .hero-note span {
+      display: block
+    }
+
+    .hero-note strong {
+      font-family: Manrope, sans-serif;
+      font-size: .92rem
+    }
+
+    .hero-note span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .78rem
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 38px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .49);
+      border-radius: 17px;
+      background: rgba(13, 101, 126, .11)
+    }
+
+    .trust-item {
+      min-height: 82px;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, .49)
+    }
+
+    .trust-item strong,
+    .trust-item span {
+      display: block
+    }
+
+    .trust-item strong {
+      color: var(--blue-dark);
+      font-family: Manrope, sans-serif;
+      font-size: 1.05rem
+    }
+
+    .trust-item span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .76rem
+    }
+
+    .section-heading {
+      max-width: 740px;
+      margin: 0 auto 42px;
+      border: 1px solid rgba(255, 255, 255, .32);
+      border-radius: 20px;
+      padding: 20px 24px;
+      text-align: center;
+      background: rgba(250, 254, 255, .44);
+      box-shadow: 0 8px 20px rgba(0, 42, 65, .045);
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px)
+    }
+
+    .catalog-panel .section-heading {
+      border-color: transparent;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none
+    }
+
+    .kicker {
+      margin-bottom: 10px;
+      color: #006c8f
+    }
+
+    .section-heading h2 {
+      margin-bottom: 14px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -.035em
+    }
+
+    .section-heading p {
+      color: var(--muted)
+    }
+
+    .products-priority {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px
+    }
+
+    .priority-card {
+      position: relative;
+      min-height: 220px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--md);
+      padding: 28px;
+      background: rgba(249, 254, 255, .53);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(6.75px) saturate(109.4%);
+      backdrop-filter: blur(6.75px) saturate(109.4%)
+    }
+
+    .priority-card.featured {
+      grid-column: 1/-1;
+      min-height: 265px;
+      padding: clamp(30px, 5vw, 48px);
+      color: #fff;
+      background: linear-gradient(112deg, rgba(0, 84, 119, .68), rgba(1, 142, 164, .54));
+      box-shadow: 0 10px 23px rgba(0, 41, 64, .09)
+    }
+
+    .priority-number {
+      display: block;
+      margin-bottom: 28px;
+      color: var(--blue);
+      font: 800 clamp(2rem, 4vw, 3.2rem)/1 Manrope, sans-serif;
+      letter-spacing: -.04em;
+      opacity: .72
+    }
+
+    .featured .priority-number {
+      margin-bottom: 36px;
+      color: #c9fbff
+    }
+
+    .priority-card h3 {
+      max-width: 570px;
+      margin-bottom: 10px;
+      font-size: clamp(1.18rem, 2.1vw, 1.55rem)
+    }
+
+    .priority-card p {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: .93rem
+    }
+
+    .featured h3 {
+      font-size: clamp(1.55rem, 3vw, 2.35rem)
+    }
+
+    .featured p {
+      color: rgba(238, 253, 255, .86)
+    }
+
+    .card-label {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      border: 1px solid rgba(255, 255, 255, .27);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: #226072;
+      background: rgba(255, 255, 255, .32);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .featured .card-label {
+      color: #fff;
+      background: rgba(255, 255, 255, .045)
+    }
+
+    .priority-card.service {
+      border-color: rgba(0, 95, 125, .16);
+      background: rgba(215, 245, 248, .54)
+    }
+
+    .catalog-panel {
+      border-radius: var(--lg);
+      padding: clamp(24px, 4vw, 42px)
+    }
+
+    .catalog-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+      margin-bottom: 28px
+    }
+
+    .filter-button {
+      min-height: 43px;
+      border: 1px solid rgba(2, 107, 139, .25);
+      border-radius: 999px;
+      padding: 9px 15px;
+      color: #285867;
+      background: rgba(255, 255, 255, .54);
+      font-size: .82rem;
+      font-weight: 800;
+      cursor: pointer
+    }
+
+    .filter-button:hover,
+    .filter-button.active {
+      border-color: var(--blue);
+      color: #fff;
+      background: var(--blue)
+    }
+
+    .catalog-status {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: .8rem;
+      text-align: center
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px
+    }
+
+    .catalog-card {
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .59);
+      border-radius: 17px;
+      background: rgba(255, 255, 255, .6);
+      box-shadow: 0 12px 26px rgba(0, 57, 77, .09)
+    }
+
+    .catalog-card[hidden] {
+      display: none
+    }
+
+    .catalog-card img {
+      width: 100%;
+      height: 185px;
+      object-fit: cover;
+      filter: saturate(.82) contrast(.95)
+    }
+
+    .catalog-copy {
+      padding: 21px
+    }
+
+    .product-type {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue)
+    }
+
+    .catalog-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.08rem
+    }
+
+    .catalog-card p {
+      color: var(--muted);
+      font-size: .87rem
+    }
+
+    .product-link {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--blue-dark);
+      font-size: .82rem;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px
+    }
+
+    .catalog-empty {
+      border: 1px dashed rgba(0, 99, 130, .26);
+      border-radius: 14px;
+      padding: 25px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .5);
+      text-align: center
+    }
+
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px
+    }
+
+    .advantage-card,
+    .step,
+    .quote,
+    .gallery-card {
+      border: 1px solid var(--line);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(6.75px) saturate(107.5%);
+      backdrop-filter: blur(6.75px) saturate(107.5%)
+    }
+
+    .advantage-card {
+      min-height: 180px;
+      border-radius: var(--md);
+      padding: 25px
+    }
+
+    .advantage-index {
+      display: inline-grid;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 24px;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--blue);
+      font-size: .75rem;
+      font-weight: 800
+    }
+
+    .advantage-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.04rem
+    }
+
+    .advantage-card p {
+      color: var(--muted);
+      font-size: .87rem
+    }
+
+    .scope-note {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: var(--md);
+      padding: 22px 25px;
+      color: #dffbff;
+      background: rgba(1, 51, 73, .53);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(6.75px);
+      backdrop-filter: blur(6.75px)
+    }
+
+    .scope-note strong {
+      flex: 0 0 auto;
+      color: #fff;
+      font-family: Manrope, sans-serif
+    }
+
+    .scope-note p {
+      font-size: .86rem
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .step {
+      min-height: 225px;
+      border-radius: 17px;
+      padding: 23px 19px
+    }
+
+    .step-number {
+      display: block;
+      margin-bottom: 38px;
+      color: var(--blue);
+      font: 800 1.65rem Manrope, sans-serif
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+      font-size: .98rem
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: .82rem
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 17px
+    }
+
+    .gallery-card {
+      grid-column: span 4;
+      overflow: hidden;
+      border-radius: var(--md)
+    }
+
+    .gallery-card:first-child {
+      grid-column: span 8;
+      grid-row: span 2
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      filter: saturate(.84) contrast(.95)
+    }
+
+    .gallery-card:first-child img {
+      height: 415px
+    }
+
+    .gallery-card figcaption {
+      padding: 15px 17px 17px;
+      color: var(--muted);
+      font-size: .79rem
+    }
+
+    .gallery-card b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-family: Manrope, sans-serif;
+      font-size: .92rem
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px
+    }
+
+    .quote {
+      min-height: 260px;
+      border-radius: var(--md);
+      padding: 27px
+    }
+
+    .stars {
+      margin-bottom: 20px;
+      color: #9a6700;
+      letter-spacing: .14em;
+      font-size: .86rem
+    }
+
+    .quote blockquote {
+      margin-bottom: 23px;
+      color: var(--muted);
+      font-size: .93rem
+    }
+
+    .quote cite {
+      color: var(--ink);
+      font-style: normal;
+      font-weight: 800
+    }
+
+    .quote cite span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 700
+    }
+
+    .faq-panel {
+      max-width: 900px;
+      margin-inline: auto;
+      overflow: hidden;
+      border-radius: var(--lg)
+    }
+
+    .faq-item+.faq-item {
+      border-top: 1px solid rgba(4, 91, 118, .14)
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      border: 0;
+      padding: 21px 24px;
+      color: var(--ink);
+      background: transparent;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer
+    }
+
+    .faq-question:hover {
+      background: rgba(255, 255, 255, .38)
+    }
+
+    .faq-sign {
+      flex: 0 0 auto;
+      color: var(--blue);
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1
+    }
+
+    .faq-answer {
+      padding: 0 64px 22px 24px;
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    .final-cta {
+      padding-top: 62px
+    }
+
+    .cta-panel {
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .206);
+      border-radius: 30px;
+      padding: clamp(38px, 7vw, 72px) 24px;
+      color: #fff;
+      background: linear-gradient(115deg, rgba(0, 69, 103, .68), rgba(0, 151, 167, .54));
+      box-shadow: 0 11px 23px rgba(0, 38, 61, .1);
+      text-align: center;
+      -webkit-backdrop-filter: blur(7.5px);
+      backdrop-filter: blur(7.5px)
+    }
+
+    .cta-panel h2 {
+      max-width: 760px;
+      margin: 0 auto 14px;
+      font-size: clamp(2rem, 4.5vw, 3.45rem);
+      letter-spacing: -.04em
+    }
+
+    .cta-panel p {
+      max-width: 600px;
+      margin: 0 auto 27px;
+      color: rgba(233, 253, 255, .86)
+    }
+
+    .cta-panel .kicker {
+      color: #bff9ff
+    }
+
+    .btn-whatsapp {
+      color: #fff;
+      background: var(--green)
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      z-index: 30;
+      right: 24px;
+      bottom: 24px;
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 50%;
+      color: #fff;
+      background: #25d366;
+      box-shadow: 0 8px 20px rgba(0, 67, 40, .2);
+      overflow: hidden;
+      transition: width .7s ease, border-radius .7s ease, gap .7s ease
+    }
+
+    .whatsapp-float:hover {
+      background: #159c4b
+    }
+
+    .whatsapp-float svg {
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      fill: currentColor
+    }
+
+    .whatsapp-float-label {
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      white-space: nowrap;
+      font-size: .82rem;
+      font-weight: 800;
+      transition: max-width .7s ease, opacity .7s ease
+    }
+
+    .whatsapp-float:hover {
+      width: 218px;
+      gap: 8px;
+      border-radius: 999px
+    }
+
+    .whatsapp-float:hover .whatsapp-float-label {
+      max-width: 160px;
+      opacity: 1
+    }
+
+    .site-footer {
+      margin-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, .105);
+      color: #c7e1e7;
+      background: var(--glass-dark);
+      -webkit-backdrop-filter: blur(8.25px) saturate(105.6%);
+      backdrop-filter: blur(8.25px) saturate(105.6%)
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr .8fr 1fr;
+      gap: 55px;
+      padding: 52px 0 36px
+    }
+
+    .footer-brand img {
+      width: 200px;
+      height: auto;
+      filter: brightness(0) invert(1);
+      opacity: .94
+    }
+
+    .footer-about {
+      max-width: 390px;
+      margin-top: 17px;
+      font-size: .88rem
+    }
+
+    .footer-column h3 {
+      margin-bottom: 16px;
+      color: #fff;
+      font-size: .95rem
+    }
+
+    .footer-column a,
+    .footer-column address {
+      display: block;
+      margin-bottom: 9px;
+      color: #c7e1e7;
+      font-size: .84rem;
+      font-style: normal
+    }
+
+    .footer-column a:hover {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 3px
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, .049);
+      padding: 20px 0 24px;
+      color: #9cbac2;
+      font-size: .76rem;
+      text-align: center
+    }
+
+    @media(max-width:1000px) {
+      .nav-shell {
+        flex-wrap: wrap;
+        gap: 12px 20px;
+        padding: 14px 0
+      }
+
+      .main-nav {
+        order: 3;
+        width: 100%;
+        position: static;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 3px 0 2px;
+        transform: none
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-media,
+      .hero-photo {
+        height: 350px;
+        min-height: 350px
+      }
+
+      .catalog-grid,
+      .advantages-grid,
+      .testimonials-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+    }
+
+    @media(max-width:720px) {
+      html {
+        scroll-padding-top: 140px
+      }
+
+      section {
+        padding: 72px 0
+      }
+
+      .brand img {
+        width: 142px
+      }
+
+      .header-cta {
+        min-height: 40px;
+        padding: 9px 13px;
+        font-size: .76rem
+      }
+
+      .hero-panel {
+        border-radius: 23px
+      }
+
+      .trust-row {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .products-priority,
+      .catalog-grid,
+      .advantages-grid,
+      .testimonials-grid {
+        grid-template-columns: 1fr
+      }
+
+      .priority-card.featured {
+        grid-column: auto
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .gallery-card,
+      .gallery-card:first-child {
+        grid-column: span 6;
+        grid-row: auto
+      }
+
+      .gallery-card img,
+      .gallery-card:first-child img {
+        height: 220px
+      }
+
+      .scope-note {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .footer-brand {
+        grid-column: 1/-1
+      }
+    }
+
+    @media(max-width:480px) {
+      html {
+        scroll-padding-top: 175px
+      }
+
+      .container {
+        width: calc(100% - 26px)
+      }
+
+      .nav-shell {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 120px
+      }
+
+      .brand img {
+        width: 135px
+      }
+
+      .brand {
+        grid-column: 1/-1;
+        justify-content: center
+      }
+
+      .header-cta {
+        width: 120px;
+        min-height: 42px;
+        padding: 8px 9px;
+        font-size: .7rem;
+        white-space: normal
+      }
+
+      .main-nav {
+        grid-column: 1/-1;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 8px 12px;
+        justify-content: space-between;
+        overflow: visible;
+        font-size: .78rem
+      }
+
+      .main-nav .nav-link {
+        justify-content: center;
+        text-align: center
+      }
+
+      h1 {
+        font-size: clamp(1.37rem, 8.10vw, 1.99rem)
+      }
+
+      .eyebrow {
+        border-radius: 16px;
+        font-size: .65rem
+      }
+
+      .hero-media,
+      .hero-photo {
+        height: 300px;
+        min-height: 300px
+      }
+
+      .button-row .btn {
+        width: 100%
+      }
+
+      .trust-item {
+        padding: 14px
+      }
+
+      .priority-card,
+      .priority-card.featured {
+        min-height: 225px;
+        padding: 25px
+      }
+
+      .card-label {
+        top: 20px;
+        right: 20px
+      }
+
+      .catalog-panel {
+        padding-inline: 14px
+      }
+
+      .catalog-filters {
+        justify-content: flex-start
+      }
+
+      .filter-button {
+        flex: 1 1 auto
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr
+      }
+
+      .step {
+        min-height: 175px
+      }
+
+      .step-number {
+        margin-bottom: 24px
+      }
+
+      .gallery-grid {
+        display: block
+      }
+
+      .gallery-card {
+        margin-bottom: 15px
+      }
+
+      .faq-question {
+        padding-inline: 18px
+      }
+
+      .faq-answer {
+        padding: 0 45px 20px 18px
+      }
+
+      .whatsapp-float {
+        right: 14px;
+        bottom: 14px;
+        width: 56px;
+        height: 56px
+      }
+
+      .whatsapp-float svg {
+        width: 29px;
+        height: 29px
+      }
+
+      .whatsapp-float:hover {
+        width: 56px;
+        gap: 0;
+        border-radius: 50%
+      }
+
+      .whatsapp-float:hover .whatsapp-float-label {
+        max-width: 0;
+        opacity: 0
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px
+      }
+
+      .footer-brand {
+        grid-column: auto
+      }
+    }
+
+    .js-reveal .reveal-item {
+      transition: opacity .65s ease, transform .65s cubic-bezier(.22, 1, .36, 1)
+    }
+
+    .js-reveal .reveal-item:not(.is-visible) {
+      opacity: 0;
+      transform: translateY(22px)
+    }
+
+    .back-to-top {
+      position: fixed;
+      z-index: 30;
+      left: 24px;
+      bottom: 24px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid rgba(255, 255, 255, .65);
+      border-radius: 50px;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 8px 20px rgba(0, 54, 77, .2);
+      cursor: pointer;
+      overflow: hidden
+    }
+
+    .back-to-top:hover {
+      background: var(--blue-dark)
+    }
+
+    .back-to-top[hidden] {
+      display: none
+    }
+
+    .back-to-top svg {
+      flex: 0 0 23px;
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .back-to-top-label {
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      white-space: nowrap;
+      font-size: .78rem;
+      font-weight: 800
+    }
+
+    .back-to-top.is-bouncing {
+      animation: back-to-top-expand 3s ease both
+    }
+
+    .back-to-top.is-bouncing svg {
+      animation: arrow-bounce .6s ease-in-out 5
+    }
+
+    .back-to-top.is-bouncing .back-to-top-label {
+      animation: back-to-top-label 3s ease both
+    }
+
+    @keyframes arrow-bounce {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-6px)
+      }
+    }
+
+    @keyframes back-to-top-expand {
+
+      0%,
+      100% {
+        width: 50px;
+        gap: 0
+      }
+
+      16%,
+      84% {
+        width: 126px;
+        gap: 7px
+      }
+    }
+
+    @keyframes back-to-top-label {
+
+      0%,
+      12% {
+        max-width: 0;
+        opacity: 0
+      }
+
+      22%,
+      82% {
+        max-width: 70px;
+        opacity: 1
+      }
+
+      100% {
+        max-width: 0;
+        opacity: 0
+      }
+    }
+
+    @media(hover:hover) and (pointer:fine) {
+      .back-to-top:hover {
+        animation: back-to-top-hover-expand 3s ease infinite
+      }
+
+      .back-to-top:hover svg {
+        animation: arrow-bounce-hover .6s ease-in-out infinite
+      }
+
+      .back-to-top:hover .back-to-top-label {
+        animation: back-to-top-hover-label 3s ease infinite
+      }
+    }
+
+    @keyframes arrow-bounce-hover {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-6px)
+      }
+    }
+
+    @keyframes back-to-top-hover-expand {
+
+      0%,
+      100% {
+        width: 50px;
+        gap: 0
+      }
+
+      16%,
+      84% {
+        width: 126px;
+        gap: 7px
+      }
+    }
+
+    @keyframes back-to-top-hover-label {
+
+      0%,
+      12% {
+        max-width: 0;
+        opacity: 0
+      }
+
+      22%,
+      82% {
+        max-width: 70px;
+        opacity: 1
+      }
+
+      100% {
+        max-width: 0;
+        opacity: 0
+      }
+    }
+
+    @media(max-width:480px) {
+      .back-to-top {
+        left: 14px;
+        bottom: 14px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      .js-reveal .reveal-item {
+        transition: none
+      }
+
+      .js-reveal .reveal-item:not(.is-visible) {
+        opacity: 1;
+        transform: none
+      }
+
+      .back-to-top.is-bouncing,
+      .back-to-top.is-bouncing svg,
+      .back-to-top.is-bouncing .back-to-top-label,
+      .back-to-top:hover,
+      .back-to-top:hover svg,
+      .back-to-top:hover .back-to-top-label {
+        animation: none
+      }
+
+      .back-to-top.is-bouncing,
+      .back-to-top:hover {
+        width: 126px;
+        gap: 7px
+      }
+
+      .back-to-top.is-bouncing .back-to-top-label,
+      .back-to-top:hover .back-to-top-label {
+        max-width: 70px;
+        opacity: 1
+      }
+    }
+
+    .hero-carousel {
+      position: relative;
+      height: 445px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 24px;
+      background: #c8e8ed;
+      box-shadow: 0 9px 17px rgba(0, 49, 67, .075)
+    }
+
+    .hero-carousel .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border: 0;
+      border-radius: 0;
+      object-fit: cover;
+      opacity: 0;
+      box-shadow: none;
+      transition: opacity .7s ease
+    }
+
+    .hero-carousel .hero-photo.is-active {
+      opacity: 1
+    }
+
+    .hero-carousel:not(.is-ready) .carousel-control {
+      display: none
+    }
+
+    .hero-note {
+      z-index: 3
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .55);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(3, 47, 67, .58);
+      transform: translateY(-50%);
+      cursor: pointer
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(3, 47, 67, .82)
+    }
+
+    .carousel-arrow svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .carousel-prev {
+      left: 12px
+    }
+
+    .carousel-next {
+      right: 12px
+    }
+
+    .carousel-dots {
+      position: absolute;
+      z-index: 2;
+      top: 14px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 11px;
+      background: rgba(3, 47, 67, .46);
+      transform: translateX(-50%)
+    }
+
+    .carousel-dot {
+      width: 9px;
+      height: 9px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .58);
+      cursor: pointer
+    }
+
+    .carousel-dot[aria-current="true"] {
+      width: 25px;
+      background: #fff
+    }
+
+    @media(max-width:1000px) {
+      .hero-carousel {
+        height: 350px;
+        min-height: 350px
+      }
+    }
+
+    @media(max-width:480px) {
+      .hero-carousel {
+        height: 300px;
+        min-height: 300px
+      }
+
+      .carousel-arrow {
+        width: 38px;
+        height: 38px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .hero-carousel .hero-photo {
+        transition: none
+      }
+    }
+
+    .priority-card[data-modal-trigger] {
+      cursor: pointer
+    }
+
+    .priority-card[data-modal-trigger]:hover {
+      border-color: rgba(2, 125, 165, .55);
+      box-shadow: 0 15px 32px rgba(0, 52, 74, .14)
+    }
+
+    .priority-card.featured[data-modal-trigger]:hover {
+      border-color: rgba(255, 255, 255, .75)
+    }
+
+    .priority-discover {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 17px;
+      color: var(--blue-dark);
+      font-size: .82rem;
+      font-weight: 800
+    }
+
+    .priority-discover span {
+      font-size: 1.2rem;
+      line-height: 1
+    }
+
+    .featured .priority-discover {
+      color: #fff
+    }
+
+    body.modal-open {
+      overflow: hidden
+    }
+
+    .product-modal {
+      position: fixed;
+      inset: 0;
+      width: min(1040px, calc(100% - 28px));
+      height: min(820px, calc(100dvh - 28px));
+      max-width: none;
+      max-height: none;
+      margin: auto;
+      overflow: hidden;
+      border: 1px solid #d4e9ee;
+      border-radius: 24px;
+      padding: 0;
+      color: var(--ink);
+      background: #f7fcfd;
+      box-shadow: 0 30px 90px rgba(0, 25, 40, .32)
+    }
+
+    .product-modal[open] {
+      display: flex;
+      flex-direction: column
+    }
+
+    .product-modal::backdrop {
+      background: rgba(3, 27, 42, .7);
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px)
+    }
+
+    .product-modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid #d8e8ed;
+      padding: 22px 28px 19px;
+      background: #fff
+    }
+
+    .product-modal__eyebrow {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--blue-dark);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase
+    }
+
+    .product-modal__header h2 {
+      font-size: clamp(1.35rem, 2.5vw, 2rem)
+    }
+
+    .product-modal__close {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid #cbdde3;
+      border-radius: 50%;
+      color: #17465b;
+      background: #f3f9fb;
+      font-size: 1.65rem;
+      line-height: 1;
+      cursor: pointer
+    }
+
+    .product-modal__close:hover {
+      background: #e1f1f5
+    }
+
+    .product-modal__body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 24px 28px 30px;
+      overscroll-behavior: contain
+    }
+
+    .product-modal__intro {
+      max-width: 820px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: .95rem
+    }
+
+    .product-modal__gallery[hidden],
+    .product-modal__project[hidden] {
+      display: none
+    }
+
+    .product-modal__stage {
+      position: relative;
+      display: grid;
+      height: clamp(240px, 42vh, 390px);
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid #deebee;
+      border-radius: 17px;
+      background: #fff
+    }
+
+    .product-modal__stage img {
+      width: 100%;
+      height: 100%;
+      padding: 18px 72px;
+      object-fit: contain
+    }
+
+    .product-modal__brand {
+      position: absolute;
+      z-index: 1;
+      top: 14px;
+      left: 14px;
+      border: 1px solid #c9e8ef;
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: var(--blue-dark);
+      background: rgba(241, 251, 253, .95);
+      font: 800 .78rem Manrope, sans-serif
+    }
+
+    .product-modal__arrow {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      transform: translateY(-50%);
+      border: 0;
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(2, 85, 117, .87);
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer
+    }
+
+    .product-modal__arrow:hover {
+      background: var(--blue-dark)
+    }
+
+    .product-modal__prev {
+      left: 13px
+    }
+
+    .product-modal__next {
+      right: 13px
+    }
+
+    .product-modal__caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 12px 2px 15px;
+      color: var(--muted);
+      font-size: .86rem
+    }
+
+    .product-modal__caption strong {
+      color: var(--ink)
+    }
+
+    .product-modal__thumbs {
+      display: flex;
+      gap: 11px;
+      overflow-x: auto;
+      padding: 3px 2px 12px;
+      scroll-snap-type: x mandatory
+    }
+
+    .product-modal__thumb {
+      flex: 0 0 142px;
+      overflow: hidden;
+      border: 2px solid #dbe9ed;
+      border-radius: 12px;
+      padding: 4px;
+      color: var(--muted);
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      scroll-snap-align: start
+    }
+
+    .product-modal__thumb[aria-current="true"] {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(2, 125, 165, .13)
+    }
+
+    .product-modal__thumb img {
+      width: 100%;
+      height: 82px;
+      border-radius: 7px;
+      background: #fff;
+      object-fit: contain
+    }
+
+    .product-modal__thumb span {
+      display: block;
+      overflow: hidden;
+      padding: 6px 5px 4px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: .74rem
+    }
+
+    .product-modal__thumb b {
+      display: block;
+      color: var(--ink)
+    }
+
+    .product-modal__disclaimer {
+      margin-top: 8px;
+      color: #5c7480;
+      font-size: .74rem
+    }
+
+    .product-modal__project {
+      border: 1px solid #d4e7eb;
+      border-radius: 18px;
+      padding: clamp(22px, 4vw, 34px);
+      background: linear-gradient(135deg, #eaf9fb, #fff)
+    }
+
+    .product-modal__project h3 {
+      margin-bottom: 13px;
+      font-size: clamp(1.2rem, 2vw, 1.55rem)
+    }
+
+    .product-modal__project p {
+      max-width: 760px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: .94rem
+    }
+
+    .product-modal__formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px
+    }
+
+    .product-modal__formats span {
+      border: 1px solid #badde5;
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: var(--blue-dark);
+      background: #fff;
+      font-size: .78rem;
+      font-weight: 800
+    }
+
+    .product-modal__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border-top: 1px solid #d8e8ed;
+      padding: 16px 28px;
+      background: #fff
+    }
+
+    .product-modal__footer p {
+      max-width: 410px;
+      color: var(--muted);
+      font-size: .8rem
+    }
+
+    .product-modal__footer .btn {
+      flex: 0 0 auto;
+      min-height: 46px
+    }
+
+    @media(max-width:600px) {
+      .product-modal {
+        width: calc(100% - 12px);
+        height: calc(100dvh - 12px);
+        border-radius: 17px
+      }
+
+      .product-modal__header {
+        padding: 18px 18px 15px
+      }
+
+      .product-modal__body {
+        padding: 18px
+      }
+
+      .product-modal__stage {
+        height: 245px
+      }
+
+      .product-modal__stage img {
+        padding: 15px 54px
+      }
+
+      .product-modal__thumb {
+        flex-basis: 116px
+      }
+
+      .product-modal__thumb img {
+        height: 66px
+      }
+
+      .product-modal__footer {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 13px 18px
+      }
+
+      .product-modal__footer .btn {
+        width: 100%
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="#inicio" aria-label="Veneza Piscinas - voltar ao início"><img
+          src="assets/images/brand/logo.png" alt="Veneza Piscinas"></a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="nav-link" href="#filtracao">Filtros e Bombas</a>
+        <a class="nav-link" href="#filtracao">Ger. Cloro</a>
+        <a class="nav-link" href="#filtracao">Ger. Ozônio</a>
+        <a class="nav-link" href="#filtracao">Aquecedores</a>
+        <a class="nav-link" href="#filtracao">Iluminação</a>
+        <a class="nav-link" href="#filtracao">Revest. Manta Armada</a>
+      </nav>
+    </div>
+  </header>
+  <main id="inicio">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-panel glass">
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow">Especialistas em equipamentos para piscinas</p>
+              <h1 id="hero-title">Soluções e equipamentos para piscinas que unem <span>qualidade, segurança e alto
+                  desempenho</span></h1>
+              <p class="hero-copy">Filtros, motobombas, aquecedores, gerador de cloro, gerador de ozônio, iluminação LED
+                e automação para entregar água cristalina e sanitizada com conforto térmico e eficiência.</p>
+              <div class="button-row"><a class="btn btn-primary"
+                  href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!%20Gostaria%20de%20pedir%20um%20or%C3%A7amento."
+                  target="_blank" rel="noopener">Pedir orçamento</a><a class="btn btn-secondary" href="#produtos">Ver
+                  produtos</a></div>
+            </div>
+            <div class="hero-media">
+              <div class="hero-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos de piscinas">
+                <img class="hero-photo is-active" src="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg"
+                  alt="Pingo na piscina de borda infinita com vista para o mar" width="1200" height="800"
+                  fetchpriority="high">
+                <img class="hero-photo" src="assets/images/hero/piscina-vista-ilha-pingo.jpg"
+                  alt="Pingo na piscina de borda infinita com vista para uma ilha" width="1200" height="800"
+                  aria-hidden="true">
+                <img class="hero-photo" src="assets/images/hero/piscina-santorini-sol-de-verao-pingo.jpg"
+                  alt="Pingo na piscina de borda infinita sob sol de verão em Santorini" width="1200" height="800"
+                  aria-hidden="true">
+                <img class="hero-photo" src="assets/images/hero/piscina-casa-vista-montanhas-sol-de-verao-pingo.jpg"
+                  alt="Pingo na piscina ensolarada de uma casa com vista para montanhas" width="1200" height="800"
+                  aria-hidden="true">
+                <button class="carousel-arrow carousel-prev carousel-control" type="button"
+                  aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m15 5-7 7 7 7" />
+                  </svg></button>
+                <button class="carousel-arrow carousel-next carousel-control" type="button"
+                  aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m9 5 7 7-7 7" />
+                  </svg></button>
+                <div class="carousel-dots carousel-control" role="group" aria-label="Selecionar foto">
+                  <button class="carousel-dot" type="button" aria-label="Ver foto 1 de 4" aria-current="true"></button>
+                  <button class="carousel-dot" type="button" aria-label="Ver foto 2 de 4" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" aria-label="Ver foto 3 de 4" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" aria-label="Ver foto 4 de 4" aria-current="false"></button>
+                </div>
+              </div>
+              <div class="hero-note"><strong>Escolha técnica, compra segura</strong><span>Dimensionamento e suporte
+                  especializado em Recife e região.</span></div>
+            </div>
+          </div>
+          <div class="trust-row" aria-label="Diferenciais em números">
+            <div class="trust-item"><strong>35 anos</strong><span>de experiência no setor</span></div>
+            <div class="trust-item"><strong>Até 24h</strong><span>para retorno do orçamento</span></div>
+            <div class="trust-item"><strong>Equipe própria</strong><span>na orientação e instalação</span></div>
+            <div class="trust-item"><strong>Recife</strong><span>e região metropolitana</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="produtos" aria-labelledby="produtos-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="kicker">Nossa linha</p>
+          <h2 id="produtos-title">Soluções que proporcionam segurança, conforto e qualidade à piscina e seus usuários
+          </h2>
+          <p>Os cinco primeiros itens são equipamentos. O projeto hidráulico entra como apoio técnico quando a
+            instalação exige planejamento completo.</p>
+        </div>
+        <div class="products-priority">
+          <article class="priority-card featured" data-modal-trigger="filtracao" role="button" tabindex="0"
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto em
+              destaque</span><span class="priority-number">01</span>
+            <h3>Filtros e Motobombas</h3>
+            <p>Mais do que filtrar a água, é preciso fazer isso com eficiência. Dimensionamos o sistema conforme a área,
+              o volume e o perfil de uso da piscina, equilibrando desempenho e consumo.</p><span
+              class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+          </article>
+          <article class="priority-card" data-modal-trigger="aquecedores" role="button" tabindex="0"
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto</span><span
+              class="priority-number">02</span>
+            <h3>Aquecedores de Piscinas</h3>
+            <p>Conforto térmico em todas as épocas do ano. Fazemos o dimensionamento técnico considerando a temperatura
+              inicial e a desejada, a área e o volume da piscina, a presença de borda infinita e a velocidade do vento.
+            </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+          </article>
+          <article class="priority-card" data-modal-trigger="cloro" role="button" tabindex="0" aria-haspopup="dialog"
+            aria-controls="product-modal"><span class="card-label">Produto</span><span class="priority-number">03</span>
+            <h3>Gerador de Cloro</h3>
+            <p style="color: #082f49;">O gerador de cloro utiliza a eletrólise do sal (cloreto de sódio) para produzir o
+              cloro necessário à desinfecção da piscina. Isso simplifica o tratamento e ajuda a manter a água protegida.
+            </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+          </article>
+          <article class="priority-card" data-modal-trigger="ozonio" role="button" tabindex="0" aria-haspopup="dialog"
+            aria-controls="product-modal"><span class="card-label">Produto</span><span class="priority-number">04</span>
+            <h3>Gerador de Ozônio</h3>
+            <p>A tecnologia de ozônio ajuda a purificar a água e a reduzir microrganismos, impurezas e odores. Como
+              complemento ao tratamento e à manutenção do equilíbrio químico, contribui para um banho mais confortável.
+            </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+          </article>
+          <article class="priority-card" data-modal-trigger="iluminacao" role="button" tabindex="0"
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto</span><span
+              class="priority-number">05</span>
+            <h3>Iluminação LED e Refletores</h3>
+            <p>Iluminação que valoriza o ambiente, melhora a visibilidade e torna o banho noturno mais seguro. Nossa
+              equipe técnica orienta a escolha e o posicionamento dos refletores.</p><span class="priority-discover">Ver
+              marcas e equipamentos <span aria-hidden="true">→</span></span>
+          </article>
+          <article class="priority-card service" data-modal-trigger="projeto" role="button" tabindex="0"
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Solução técnica</span><span
+              class="priority-number">06</span>
+            <h3>Projeto Hidráulico</h3>
+            <p>Um projeto hidráulico bem dimensionado contribui para a segurança dos banhistas, a eficiência da
+              filtração e a qualidade da água, além de ajudar a evitar desperdícios e custos desnecessários.</p><span
+              class="priority-discover">Conhecer o projeto técnico <span aria-hidden="true">→</span></span>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="como-comprar" aria-labelledby="como-comprar-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="kicker">Como comprar</p>
+          <h2 id="como-comprar-title">Do primeiro contato ao equipamento instalado</h2>
+          <p>Um processo objetivo para comprar com clareza e receber uma recomendação compatível com a sua piscina.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step"><span class="step-number">01</span>
+            <h3>Escolha o equipamento</h3>
+            <p>Conte qual produto ou melhoria você procura.</p>
+          </article>
+          <article class="step"><span class="step-number">02</span>
+            <h3>Envie medidas e necessidades</h3>
+            <p>Compartilhe volume, medidas, fotos e rotina de uso.</p>
+          </article>
+          <article class="step"><span class="step-number">03</span>
+            <h3>Receba a recomendação</h3>
+            <p>Analisamos os dados e indicamos a configuração adequada.</p>
+          </article>
+          <article class="step"><span class="step-number">04</span>
+            <h3>Receba o orçamento</h3>
+            <p>Confira produtos, valores, condições e prazo.</p>
+          </article>
+          <article class="step"><span class="step-number">05</span>
+            <h3>Instale com suporte técnico</h3>
+            <p>Conte com orientação e instalação profissional.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="projetos" aria-labelledby="projetos-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="kicker">Galeria de projetos</p>
+          <h2 id="projetos-title">Equipamentos aplicados a piscinas reais</h2>
+          <p>Referências de ambientes onde desempenho técnico, conforto e acabamento trabalham juntos.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-card"><img
+              src="https://images.unsplash.com/photo-1572331165267-854da2b10ccc?auto=format&amp;fit=crop&amp;w=1200&amp;q=84"
+              alt="Piscina residencial com sistema hidráulico completo" loading="lazy">
+            <figcaption><b>Sistema residencial completo</b>Filtração, circulação e dimensionamento hidráulico.
+            </figcaption>
+          </figure>
+          <figure class="gallery-card"><img
+              src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+              alt="Piscina com água cristalina" loading="lazy">
+            <figcaption><b>Filtração e tratamento</b>Conjunto preparado para uma rotina de água limpa.</figcaption>
+          </figure>
+          <figure class="gallery-card"><img
+              src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+              alt="Piscina com iluminação noturna" loading="lazy">
+            <figcaption><b>Iluminação LED</b>Refletores subaquáticos e valorização do ambiente.</figcaption>
+          </figure>
+          <figure class="gallery-card"><img
+              src="https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+              alt="Spa e piscina com aquecimento" loading="lazy">
+            <figcaption><b>Conforto térmico</b>Aquecimento dimensionado para piscina e spa.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section id="depoimentos" aria-labelledby="depoimentos-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="kicker">Depoimentos</p>
+          <h2 id="depoimentos-title">Confiança que continua após a compra</h2>
+          <p>Clientes que encontraram o equipamento certo com instalação e suporte especializados.</p>
+        </div>
+        <div class="testimonials-grid">
+          <article class="quote">
+            <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+            <blockquote>“O filtro e a motobomba ficaram muito bem dimensionados. A água melhorou e a equipe ainda
+              explicou toda a operação.”</blockquote><cite>Carlos Silva<span>Cliente em Recife</span></cite>
+          </article>
+          <article class="quote">
+            <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+            <blockquote>“Recebi o orçamento rápido, o equipamento certo e uma instalação muito organizada. O suporte fez
+              diferença.”</blockquote><cite>Marina Costa<span>Cliente em Recife</span></cite>
+          </article>
+          <article class="quote">
+            <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+            <blockquote>“A orientação para escolher o aquecedor foi clara, sem exageros. Hoje usamos a piscina com muito
+              mais conforto.”</blockquote><cite>Fernando Alves<span>Cliente em Recife</span></cite>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="duvidas" aria-labelledby="duvidas-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="kicker">Dúvidas</p>
+          <h2 id="duvidas-title">Perguntas frequentes</h2>
+          <p>Informações essenciais para escolher, comprar e instalar seu equipamento.</p>
+        </div>
+        <div class="faq-panel glass">
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="true" aria-controls="faq-1">Como solicito um
+                orçamento?<span class="faq-sign" aria-hidden="true">−</span></button></h3>
+            <div class="faq-answer" id="faq-1">Envie uma mensagem pelo WhatsApp com o produto de interesse, as medidas
+              ou o volume da piscina e, se possível, fotos do local.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-2">Os equipamentos
+                têm garantia?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-2" hidden>Sim. A garantia varia conforme o fabricante e o modelo. As
+              condições aplicáveis são apresentadas junto com o orçamento.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-3">Vocês fazem a
+                instalação?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-3" hidden>Sim. Podemos fornecer o equipamento com instalação profissional e
+              orientação de uso, conforme a viabilidade técnica e a localização.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-4">Qual é o prazo
+                para orçamento e entrega?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-4" hidden>O retorno do orçamento costuma ocorrer em até 24 horas úteis. O
+              prazo de entrega depende do produto e da disponibilidade.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-5">Quais são as
+                formas de pagamento?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-5" hidden>As condições e formas de pagamento disponíveis são detalhadas no
+              orçamento, de acordo com os equipamentos e serviços incluídos.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-6">Como escolher o
+                filtro e a motobomba corretos?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-6" hidden>Consideramos volume, tempo de recirculação, tubulação e perdas do
+              sistema para indicar vazão e potência compatíveis.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-7">Qual aquecedor é
+                indicado para minha piscina?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-7" hidden>A escolha depende do volume de água, temperatura desejada,
+              exposição ao vento e frequência de uso.</div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-8">Gerador de cloro
+                e gerador de ozônio são iguais?<span class="faq-sign" aria-hidden="true">+</span></button></h3>
+            <div class="faq-answer" id="faq-8" hidden>Não. O gerador de cloro produz sanitizante por eletrólise salina;
+              o ozônio atua como oxidante complementar. A indicação depende do tratamento desejado.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="final-cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-panel">
+          <p class="kicker">Atendimento especializado</p>
+          <h2 id="cta-title">Encontre o equipamento ideal para sua piscina</h2>
+          <p>Envie as informações da sua piscina e receba uma recomendação técnica com orçamento.</p><a
+            class="btn btn-whatsapp"
+            href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!%20Quero%20encontrar%20o%20equipamento%20ideal%20para%20minha%20piscina."
+            target="_blank" rel="noopener">Conversar pelo WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dialog class="product-modal" id="product-modal" aria-labelledby="product-modal-title"
+    aria-describedby="product-modal-intro">
+    <div class="product-modal__header">
+      <div><span class="product-modal__eyebrow" id="product-modal-eyebrow">Nossa linha</span>
+        <h2 id="product-modal-title"></h2>
+      </div><button class="product-modal__close" type="button" aria-label="Fechar janela">×</button>
+    </div>
+    <div class="product-modal__body">
+      <p class="product-modal__intro" id="product-modal-intro"></p>
+      <div class="product-modal__gallery" id="product-modal-gallery">
+        <div class="product-modal__stage"><span class="product-modal__brand" id="product-modal-brand"></span><button
+            class="product-modal__arrow product-modal__prev" type="button" aria-label="Foto anterior">‹</button><img
+            id="product-modal-image" alt="" width="800" height="600"><button
+            class="product-modal__arrow product-modal__next" type="button" aria-label="Próxima foto">›</button></div>
+        <p class="product-modal__caption" aria-live="polite"><strong id="product-modal-image-name"></strong><span
+            id="product-modal-image-count"></span></p>
+        <div class="product-modal__thumbs" id="product-modal-thumbs" role="group"
+          aria-label="Selecionar foto do equipamento"></div>
+        <p class="product-modal__disclaimer">Fotos de referência das marcas. Consulte modelos e disponibilidade no
+          atendimento.</p>
+      </div>
+      <div class="product-modal__project" id="product-modal-project" hidden>
+        <h3>Projeto feito por quem entende o sistema completo</h3>
+        <p>O projeto hidráulico é desenvolvido diretamente pelo especialista da Veneza Piscinas, sem terceirização.
+          Modelamos e compatibilizamos as redes em BIM/Revit e preparamos a documentação técnica em DWG.</p>
+        <p>Dimensionamos tubulações, sucção, retorno, vazão e recirculação, considerando a integração com filtração,
+          aquecimento e tratamento. O resultado é uma solução planejada para desempenho, segurança e manutenção.</p>
+        <div class="product-modal__formats" aria-label="Formatos e entregas"><span>BIM / Revit</span><span>Arquivos
+            DWG</span><span>Dimensionamento hidráulico</span><span>Compatibilização dos equipamentos</span></div>
+      </div>
+    </div>
+    <div class="product-modal__footer">
+      <p>Conte sobre sua piscina e receba orientação técnica com um orçamento sob medida.</p><a class="btn btn-whatsapp"
+        id="product-modal-whatsapp" href="https://wa.me/5581982983545" target="_blank" rel="noopener">Falar com
+        especialista e pedir orçamento</a>
+    </div>
+  </dialog>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a href="#inicio" aria-label="Veneza Piscinas - voltar ao início"><img
+              src="assets/images/brand/logo.png" alt="Veneza Piscinas"></a>
+          <p class="footer-about">Equipamentos para piscinas, orientação técnica e instalação profissional há 35 anos em
+            Recife e região metropolitana.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Navegação</h3><a href="#produtos">Produtos</a><a href="#catalogo">Catálogo</a><a
+            href="#vantagens">Vantagens</a><a href="#como-comprar">Como Comprar</a><a href="#duvidas">Dúvidas</a>
+        </div>
+        <div class="footer-column">
+          <h3>Contato</h3><a href="tel:+5581982983545">Telefone: (81) 98298-3545</a><a
+            href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!" target="_blank"
+            rel="noopener">WhatsApp: (81) 98298-3545</a><a href="https://instagram.com/venezapiscinas" target="_blank"
+            rel="noopener">Instagram: @venezapiscinas</a>
+          <address>Estr. dos Remédios, 2044<br>Ilha do Retiro, Recife - PE</address>
+        </div>
+      </div>
+      <p class="copyright">© 2026 Veneza Piscinas. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+  <button class="back-to-top" type="button" aria-label="Voltar ao topo" title="Voltar ao topo" hidden><span
+      class="back-to-top-label" aria-hidden="true">Voltar</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m5 14 7-7 7 7M12 7v12" />
+    </svg>
+  </button>
+  <a class="whatsapp-float"
+    href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!%20Quero%20ajuda%20para%20escolher%20um%20equipamento."
+    target="_blank" rel="noopener" aria-label="Falar com a Veneza Piscinas pelo WhatsApp" title="Falar pelo WhatsApp">
+    <span class="whatsapp-float-label" aria-hidden="true">Falar com especialista</span><svg viewBox="0 0 448 512" aria-hidden="true">
+      <path
+        d="M380.9 97.1C339-3 283.7 0 224.2 0 101.8 0 2.5 99.2 2.5 221.7c0 39.1 10.2 77.3 29.6 111L.6 480l126.1-33.1c32.5 17.7 69.1 27 106.1 27h.1c122.3 0 224.1-99.2 224.1-221.7 0-59.3-25.2-115-67.1-157.1zM233.3 438.5c-33.2 0-65.7-8.9-94-25.8l-6.7-4-74.8 19.6 20-72.9-4.4-7.5c-18.5-29.4-28.2-63.4-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.7-186.8 184.7zm101.2-138.3c-5.5-2.8-32.8-16.1-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.3-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+    </svg>
+  </a>
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll('.filter-button'), products = document.querySelectorAll('.catalog-card'), empty = document.querySelector('.catalog-empty'), status = document.querySelector('.catalog-status');
+      buttons.forEach(function (button) { button.addEventListener('click', function () { var category = button.dataset.filter, count = 0; buttons.forEach(function (item) { var active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-pressed', String(active)) }); products.forEach(function (product) { var show = category === 'todos' || product.dataset.category === category; product.hidden = !show; if (show) count += 1 }); empty.hidden = count !== 0; status.textContent = count === 1 ? '1 produto em exibição' : count + ' produtos em exibição' }) });
+      document.querySelectorAll('.faq-question').forEach(function (button) { button.addEventListener('click', function () { var expanded = button.getAttribute('aria-expanded') === 'true', answer = document.getElementById(button.getAttribute('aria-controls')), sign = button.querySelector('.faq-sign'); button.setAttribute('aria-expanded', String(!expanded)); answer.hidden = expanded; sign.textContent = expanded ? '+' : '−' }) });
+      var carousel = document.querySelector('.hero-carousel');
+      if (carousel) {
+        var slides = carousel.querySelectorAll('.hero-photo'), dots = carousel.querySelectorAll('.carousel-dot'), activeSlide = 0, carouselTimer;
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        function showSlide(index) {
+          activeSlide = (index + slides.length) % slides.length;
+          slides.forEach(function (slide, i) { var active = i === activeSlide; slide.classList.toggle('is-active', active); slide.setAttribute('aria-hidden', String(!active)) });
+          dots.forEach(function (dot, i) { dot.setAttribute('aria-current', String(i === activeSlide)) });
+        }
+        function stopCarousel() { window.clearInterval(carouselTimer) }
+        function startCarousel() { stopCarousel(); if (!reducedMotion.matches && !document.hidden && !carousel.matches(':hover') && !carousel.contains(document.activeElement)) { carouselTimer = window.setInterval(function () { showSlide(activeSlide + 1) }, 5500) } }
+        carousel.querySelector('.carousel-prev').addEventListener('click', function () { showSlide(activeSlide - 1); startCarousel() });
+        carousel.querySelector('.carousel-next').addEventListener('click', function () { showSlide(activeSlide + 1); startCarousel() });
+        dots.forEach(function (dot, i) { dot.addEventListener('click', function () { showSlide(i); startCarousel() }) });
+        carousel.addEventListener('mouseenter', stopCarousel);
+        carousel.addEventListener('mouseleave', startCarousel);
+        carousel.addEventListener('focusin', stopCarousel);
+        carousel.addEventListener('focusout', function (event) { if (!carousel.contains(event.relatedTarget)) { startCarousel() } });
+        document.addEventListener('visibilitychange', function () { if (document.hidden) { stopCarousel() } else { startCarousel() } });
+        carousel.classList.add('is-ready');
+        startCarousel();
+      }
+      var productModal = document.getElementById('product-modal');
+      if (productModal) {
+        var productLines = {
+          filtracao: {
+            title: 'Filtros e Motobombas', intro: 'Conheça exemplos das marcas com que trabalhamos. Filtro e motobomba são escolhidos em conjunto, conforme o volume, a vazão e a rotina de uso da piscina.', items: [
+              { type: 'Filtro', brand: 'Nautilus', name: 'Filtro F950P', image: 'assets/images/products/filtro-nautilus.jpg' },
+              { type: 'Filtro', brand: 'Syllent', name: 'Filtro SYL200', image: 'assets/images/products/filtro-syllent.png' },
+              { type: 'Filtro', brand: 'Albacete', name: 'Filtro AP50', image: 'assets/images/products/filtro-albacete.webp' },
+              { type: 'Motobomba', brand: 'Nautilus', name: 'Motobomba NBFC', image: 'assets/images/products/motobomba-nautilus.jpg' },
+              { type: 'Motobomba', brand: 'Syllent', name: 'Pré-filtro autoescorvante', image: 'assets/images/products/motobomba-syllent.png' },
+              { type: 'Motobomba', brand: 'Albacete', name: 'Motobomba APP-2', image: 'assets/images/products/motobomba-albacete.webp' }
+            ]
+          },
+          aquecedores: {
+            title: 'Aquecedores de Piscinas', intro: 'O aquecimento ideal considera volume, temperatura desejada, exposição ao vento e frequência de uso. Veja algumas das marcas que podemos indicar para seu projeto.', items: [
+              { type: 'Aquecedor', brand: 'Nautilus', name: 'Bomba de calor Terma', image: 'assets/images/products/aquecedor-nautilus.jpg' },
+              { type: 'Aquecedor', brand: 'Tholz', name: 'Trocador de calor X23', image: 'assets/images/products/aquecedor-tholz.webp' },
+              { type: 'Aquecedor', brand: 'Fromtherm', name: 'Bomba de calor FTi', image: 'assets/images/products/aquecedor-fromtherm.png' }
+            ]
+          },
+          cloro: {
+            title: 'Geradores de Cloro', intro: 'A eletrólise salina automatiza a produção de cloro durante a circulação da água. Indicamos a linha conforme o volume da piscina e as condições de instalação.', items: [
+              { type: 'Gerador de cloro', brand: 'Nautilus', name: 'EasyClor Pro', image: 'assets/images/products/cloro-nautilus.png' },
+              { type: 'Gerador de cloro', brand: 'Syllent', name: 'EcoChlor', image: 'assets/images/products/cloro-syllent.jpg' },
+              { type: 'Gerador de cloro', brand: 'Tholz', name: 'Gerador de Cloro', image: 'assets/images/products/cloro-tholz.webp' }
+            ]
+          },
+          ozonio: {
+            title: 'Geradores de Ozônio', intro: 'O ozônio complementa o tratamento da água. A indicação considera o volume, a circulação e o sistema de desinfecção da piscina.', items: [
+              { type: 'Gerador de ozônio', brand: 'Panozon', name: 'Blue Star', image: 'assets/images/products/ozonio-panozon.png' },
+              { type: 'Gerador de ozônio', brand: 'Ozon3', name: 'OZ60', image: 'assets/images/products/ozonio-ozon3.jpg' }
+            ]
+          },
+          iluminacao: {
+            title: 'Iluminação LED e Refletores', intro: 'Refletores bem posicionados valorizam a piscina e melhoram a visibilidade à noite. Nossa equipe orienta quantidade, potência e acabamento.', items: [
+              { type: 'Refletor LED', brand: 'Tholz', name: 'RGBW Premium', image: 'assets/images/products/led-tholz.webp' },
+              { type: 'Refletor LED', brand: 'Syllent', name: 'Linhas Classic e Premium', image: 'assets/images/products/led-syllent.png' }
+            ]
+          },
+          projeto: { title: 'Projeto Hidráulico', intro: 'Planejamento técnico desenvolvido pela Veneza Piscinas para integrar todos os equipamentos à sua piscina.', items: [] }
+        };
+        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalProject = document.getElementById('product-modal-project'), modalImage = document.getElementById('product-modal-image'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), activeLine = null, activeImage = 0, previousFocus = null;
+        function whatsappUrl(message) { return 'https://wa.me/5581982983545?text=' + encodeURIComponent(message) }
+        function showProductImage(index) {
+          activeImage = (index + activeLine.items.length) % activeLine.items.length;
+          var item = activeLine.items[activeImage];
+          modalImage.src = item.image;
+          modalImage.alt = item.name + ' da marca ' + item.brand;
+          modalBrand.textContent = item.brand;
+          modalImageName.textContent = item.name + ' · ' + item.brand;
+          modalImageCount.textContent = (activeImage + 1) + ' de ' + activeLine.items.length;
+          modalThumbs.querySelectorAll('button').forEach(function (button, i) { button.setAttribute('aria-current', String(i === activeImage)) });
+          modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento para ' + item.type.toLowerCase() + ' da marca ' + item.brand + '.');
+        }
+        function openProductModal(key, trigger) {
+          activeLine = productLines[key]; if (!activeLine) return;
+          previousFocus = trigger;
+          modalTitle.textContent = activeLine.title;
+          modalIntro.textContent = activeLine.intro;
+          modalEyebrow.textContent = key === 'projeto' ? 'Solução técnica' : 'Nossa linha';
+          modalGallery.hidden = key === 'projeto'; modalProject.hidden = key !== 'projeto';
+          modalThumbs.replaceChildren();
+          if (activeLine.items.length) {
+            activeLine.items.forEach(function (item, index) {
+              var button = document.createElement('button'), photo = document.createElement('img'), label = document.createElement('span'), brand = document.createElement('b');
+              button.type = 'button'; button.className = 'product-modal__thumb'; button.setAttribute('aria-label', 'Ver ' + item.name + ' da marca ' + item.brand);
+              photo.src = item.image; photo.alt = ''; photo.loading = 'lazy';
+              brand.textContent = item.brand; label.appendChild(brand); label.appendChild(document.createTextNode(item.type));
+              button.appendChild(photo); button.appendChild(label); button.addEventListener('click', function () { showProductImage(index) }); modalThumbs.appendChild(button);
+            });
+            showProductImage(0);
+          } else {
+            modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de projeto hidráulico em BIM/Revit e DWG para minha piscina.');
+          }
+          productModal.showModal(); document.body.classList.add('modal-open'); productModal.querySelector('.product-modal__close').focus();
+        }
+        document.querySelectorAll('[data-modal-trigger]').forEach(function (card) {
+          card.addEventListener('click', function () { openProductModal(card.dataset.modalTrigger, card) });
+          card.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openProductModal(card.dataset.modalTrigger, card) } });
+        });
+        productModal.querySelector('.product-modal__close').addEventListener('click', function () { productModal.close() });
+        productModal.querySelector('.product-modal__prev').addEventListener('click', function () { showProductImage(activeImage - 1) });
+        productModal.querySelector('.product-modal__next').addEventListener('click', function () { showProductImage(activeImage + 1) });
+        productModal.addEventListener('keydown', function (event) { if (modalGallery.hidden) return; if (event.key === 'ArrowLeft') { event.preventDefault(); showProductImage(activeImage - 1) } else if (event.key === 'ArrowRight') { event.preventDefault(); showProductImage(activeImage + 1) } });
+        productModal.addEventListener('click', function (event) { var box = productModal.getBoundingClientRect(); if (event.target === productModal && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) { productModal.close() } });
+        productModal.addEventListener('close', function () { document.body.classList.remove('modal-open'); if (previousFocus) previousFocus.focus() });
+      }
+      var backToTop = document.querySelector('.back-to-top'), backToTopWasVisible = false;
+      function updateBackToTop() { var isVisible = window.scrollY >= 150; backToTop.hidden = !isVisible; if (isVisible && !backToTopWasVisible) { backToTop.classList.add('is-bouncing') } if (!isVisible) { backToTop.classList.remove('is-bouncing') } backToTopWasVisible = isVisible }
+      window.addEventListener('scroll', updateBackToTop, { passive: true });
+      updateBackToTop();
+      backToTop.addEventListener('mouseenter', function () { backToTop.classList.remove('is-bouncing') });
+      backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }) });
+      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var revealItems = document.querySelectorAll('.hero-panel,.section-heading,.priority-card,.catalog-card,.advantage-card,.scope-note,.step,.gallery-card,.quote,.faq-panel,.cta-panel');
+        revealItems.forEach(function (item) { item.classList.add('reveal-item') });
+        document.documentElement.classList.add('js-reveal');
+        var revealObserver = new IntersectionObserver(function (entries) { entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target) } }) }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+        revealItems.forEach(function (item) { revealObserver.observe(item) });
+      }
+    }());
+  </script>
+</body>
+
+</html>
