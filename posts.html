@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Arquivo de artigos da Veneza Piscinas sobre piscinas, aquecimento, tratamento da água e equipamentos.">
+  <title>Artigos sobre piscinas | Veneza Piscinas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; --ink:#092f42; --muted:#496a78; --blue:#087da1; --cyan:#12b8c4; --line:#d3e8ed; --paper:#fff; --pale:#e9f7fa; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:linear-gradient(145deg,#eaf9fb,#f6fcfd 55%,#e8f7f9); font:500 16px/1.6 'DM Sans',sans-serif; }
+    a { color:inherit; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    .container { width:min(1160px,calc(100% - 40px)); margin-inline:auto; }
+    .site-header { background:#fff; border-bottom:1px solid var(--line); }
+    .nav { min-height:78px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand img { display:block; width:112px; height:54px; object-fit:contain; }
+    .nav a:last-child { color:#086d8e; font-weight:800; text-decoration:none; }
+    .nav a:last-child:hover { text-decoration:underline; }
+    .intro { padding:58px 0 44px; background:radial-gradient(circle at 85% 15%,#d1f3f5,transparent 38%),linear-gradient(120deg,#fff,#eaf9fa); border-bottom:1px solid var(--line); }
+    .eyebrow { display:inline-block; margin:0 0 14px; padding:7px 13px; border-radius:100px; background:#d5f3f3; color:#076f83; font-size:.82rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    h1,h2,h3 { font-family:Manrope,sans-serif; line-height:1.18; }
+    h1 { margin:0 0 14px; max-width:850px; font-size:clamp(2.2rem,5vw,4rem); letter-spacing:-.045em; }
+    .intro p:last-child { margin:0; max-width:760px; color:var(--muted); font-size:1.06rem; }
+    .archive { padding:34px 0 78px; }
+    .toolbar { display:grid; grid-template-columns:minmax(0,1fr) 240px; gap:14px; align-items:end; margin-bottom:14px; }
+    .field label { display:block; margin-bottom:7px; font-size:.86rem; font-weight:800; }
+    .field input,.field select { width:100%; height:48px; padding:0 14px; border:1px solid #b9d8de; border-radius:10px; background:#fff; color:var(--ink); outline:none; }
+    .field input:focus,.field select:focus { border-color:var(--blue); box-shadow:0 0 0 3px #bce8ef; }
+    .result-count { margin:0 0 20px; color:var(--muted); font-size:.91rem; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+    .card { min-width:0; overflow:hidden; background:var(--paper); border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 28px #0b556014; }
+    .card-media { height:190px; overflow:hidden; background:#dceff2; }
+    .card-media img { width:100%; height:100%; object-fit:cover; }
+    .card-content { display:flex; flex-direction:column; min-height:250px; padding:20px; }
+    .card-meta { color:#08708d; font-size:.76rem; font-weight:800; letter-spacing:.035em; text-transform:uppercase; }
+    .card h2 { margin:10px 0; font-size:1.12rem; letter-spacing:-.02em; }
+    .card h2 a { text-decoration:none; }
+    .card h2 a:hover { color:var(--blue); }
+    .card p { margin:0 0 20px; color:var(--muted); font-size:.91rem; line-height:1.55; }
+    .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; color:var(--muted); font-size:.81rem; }
+    .read-link { color:#08708d; font-weight:800; text-decoration:none; white-space:nowrap; }
+    .read-link:hover { text-decoration:underline; }
+    .empty { padding:32px; border:1px solid var(--line); border-radius:14px; background:#fff; color:var(--muted); text-align:center; }
+    .empty[hidden],.card-media[hidden] { display:none; }
+    .site-footer { padding:34px 0; background:#092f42; color:#e6f7f9; }
+    .footer-row { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .footer-row p { margin:0; }
+    .footer-row a { font-weight:800; }
+    .reader { position:fixed; width:min(920px,calc(100% - 28px)); max-height:min(92vh,1100px); padding:0; border:1px solid var(--line); border-radius:18px; background:#fff; color:var(--ink); box-shadow:0 25px 90px #052c4380; }
+    .reader::backdrop { background:#062a3bc2; backdrop-filter:blur(4px); }
+    .reader-head { position:sticky; top:0; z-index:1; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:13px 24px; border-bottom:1px solid var(--line); background:#fff; }
+    .reader-head strong { font-family:Manrope,sans-serif; font-size:.9rem; }
+    .close { display:inline-flex; align-items:center; justify-content:center; min-width:94px; min-height:40px; border:1px solid #b7d5dc; border-radius:8px; background:#fff; color:#076d8d; font-weight:800; }
+    .close:hover { background:#eaf8fa; }
+    .reader-inner { padding:28px clamp(22px,5vw,58px) 48px; }
+    .reader-meta { display:flex; flex-wrap:wrap; gap:8px 16px; color:#08708d; font-size:.85rem; font-weight:700; }
+    .reader h2 { margin:16px 0; font-size:clamp(1.8rem,4vw,2.8rem); letter-spacing:-.035em; }
+    .reader-summary { margin:0 0 22px; color:var(--muted); font-size:1.06rem; }
+    .reader-cover { width:100%; max-height:380px; margin:0 0 28px; object-fit:contain; border-radius:12px; background:#f1f7f8; }
+    .reader-cover[hidden] { display:none; }
+    .article-body { overflow-wrap:anywhere; color:#183b4a; font-size:1.02rem; line-height:1.78; }
+    .article-body p,.article-body ul,.article-body ol,.article-body blockquote { margin:0 0 1.25em; }
+    .article-body h2,.article-body h3,.article-body h4 { margin:1.55em 0 .5em; }
+    .article-body h2 { font-size:1.45rem; }
+    .article-body h3 { font-size:1.2rem; }
+    .article-body ul,.article-body ol { padding-left:1.4em; }
+    .article-body a { color:#0078a3; text-decoration:underline; }
+    .article-body img { display:block; max-width:100%; height:auto; margin:1.3em auto; border-radius:9px; }
+    .article-body blockquote { padding:12px 18px; border-left:4px solid var(--cyan); background:#eff9fa; }
+    .article-body .media-frame { position:relative; height:0; padding-bottom:56.25%; margin:1.4em 0; overflow:hidden; border-radius:10px; background:#e6f2f4; }
+    .article-body .media-frame iframe { position:absolute; width:100%; height:100%; inset:0; border:0; }
+    .article-body .media-link { display:inline-block; margin:0 0 1.2em; }
+    .reader-foot { margin-top:36px; padding-top:22px; border-top:1px solid var(--line); }
+    .reader-foot a { display:inline-block; padding:12px 17px; border-radius:8px; background:var(--blue); color:#fff; font-weight:800; text-decoration:none; }
+    @media(max-width:900px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:620px) { .container { width:min(100% - 28px,1160px); } .intro { padding:42px 0 34px; } .toolbar,.grid { grid-template-columns:1fr; } .card-media { height:210px; } .footer-row { align-items:flex-start; flex-direction:column; } .reader { width:100%; height:100%; max-height:100%; border:0; border-radius:0; } .reader-head { padding:10px 18px; } .reader-inner { padding:24px 18px 45px; } }
+  </style>
+  <script src="assets/data/posts-data.js" defer></script>
+  <script src="assets/js/posts.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Veneza Piscinas — página inicial"><img src="assets/images/brand/logo.png" alt="Veneza Piscinas"></a>
+      <a href="index.html">← Voltar ao início</a>
+    </div>
+  </header>
+  <main>
+    <section class="intro">
+      <div class="container">
+        <p class="eyebrow">Conteúdo Veneza Piscinas</p>
+        <h1>Artigos para cuidar melhor da sua piscina</h1>
+        <p>Explore nosso arquivo de conteúdos sobre equipamentos, tratamento da água, conforto e segurança. Use a busca ou escolha um assunto para encontrar o que precisa.</p>
+      </div>
+    </section>
+    <section class="archive container" aria-label="Arquivo de artigos">
+      <div class="toolbar">
+        <div class="field"><label for="search">Buscar artigos</label><input id="search" type="search" placeholder="Ex.: aquecedor, cloro, manutenção" autocomplete="off"></div>
+        <div class="field"><label for="category">Assunto</label><select id="category"><option value="">Todos os assuntos</option></select></div>
+      </div>
+      <p id="result-count" class="result-count" role="status" aria-live="polite"></p>
+      <div id="post-grid" class="grid"></div>
+      <p id="empty" class="empty" hidden>Nenhum artigo encontrado. Tente outra busca ou assunto.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-row"><p>Veneza Piscinas · Recife e região metropolitana</p><a href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!%20Gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener noreferrer">Falar com um especialista →</a></div></footer>
+  <dialog id="reader" class="reader" aria-labelledby="reader-title">
+    <div class="reader-head"><strong>Artigos Veneza Piscinas</strong><button id="close-reader" class="close" type="button">Voltar</button></div>
+    <div class="reader-inner">
+      <div id="reader-meta" class="reader-meta"></div>
+      <h2 id="reader-title"></h2>
+      <p id="reader-summary" class="reader-summary"></p>
+      <img id="reader-cover" class="reader-cover" alt="" hidden>
+      <div id="article-body" class="article-body"></div>
+      <div class="reader-foot"><a href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!%20Li%20um%20artigo%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener noreferrer">Falar com um especialista</a></div>
+    </div>
+  </dialog>
+</body>
+</html>
