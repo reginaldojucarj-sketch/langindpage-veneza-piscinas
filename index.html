@@ -1603,12 +1603,18 @@
         min-height: 300px
       }
 
+      .hero-note {
+        left: auto;
+        width: calc(75% - 27px);
+        padding: 11.25px 12.75px
+      }
+
       .hero-note strong {
-        font-size: .368rem
+        font-size: .644rem
       }
 
       .hero-note span {
-        font-size: .312rem
+        font-size: .546rem
       }
 
       .carousel-arrow {
@@ -2012,18 +2018,27 @@
                 <img class="hero-photo is-active" src="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg"
                   alt="Pingo na piscina de borda infinita com vista para o mar" width="1200" height="800"
                   fetchpriority="high">
-                <video class="hero-photo" src="assets/videos/v10771g5000cdalv5i7og65vqoivia7g~1.webm"
+                <video class="hero-photo"
                   poster="assets/images/hero/piscina-vista-ilha-pingo.jpg"
                   aria-label="Pingo convida para entrar na piscina com vista para uma ilha" aria-hidden="true"
-                  muted autoplay loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
-                <video class="hero-photo" src="assets/videos/shot_01_v4.webm"
+                  muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+                  <source src="assets/videos/piscina-vista-ilha-pingo.mp4" type="video/mp4">
+                  <source src="assets/videos/piscina-vista-ilha-pingo.webm" type="video/webm">
+                </video>
+                <video class="hero-photo"
                   poster="assets/images/hero/piscina-santorini-sol-de-verao-pingo.jpg"
                   aria-label="Pingo convida para entrar na piscina ensolarada em Santorini" aria-hidden="true"
-                  muted autoplay loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
-                <video class="hero-photo" src="assets/videos/shot_02_pull_in.webm"
+                  muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+                  <source src="assets/videos/piscina-santorini-pingo.mp4" type="video/mp4">
+                  <source src="assets/videos/piscina-santorini-pingo.webm" type="video/webm">
+                </video>
+                <video class="hero-photo"
                   poster="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg"
                   aria-label="Pingo convida para entrar na piscina de hotel com vista para o mar" aria-hidden="true"
-                  muted autoplay loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
+                  muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+                  <source src="assets/videos/piscina-hotel-pingo.mp4" type="video/mp4">
+                  <source src="assets/videos/piscina-hotel-pingo.webm" type="video/webm">
+                </video>
                 <button class="carousel-arrow carousel-prev carousel-control" type="button"
                   aria-label="Slide anterior"><svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m15 5-7 7 7 7" />
@@ -2353,6 +2368,19 @@
       var carousel = document.querySelector('.hero-carousel');
       if (carousel) {
         var slides = carousel.querySelectorAll('.hero-photo'), dots = carousel.querySelectorAll('.carousel-dot'), activeSlide = 0, carouselTimer;
+        function fallbackToPoster(video) {
+          if (!video.isConnected) return;
+          var photo = document.createElement('img');
+          photo.className = video.className;
+          photo.src = video.poster;
+          photo.alt = video.getAttribute('aria-label') || 'Piscina Veneza Piscinas';
+          photo.setAttribute('aria-hidden', video.getAttribute('aria-hidden'));
+          video.replaceWith(photo);
+          slides = carousel.querySelectorAll('.hero-photo');
+        }
+        slides.forEach(function (slide) {
+          if (slide.tagName === 'VIDEO') slide.addEventListener('error', function () { fallbackToPoster(slide) });
+        });
         function showSlide(index) {
           activeSlide = (index + slides.length) % slides.length;
           slides.forEach(function (slide, i) {
@@ -2360,7 +2388,13 @@
             slide.classList.toggle('is-active', active);
             slide.setAttribute('aria-hidden', String(!active));
             if (slide.tagName === 'VIDEO') {
-              if (active) { slide.currentTime = 0; slide.play().catch(function () { }) }
+              if (active) {
+                slide.currentTime = 0;
+                var playback = slide.play();
+                if (playback && typeof playback.catch === 'function') playback.catch(function (error) {
+                  if (error.name !== 'AbortError') fallbackToPoster(slide);
+                });
+              }
               else { slide.pause() }
             }
           });
