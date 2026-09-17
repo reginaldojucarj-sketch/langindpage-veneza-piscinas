@@ -29,5 +29,13 @@ Abra o `index.html` diretamente no navegador ou sirva a pasta por um servidor HT
 ## Estrutura
 
 - `index.html`: página principal e interações
+- `posts.html`: arquivo pesquisável de artigos do banco `veneza_pena`
+- `assets/data/posts-data.js`: cópia estática dos 184 posts e metadados de categorias, autores e imagens
 - `assets/images`: logo, imagens de fundo, hero e produtos
 - `scripts`: arquivos auxiliares do projeto
+
+## Arquivo de artigos
+
+A página `posts.html` mostra todos os registros encontrados em `POST_pena` na extração de 17/09/2026, inclusive os estados `PP`, `PO` e `PE`. Os textos vieram de uma consulta com `LEFT JOIN` nas tabelas relacionadas a artigos: `AUTOR_pena`, `PESSOA_pena`, `IMAGENS_pena`, `CATEGORIA_pena` e `CATEGORIA_POST_pena`. Apenas campos editoriais foram exportados; credenciais e dados das tabelas de clientes, e-mail e logs não entram na página.
+
+O GitHub Pages publica uma cópia estática. Para atualizar os artigos, execute a consulta em `scripts/export-posts.sql` no banco, salve o resultado em JSONL e gere novamente o arquivo de dados com `scripts/build-posts-data.ps1 -Source <arquivo.jsonl> -Destination assets/data/posts-data.js`.
