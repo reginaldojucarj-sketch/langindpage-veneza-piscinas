@@ -455,10 +455,16 @@
       opacity: .72
     }
 
-    .featured .priority-number {
+    .priority-card[data-modal-trigger="filtracao"] .priority-number {
       margin-bottom: 36px;
       color: #c9fbff
     }
+
+    .priority-card[data-modal-trigger="aquecedores"] .priority-number { color: #b45309 }
+    .priority-card[data-modal-trigger="cloro"] .priority-number { color: #15803d }
+    .priority-card[data-modal-trigger="ozonio"] .priority-number { color: #7c3aed }
+    .priority-card[data-modal-trigger="iluminacao"] .priority-number { color: #be185d }
+    .priority-card[data-modal-trigger="projeto"] .priority-number { color: #036b80 }
 
     .priority-card h3 {
       max-width: 570px;
@@ -1145,16 +1151,18 @@
       .main-nav {
         grid-column: 1/-1;
         display: grid;
-        grid-template-columns: repeat(3, auto);
-        gap: 8px 12px;
-        justify-content: space-between;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
         overflow: visible;
         font-size: .78rem
       }
 
       .main-nav .nav-link {
+        min-width: 0;
         justify-content: center;
-        text-align: center
+        padding: 6px 4px;
+        text-align: center;
+        white-space: normal
       }
 
       h1 {
@@ -1604,8 +1612,10 @@
       }
 
       .hero-note {
-        left: auto;
-        width: calc(75% - 27px);
+        right: 9px;
+        bottom: 9px;
+        left: 9px;
+        width: auto;
         padding: 11.25px 12.75px
       }
 
@@ -1750,7 +1760,7 @@
     }
 
     .product-modal__gallery[hidden],
-    .product-modal__project[hidden] {
+    .product-modal__detail[hidden] {
       display: none
     }
 
@@ -1881,19 +1891,19 @@
       font-size: .74rem
     }
 
-    .product-modal__project {
+    .product-modal__detail {
       border: 1px solid #d4e7eb;
       border-radius: 18px;
       padding: clamp(22px, 4vw, 34px);
       background: linear-gradient(135deg, #eaf9fb, #fff)
     }
 
-    .product-modal__project h3 {
+    .product-modal__detail h3 {
       margin-bottom: 13px;
       font-size: clamp(1.2rem, 2vw, 1.55rem)
     }
 
-    .product-modal__project p {
+    .product-modal__detail p {
       max-width: 760px;
       margin-bottom: 16px;
       color: var(--muted);
@@ -1938,6 +1948,18 @@
       min-height: 46px
     }
 
+    .product-modal__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .product-modal__back {
+      font-family: inherit;
+      font-size: .88rem;
+      cursor: pointer
+    }
+
     @media(max-width:600px) {
       .product-modal {
         width: calc(100% - 12px);
@@ -1978,6 +2000,10 @@
       .product-modal__footer .btn {
         width: 100%
       }
+
+      .product-modal__actions {
+        flex-direction: column
+      }
     }
   </style>
 </head>
@@ -1988,12 +2014,12 @@
       <a class="brand" href="#inicio" aria-label="Veneza Piscinas - voltar ao início"><img
           src="assets/images/brand/logo.png" alt="Veneza Piscinas"></a>
       <nav class="main-nav" aria-label="Navegação principal">
-        <a class="nav-link" href="#filtracao">Filtros e Bombas</a>
-        <a class="nav-link" href="#filtracao">Ger. Cloro</a>
-        <a class="nav-link" href="#filtracao">Ger. Ozônio</a>
-        <a class="nav-link" href="#filtracao">Aquecedores</a>
-        <a class="nav-link" href="#filtracao">Iluminação</a>
-        <a class="nav-link" href="#filtracao">Revest. Manta Armada</a>
+        <a class="nav-link" href="#produtos" data-modal-link="filtracao" aria-haspopup="dialog" aria-controls="product-modal">Filtros e Bombas</a>
+        <a class="nav-link" href="#produtos" data-modal-link="cloro" aria-haspopup="dialog" aria-controls="product-modal">Ger. Cloro</a>
+        <a class="nav-link" href="#produtos" data-modal-link="ozonio" aria-haspopup="dialog" aria-controls="product-modal">Ger. Ozônio</a>
+        <a class="nav-link" href="#produtos" data-modal-link="aquecedores" aria-haspopup="dialog" aria-controls="product-modal">Aquecedores</a>
+        <a class="nav-link" href="#produtos" data-modal-link="iluminacao" aria-haspopup="dialog" aria-controls="product-modal">Iluminação</a>
+        <a class="nav-link" href="#produtos" data-modal-link="revestimento" aria-haspopup="dialog" aria-controls="product-modal">Revest. Manta Armada</a>
       </nav>
     </div>
   </header>
@@ -2308,7 +2334,7 @@
         <p class="product-modal__disclaimer">Fotos de referência das marcas. Consulte modelos e disponibilidade no
           atendimento.</p>
       </div>
-      <div class="product-modal__project" id="product-modal-project" hidden>
+      <div class="product-modal__detail" id="product-modal-project" hidden>
         <h3>Projeto hidráulico em BIM/Revit, DWG e PDF</h3>
         <p>Desenvolvemos o projeto hidráulico da piscina com documentação técnica nos formatos BIM/Revit, DWG e PDF.
         </p>
@@ -2316,11 +2342,18 @@
         <div class="product-modal__formats" aria-label="Formatos e entregas"><span>BIM / Revit</span><span>Arquivos
             DWG</span><span>Projeto em PDF</span><span>Atendimento com especialista</span></div>
       </div>
+      <div class="product-modal__detail" id="product-modal-revestimento" hidden>
+        <h3>Revestimento em manta armada</h3>
+        <p>Quer revestir ou renovar sua piscina? Fale com a nossa equipe para avaliar as medidas, o formato e as condições do local.</p>
+        <p>Entre em contato para conhecer as opções disponíveis e solicitar um orçamento.</p>
+      </div>
     </div>
     <div class="product-modal__footer">
-      <p>Conte sobre sua piscina e receba orientação técnica com um orçamento sob medida.</p><a class="btn btn-whatsapp"
-        id="product-modal-whatsapp" href="https://wa.me/5581982983545" target="_blank" rel="noopener">Falar com
-        especialista e pedir orçamento</a>
+      <p>Conte sobre sua piscina e receba orientação técnica com um orçamento sob medida.</p>
+      <div class="product-modal__actions">
+        <a class="btn btn-whatsapp" id="product-modal-whatsapp" href="https://wa.me/5581982983545" target="_blank" rel="noopener">Falar com especialista e pedir orçamento</a>
+        <button class="btn btn-secondary product-modal__back" type="button">Voltar</button>
+      </div>
     </div>
   </dialog>
   <footer class="site-footer">
@@ -2449,9 +2482,10 @@
               { type: 'Refletor LED', brand: 'Syllent', name: 'Linhas Classic e Premium', image: 'assets/images/products/led-syllent.png' }
             ]
           },
+          revestimento: { title: 'Revestimento em Manta Armada', intro: 'Conheça as possibilidades de revestimento para sua piscina e solicite uma avaliação com nossa equipe.', items: [] },
           projeto: { title: 'Projeto Hidráulico', intro: 'Planejamento técnico desenvolvido pela Veneza Piscinas para integrar todos os equipamentos à sua piscina.', items: [] }
         };
-        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalProject = document.getElementById('product-modal-project'), modalImage = document.getElementById('product-modal-image'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), activeLine = null, activeImage = 0, previousFocus = null;
+        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalProject = document.getElementById('product-modal-project'), modalRevestimento = document.getElementById('product-modal-revestimento'), modalImage = document.getElementById('product-modal-image'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), activeLine = null, activeImage = 0, previousFocus = null;
         function whatsappUrl(message) { return 'https://wa.me/5581982983545?text=' + encodeURIComponent(message) }
         function showProductImage(index) {
           activeImage = (index + activeLine.items.length) % activeLine.items.length;
@@ -2470,7 +2504,9 @@
           modalTitle.textContent = activeLine.title;
           modalIntro.textContent = activeLine.intro;
           modalEyebrow.textContent = key === 'projeto' ? 'Solução técnica' : 'Nossa linha';
-          modalGallery.hidden = key === 'projeto'; modalProject.hidden = key !== 'projeto';
+          modalGallery.hidden = !activeLine.items.length;
+          modalProject.hidden = key !== 'projeto';
+          modalRevestimento.hidden = key !== 'revestimento';
           modalThumbs.replaceChildren();
           if (activeLine.items.length) {
             activeLine.items.forEach(function (item, index) {
@@ -2482,7 +2518,9 @@
             });
             showProductImage(0);
           } else {
-            modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de projeto hidráulico em BIM/Revit, DWG e PDF para minha piscina.');
+            modalWhatsapp.href = whatsappUrl(key === 'projeto'
+              ? 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de projeto hidráulico em BIM/Revit, DWG e PDF para minha piscina.'
+              : 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.');
           }
           productModal.showModal(); document.body.classList.add('modal-open'); productModal.querySelector('.product-modal__close').focus();
         }
@@ -2490,7 +2528,11 @@
           card.addEventListener('click', function () { openProductModal(card.dataset.modalTrigger, card) });
           card.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openProductModal(card.dataset.modalTrigger, card) } });
         });
+        document.querySelectorAll('[data-modal-link]').forEach(function (link) {
+          link.addEventListener('click', function (event) { event.preventDefault(); openProductModal(link.dataset.modalLink, link) });
+        });
         productModal.querySelector('.product-modal__close').addEventListener('click', function () { productModal.close() });
+        productModal.querySelector('.product-modal__back').addEventListener('click', function () { productModal.close() });
         productModal.querySelector('.product-modal__prev').addEventListener('click', function () { showProductImage(activeImage - 1) });
         productModal.querySelector('.product-modal__next').addEventListener('click', function () { showProductImage(activeImage + 1) });
         productModal.addEventListener('keydown', function (event) { if (modalGallery.hidden) return; if (event.key === 'ArrowLeft') { event.preventDefault(); showProductImage(activeImage - 1) } else if (event.key === 'ArrowRight') { event.preventDefault(); showProductImage(activeImage + 1) } });
