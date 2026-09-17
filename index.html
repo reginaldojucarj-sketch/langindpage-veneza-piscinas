@@ -925,6 +925,28 @@
       opacity: 1
     }
 
+    .whatsapp-float.is-intro {
+      width: min(218px, calc(100vw - 28px));
+      gap: 8px;
+      border-radius: 999px;
+      animation: whatsapp-attention .32s ease-in-out infinite
+    }
+
+    .whatsapp-float.is-intro .whatsapp-float-label {
+      max-width: 160px;
+      opacity: 1
+    }
+
+    @keyframes whatsapp-attention {
+      0%, 100% { transform: translateX(0) rotate(0) }
+      25% { transform: translateX(-2px) rotate(-1deg) }
+      75% { transform: translateX(2px) rotate(1deg) }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .whatsapp-float.is-intro { animation: none }
+    }
+
     .site-footer {
       margin-top: 12px;
       border-top: 1px solid rgba(255, 255, 255, .105);
@@ -1490,6 +1512,10 @@
       opacity: 1
     }
 
+    .hero-carousel video.hero-photo {
+      pointer-events: none
+    }
+
     .hero-carousel:not(.is-ready) .carousel-control {
       display: none
     }
@@ -1575,6 +1601,14 @@
       .hero-carousel {
         height: 300px;
         min-height: 300px
+      }
+
+      .hero-note strong {
+        font-size: .368rem
+      }
+
+      .hero-note span {
+        font-size: .312rem
       }
 
       .carousel-arrow {
@@ -1974,32 +2008,35 @@
                   produtos</a></div>
             </div>
             <div class="hero-media">
-              <div class="hero-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos de piscinas">
+              <div class="hero-carousel" role="region" aria-roledescription="carrossel" aria-label="Piscinas em fotos e vídeos">
                 <img class="hero-photo is-active" src="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg"
                   alt="Pingo na piscina de borda infinita com vista para o mar" width="1200" height="800"
                   fetchpriority="high">
-                <img class="hero-photo" src="assets/images/hero/piscina-vista-ilha-pingo.jpg"
-                  alt="Pingo na piscina de borda infinita com vista para uma ilha" width="1200" height="800"
-                  aria-hidden="true">
-                <img class="hero-photo" src="assets/images/hero/piscina-santorini-sol-de-verao-pingo.jpg"
-                  alt="Pingo na piscina de borda infinita sob sol de verão em Santorini" width="1200" height="800"
-                  aria-hidden="true">
-                <img class="hero-photo" src="assets/images/hero/piscina-casa-vista-montanhas-sol-de-verao-pingo.jpg"
-                  alt="Pingo na piscina ensolarada de uma casa com vista para montanhas" width="1200" height="800"
-                  aria-hidden="true">
+                <video class="hero-photo" src="assets/videos/v10771g5000cdalv5i7og65vqoivia7g~1.webm"
+                  poster="assets/images/hero/piscina-vista-ilha-pingo.jpg"
+                  aria-label="Pingo convida para entrar na piscina com vista para uma ilha" aria-hidden="true"
+                  muted autoplay loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
+                <video class="hero-photo" src="assets/videos/shot_01_v4.webm"
+                  poster="assets/images/hero/piscina-santorini-sol-de-verao-pingo.jpg"
+                  aria-label="Pingo convida para entrar na piscina ensolarada em Santorini" aria-hidden="true"
+                  muted autoplay loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
+                <video class="hero-photo" src="assets/videos/shot_02_pull_in.webm"
+                  poster="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg"
+                  aria-label="Pingo convida para entrar na piscina de hotel com vista para o mar" aria-hidden="true"
+                  muted autoplay loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback></video>
                 <button class="carousel-arrow carousel-prev carousel-control" type="button"
-                  aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  aria-label="Slide anterior"><svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m15 5-7 7 7 7" />
                   </svg></button>
                 <button class="carousel-arrow carousel-next carousel-control" type="button"
-                  aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  aria-label="Próximo slide"><svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m9 5 7 7-7 7" />
                   </svg></button>
-                <div class="carousel-dots carousel-control" role="group" aria-label="Selecionar foto">
+                <div class="carousel-dots carousel-control" role="group" aria-label="Selecionar slide">
                   <button class="carousel-dot" type="button" aria-label="Ver foto 1 de 4" aria-current="true"></button>
-                  <button class="carousel-dot" type="button" aria-label="Ver foto 2 de 4" aria-current="false"></button>
-                  <button class="carousel-dot" type="button" aria-label="Ver foto 3 de 4" aria-current="false"></button>
-                  <button class="carousel-dot" type="button" aria-label="Ver foto 4 de 4" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" aria-label="Ver vídeo 2 de 4" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" aria-label="Ver vídeo 3 de 4" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" aria-label="Ver vídeo 4 de 4" aria-current="false"></button>
                 </div>
               </div>
               <div class="hero-note"><strong>Escolha técnica, compra segura</strong><span>Dimensionamento e suporte
@@ -2300,7 +2337,7 @@
       <path d="m5 14 7-7 7 7M12 7v12" />
     </svg>
   </button>
-  <a class="whatsapp-float"
+  <a class="whatsapp-float is-intro"
     href="https://wa.me/5581982983545?text=Ol%C3%A1%2C%20Veneza%20Piscinas!%20Quero%20ajuda%20para%20escolher%20um%20equipamento."
     target="_blank" rel="noopener" aria-label="Falar com a Veneza Piscinas pelo WhatsApp" title="Falar pelo WhatsApp">
     <span class="whatsapp-float-label" aria-hidden="true">Falar com especialista</span><svg viewBox="0 0 448 512" aria-hidden="true">
@@ -2316,23 +2353,27 @@
       var carousel = document.querySelector('.hero-carousel');
       if (carousel) {
         var slides = carousel.querySelectorAll('.hero-photo'), dots = carousel.querySelectorAll('.carousel-dot'), activeSlide = 0, carouselTimer;
-        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         function showSlide(index) {
           activeSlide = (index + slides.length) % slides.length;
-          slides.forEach(function (slide, i) { var active = i === activeSlide; slide.classList.toggle('is-active', active); slide.setAttribute('aria-hidden', String(!active)) });
+          slides.forEach(function (slide, i) {
+            var active = i === activeSlide;
+            slide.classList.toggle('is-active', active);
+            slide.setAttribute('aria-hidden', String(!active));
+            if (slide.tagName === 'VIDEO') {
+              if (active) { slide.currentTime = 0; slide.play().catch(function () { }) }
+              else { slide.pause() }
+            }
+          });
           dots.forEach(function (dot, i) { dot.setAttribute('aria-current', String(i === activeSlide)) });
         }
-        function stopCarousel() { window.clearInterval(carouselTimer) }
-        function startCarousel() { stopCarousel(); if (!reducedMotion.matches && !document.hidden && !carousel.matches(':hover') && !carousel.contains(document.activeElement)) { carouselTimer = window.setInterval(function () { showSlide(activeSlide + 1) }, 5500) } }
+        function stopCarousel() { window.clearTimeout(carouselTimer) }
+        function startCarousel() { stopCarousel(); if (!document.hidden) { carouselTimer = window.setTimeout(function () { showSlide(activeSlide + 1); startCarousel() }, 12000) } }
         carousel.querySelector('.carousel-prev').addEventListener('click', function () { showSlide(activeSlide - 1); startCarousel() });
         carousel.querySelector('.carousel-next').addEventListener('click', function () { showSlide(activeSlide + 1); startCarousel() });
         dots.forEach(function (dot, i) { dot.addEventListener('click', function () { showSlide(i); startCarousel() }) });
-        carousel.addEventListener('mouseenter', stopCarousel);
-        carousel.addEventListener('mouseleave', startCarousel);
-        carousel.addEventListener('focusin', stopCarousel);
-        carousel.addEventListener('focusout', function (event) { if (!carousel.contains(event.relatedTarget)) { startCarousel() } });
         document.addEventListener('visibilitychange', function () { if (document.hidden) { stopCarousel() } else { startCarousel() } });
         carousel.classList.add('is-ready');
+        showSlide(0);
         startCarousel();
       }
       var productModal = document.getElementById('product-modal');
@@ -2428,6 +2469,10 @@
       updateBackToTop();
       backToTop.addEventListener('mouseenter', function () { backToTop.classList.remove('is-bouncing') });
       backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }) });
+      var whatsappFloat = document.querySelector('.whatsapp-float');
+      if (whatsappFloat) {
+        window.setTimeout(function () { whatsappFloat.classList.remove('is-intro') }, 3000);
+      }
       if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         var revealItems = document.querySelectorAll('.hero-panel,.section-heading,.priority-card,.catalog-card,.advantage-card,.scope-note,.step,.gallery-card,.quote,.faq-panel,.cta-panel');
         revealItems.forEach(function (item) { item.classList.add('reveal-item') });
