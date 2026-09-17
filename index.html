@@ -368,15 +368,31 @@
       background: rgba(255, 255, 255, .49)
     }
 
+    .trust-icon {
+      display: inline-block;
+      width: 21px;
+      height: 21px;
+      margin: 0 7px 0 0;
+      color: var(--blue);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vertical-align: middle
+    }
+
     .trust-item strong,
     .trust-item span {
       display: block
     }
 
     .trust-item strong {
+      display: inline;
       color: var(--blue-dark);
       font-family: Manrope, sans-serif;
-      font-size: 1.05rem
+      font-size: 1.05rem;
+      vertical-align: middle
     }
 
     .trust-item span {
@@ -2150,10 +2166,10 @@
             </div>
           </div>
           <div class="trust-row" aria-label="Diferenciais em números">
-            <div class="trust-item"><strong>35 anos</strong><span>de experiência no setor</span></div>
-            <div class="trust-item"><strong>Até 24h</strong><span>para retorno do orçamento</span></div>
-            <div class="trust-item"><strong>Equipe própria</strong><span>na orientação e instalação</span></div>
-            <div class="trust-item"><strong>Recife</strong><span>e região metropolitana</span></div>
+            <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z" /></svg><strong>35 anos</strong><span>de experiência no setor</span></div>
+            <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></svg><strong>Até 24h</strong><span>para retorno do orçamento</span></div>
+            <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20" /><circle cx="10" cy="8" r="3" /><path d="M16 11a3 3 0 1 0 0-6M17 15h1a3 3 0 0 1 3 3v2" /></svg><strong>Equipe própria</strong><span>na orientação e instalação</span></div>
+            <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10.5c0 5.5-8 10.5-8 10.5S4 16 4 10.5a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10.5" r="2.5" /></svg><strong>Recife</strong><span>e região metropolitana</span></div>
           </div>
         </div>
       </div>
