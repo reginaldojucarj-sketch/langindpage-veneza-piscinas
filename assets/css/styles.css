@@ -961,7 +961,65 @@ h1 span {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: transparent
+  background: transparent;
+  cursor: pointer
+}
+
+.testimonial-controls {
+  position: absolute;
+  z-index: 2;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  width: calc(100% - 16px);
+  min-width: 0;
+  max-width: calc(100% - 16px);
+  display: grid;
+  grid-template-columns: 32px minmax(34px, 1fr) 32px 32px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 999px;
+  padding: 6px 8px;
+  background: rgba(3, 31, 43, .88);
+  box-shadow: 0 6px 18px rgba(0, 20, 30, .28);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px)
+}
+
+.testimonial-control {
+  width: 32px;
+  height: 32px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 32px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  color: #fff;
+  background: transparent;
+  font: 800 .88rem/1 Arial, sans-serif;
+  cursor: pointer
+}
+
+.testimonial-control:hover,
+.testimonial-control:focus-visible {
+  background: rgba(255, 255, 255, .18)
+}
+
+.testimonial-control:focus-visible,
+.testimonial-progress:focus-visible {
+  outline: 2px solid #5de4ef;
+  outline-offset: 2px
+}
+
+.testimonial-progress {
+  width: auto;
+  min-width: 0;
+  height: 22px;
+  margin: 0;
+  accent-color: #29d5df;
+  cursor: pointer
 }
 
 .quote--video cite {
@@ -1406,6 +1464,23 @@ h1 span {
 
   .container {
     width: calc(100% - 26px)
+  }
+
+  .testimonial-controls {
+    right: 6px;
+    bottom: 6px;
+    left: 6px;
+    width: calc(100% - 12px);
+    max-width: calc(100% - 12px);
+    grid-template-columns: 30px minmax(34px, 1fr) 30px 30px;
+    gap: 4px;
+    padding: 5px 6px
+  }
+
+  .testimonial-control {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px
   }
 
   .nav-shell {
