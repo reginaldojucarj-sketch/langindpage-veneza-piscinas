@@ -87,7 +87,7 @@
       border-radius: 999px;
       color: var(--blue-dark);
       background: rgba(214, 241, 248, .88);
-      transition: background-color .7s ease, color .7s ease;
+      transition: background-color .7s ease, color .7s ease, min-height .28s ease, padding .28s ease;
     }
 
     .main-nav .nav-link:hover {
@@ -116,7 +116,8 @@
       background: rgba(242, 253, 255, .54);
       box-shadow: 0 3px 11px rgba(0, 54, 77, .04);
       -webkit-backdrop-filter: blur(8.25px) saturate(111.25%);
-      backdrop-filter: blur(8.25px) saturate(111.25%)
+      backdrop-filter: blur(8.25px) saturate(111.25%);
+      transition: background-color .28s ease, border-color .28s ease, box-shadow .28s ease
     }
 
     .nav-shell {
@@ -125,7 +126,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 26px;
-      position: relative
+      position: relative;
+      transition: min-height .28s ease, gap .28s ease, padding .28s ease
     }
 
     .brand {
@@ -137,7 +139,8 @@
     .brand img {
       width: 172px;
       height: auto;
-      object-fit: contain
+      object-fit: contain;
+      transition: width .28s ease
     }
 
     .main-nav {
@@ -151,7 +154,8 @@
       white-space: nowrap;
       position: absolute;
       left: 62.5%;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
+      transition: gap .28s ease, padding .28s ease, font-size .28s ease
     }
 
     .main-nav a:hover {
@@ -1104,6 +1108,10 @@
     }
 
     @media(max-width:1000px) {
+      html.header-compact {
+        scroll-padding-top: 72px
+      }
+
       .nav-shell {
         flex-wrap: wrap;
         gap: 12px 20px;
@@ -1118,6 +1126,59 @@
         overflow-x: auto;
         padding: 3px 0 2px;
         transform: none
+      }
+
+      .site-header.is-compact {
+        border-bottom-color: rgba(2, 125, 165, .18);
+        background: rgba(242, 253, 255, .92);
+        box-shadow: 0 7px 20px rgba(0, 54, 77, .1)
+      }
+
+      .site-header.is-compact .nav-shell {
+        min-height: 58px;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        padding: 6px 0
+      }
+
+      .site-header.is-compact .brand {
+        grid-column: auto;
+        justify-content: flex-start
+      }
+
+      .site-header.is-compact .brand img {
+        width: 92px
+      }
+
+      .site-header.is-compact .main-nav {
+        grid-column: auto;
+        order: initial;
+        width: auto;
+        min-width: 0;
+        display: flex;
+        justify-content: flex-start;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 0;
+        font-size: .68rem;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-inline: contain
+      }
+
+      .site-header.is-compact .main-nav::-webkit-scrollbar {
+        display: none
+      }
+
+      .site-header.is-compact .nav-link {
+        flex: 0 0 auto;
+        min-width: auto;
+        min-height: 34px;
+        justify-content: center;
+        padding: 4px 9px;
+        white-space: nowrap
       }
 
       .hero-grid {
@@ -1138,6 +1199,32 @@
 
       .steps-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+    }
+
+    @media(max-width:1000px) and (orientation:landscape) and (max-height:600px) {
+      html.header-compact {
+        scroll-padding-top: 60px
+      }
+
+      .site-header.is-compact .nav-shell {
+        min-height: 50px;
+        gap: 8px;
+        padding: 4px 0
+      }
+
+      .site-header.is-compact .brand img {
+        width: 80px
+      }
+
+      .site-header.is-compact .main-nav {
+        gap: 5px;
+        font-size: .64rem
+      }
+
+      .site-header.is-compact .nav-link {
+        min-height: 32px;
+        padding: 3px 8px
       }
     }
 
@@ -1572,6 +1659,14 @@
     @media(prefers-reduced-motion:reduce) {
       html {
         scroll-behavior: auto
+      }
+
+      .site-header,
+      .nav-shell,
+      .brand img,
+      .main-nav,
+      .nav-link {
+        transition: none
       }
 
       .js-reveal .reveal-item {
@@ -2860,6 +2955,25 @@
         productModal.addEventListener('click', function (event) { var box = productModal.getBoundingClientRect(); if (event.target === productModal && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) { productModal.close() } });
         productModal.addEventListener('close', function () { document.body.classList.remove('modal-open'); if (previousFocus) previousFocus.focus() });
       }
+      var siteHeader = document.querySelector('.site-header'), headerUpdatePending = false;
+      function updateCompactHeader() {
+        var mobileHeader = window.matchMedia('(max-width: 1000px)').matches;
+        var landscapeHeader = window.matchMedia('(orientation: landscape) and (max-height: 600px)').matches;
+        var compactNow = siteHeader.classList.contains('is-compact');
+        var compactThreshold = landscapeHeader ? 24 : 72;
+        var shouldCompact = mobileHeader && (compactNow ? window.scrollY > 12 : window.scrollY >= compactThreshold);
+        siteHeader.classList.toggle('is-compact', shouldCompact);
+        document.documentElement.classList.toggle('header-compact', shouldCompact);
+        headerUpdatePending = false;
+      }
+      function requestHeaderUpdate() {
+        if (headerUpdatePending) return;
+        headerUpdatePending = true;
+        window.requestAnimationFrame(updateCompactHeader);
+      }
+      window.addEventListener('scroll', requestHeaderUpdate, { passive: true });
+      window.addEventListener('resize', requestHeaderUpdate);
+      updateCompactHeader();
       var backToTop = document.querySelector('.back-to-top'), backToTopWasVisible = false;
       function updateBackToTop() { var isVisible = window.scrollY >= 150; backToTop.hidden = !isVisible; if (isVisible && !backToTopWasVisible) { backToTop.classList.add('is-bouncing') } if (!isVisible) { backToTop.classList.remove('is-bouncing') } backToTopWasVisible = isVisible }
       window.addEventListener('scroll', updateBackToTop, { passive: true });
