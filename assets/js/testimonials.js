@@ -100,18 +100,39 @@
       video.muted = !video.muted;
     });
 
+    function updateFullscreenButton() {
+      const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+      const isFullscreen = fullscreenElement === media;
+      fullscreenButton.setAttribute('aria-label', isFullscreen ? 'Sair da tela cheia' : 'Assistir em tela cheia');
+    }
+
     fullscreenButton.addEventListener('click', function () {
+      const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+      if (fullscreenElement === media) {
+        let exit;
+        if (document.exitFullscreen) exit = document.exitFullscreen();
+        else if (document.webkitExitFullscreen) exit = document.webkitExitFullscreen();
+        if (exit && typeof exit.catch === 'function') exit.catch(function () { });
+        return;
+      }
+
       if (media.requestFullscreen) {
         const request = media.requestFullscreen();
         if (request && typeof request.catch === 'function') request.catch(function () { });
+      } else if (media.webkitRequestFullscreen) {
+        media.webkitRequestFullscreen();
       } else if (video.webkitEnterFullscreen) {
         video.webkitEnterFullscreen();
       }
     });
 
+    document.addEventListener('fullscreenchange', updateFullscreenButton);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+
     updatePlayButton();
     updateMuteButton();
     updateProgress();
+    updateFullscreenButton();
   }
 
   testimonialVideos.forEach(function (video) {
