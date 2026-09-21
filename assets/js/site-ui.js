@@ -2,7 +2,16 @@
   'use strict';
 
   const siteHeader = document.querySelector('.site-header');
+  const productNavigation = siteHeader ? siteHeader.querySelector('.main-nav') : null;
+  const productMenuToggle = siteHeader ? siteHeader.querySelector('.compact-products-toggle') : null;
   let headerUpdatePending = false;
+
+  function closeProductMenu(restoreFocus) {
+    if (!productNavigation || !productMenuToggle) return;
+    productNavigation.classList.remove('is-open');
+    productMenuToggle.setAttribute('aria-expanded', 'false');
+    if (restoreFocus) productMenuToggle.focus();
+  }
 
   function updateCompactHeader() {
     if (!siteHeader) return;
@@ -15,6 +24,7 @@
 
     siteHeader.classList.toggle('is-compact', shouldCompact);
     document.documentElement.classList.toggle('header-compact', shouldCompact);
+    if (!shouldCompact) closeProductMenu(false);
     headerUpdatePending = false;
   }
 
@@ -28,6 +38,30 @@
     window.addEventListener('scroll', requestHeaderUpdate, { passive: true });
     window.addEventListener('resize', requestHeaderUpdate);
     updateCompactHeader();
+  }
+
+  if (productNavigation && productMenuToggle) {
+    productMenuToggle.addEventListener('click', function () {
+      const willOpen = !productNavigation.classList.contains('is-open');
+      productNavigation.classList.toggle('is-open', willOpen);
+      productMenuToggle.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    productNavigation.querySelectorAll('[data-modal-link]').forEach(function (link) {
+      link.addEventListener('click', function () {
+        closeProductMenu(false);
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!productNavigation.classList.contains('is-open')) return;
+      if (!productNavigation.contains(event.target)) closeProductMenu(false);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape' || !productNavigation.classList.contains('is-open')) return;
+      closeProductMenu(true);
+    });
   }
 
   const backToTopButton = document.querySelector('.back-to-top');
