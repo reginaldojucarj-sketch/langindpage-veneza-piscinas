@@ -804,30 +804,27 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 17px
     }
 
     .gallery-card {
-      grid-column: span 4;
       overflow: hidden;
       border-radius: var(--md)
     }
 
-    .gallery-card:first-child {
-      grid-column: span 8;
-      grid-row: span 2
-    }
-
-    .gallery-card img {
+    .gallery-card img,
+    .gallery-card video {
+      display: block;
       width: 100%;
-      height: 190px;
+      height: auto;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
-      filter: saturate(.84) contrast(.95)
+      background: #d9edf0
     }
 
-    .gallery-card:first-child img {
-      height: 415px
+    .gallery-card video {
+      pointer-events: none
     }
 
     .gallery-card figcaption {
@@ -1270,15 +1267,8 @@
         grid-template-columns: repeat(2, minmax(0, 1fr))
       }
 
-      .gallery-card,
-      .gallery-card:first-child {
-        grid-column: span 6;
-        grid-row: auto
-      }
-
-      .gallery-card img,
-      .gallery-card:first-child img {
-        height: 220px
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
       }
 
       .scope-note {
@@ -2495,30 +2485,46 @@
       <div class="container">
         <div class="section-heading">
           <p class="kicker">Galeria de projetos</p>
-          <h2 id="projetos-title">Equipamentos aplicados a piscinas reais</h2>
-          <p>Referências de ambientes onde desempenho técnico, conforto e acabamento trabalham juntos.</p>
+          <h2 id="projetos-title">Piscinas e espaços de lazer em destaque</h2>
+          <p>Fotos e vídeos de piscinas, decks e áreas de convivência.</p>
         </div>
         <div class="gallery-grid">
           <figure class="gallery-card"><img
-              src="https://images.unsplash.com/photo-1572331165267-854da2b10ccc?auto=format&amp;fit=crop&amp;w=1200&amp;q=84"
-              alt="Piscina residencial com sistema hidráulico completo" loading="lazy">
-            <figcaption><b>Sistema residencial completo</b>Filtração, circulação e dimensionamento hidráulico.
+              src="assets/images/projects/piscina-deck-jardim-vista-01.jpg"
+              alt="Piscina com deck de madeira, guarda-sóis e jardim" width="1200" height="900" loading="lazy">
+            <figcaption><b>Piscina com deck e jardim</b>Área de lazer integrada ao verde.
             </figcaption>
           </figure>
           <figure class="gallery-card"><img
-              src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
-              alt="Piscina com água cristalina" loading="lazy">
-            <figcaption><b>Filtração e tratamento</b>Conjunto preparado para uma rotina de água limpa.</figcaption>
+              src="assets/images/projects/piscina-deck-jardim-vista-02.jpg"
+              alt="Outro ângulo da piscina com deck, guarda-sóis e escada de acesso" width="1200" height="900" loading="lazy">
+            <figcaption><b>Deck e acesso à piscina</b>Outro ângulo do espaço de convivência.</figcaption>
           </figure>
           <figure class="gallery-card"><img
-              src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
-              alt="Piscina com iluminação noturna" loading="lazy">
-            <figcaption><b>Iluminação LED</b>Refletores subaquáticos e valorização do ambiente.</figcaption>
+              src="assets/images/projects/piscina-iluminacao-noturna.jpg"
+              alt="Piscina iluminada à noite com escada de acesso" width="1200" height="900" loading="lazy">
+            <figcaption><b>Piscina à noite</b>Iluminação azul e reflexos na água.</figcaption>
           </figure>
           <figure class="gallery-card"><img
-              src="https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
-              alt="Spa e piscina com aquecimento" loading="lazy">
-            <figcaption><b>Conforto térmico</b>Aquecimento dimensionado para piscina e spa.</figcaption>
+              src="assets/images/projects/piscina-deck-vista-agua.jpg"
+              alt="Piscina com espreguiçadeiras amarelas e deck com vista para a água" width="1200" height="900" loading="lazy">
+            <figcaption><b>Deck com vista para a água</b>Espaço aberto para aproveitar o sol.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-area-gourmet-poster.jpg"
+              aria-label="Vídeo da piscina junto à área gourmet com churrasqueira"
+              muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-area-gourmet.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Piscina e área gourmet</b>Integração com a churrasqueira e o espaço de convivência.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-bar-molhado-poster.jpg"
+              aria-label="Vídeo da piscina com bar molhado e paisagismo"
+              muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-bar-molhado.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Piscina com bar molhado</b>Água, paisagismo e área de convivência.</figcaption>
           </figure>
         </div>
       </div>

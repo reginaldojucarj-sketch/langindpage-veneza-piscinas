@@ -32,6 +32,9 @@ Abra o `index.html` diretamente no navegador ou sirva a pasta por um servidor HT
 - `posts.html`: arquivo pesquisável de artigos do banco `veneza_pena`
 - `assets/data/posts-data.js`: cópia estática dos 184 posts e metadados de categorias, autores e imagens
 - `assets/images`: logo, imagens de fundo, hero e produtos
+- `assets/images/projects`: fotos e capas otimizadas para a galeria de projetos
+- `assets/videos/projects`: vídeos da galeria em MP4, sem faixa de áudio
+- `assets/sources/projects`: fotos originais da galeria; vídeos originais com áudio ficam apenas localmente
 - `scripts`: arquivos auxiliares do projeto
 
 ## Arquivo de artigos
