@@ -20,3 +20,4 @@ As imagens são referências visuais das linhas e marcas citadas na página. A d
 | `ozonio-ozon3.jpg` | https://www.piscinacenter.com.br/gerador-ozonio-p/-piscina-ate-60-m-oz60-ozon |
 | `led-tholz.webp` | https://tholz.com.br/iluminacao-para-piscinas/rgbw/ |
 | `led-syllent.png` | https://syllent.com.br/?taxonomy=categoria-do-produto&term=refletores-de-piscina-linha-classic-e-linha-premium |
+| `piscina-residencial-iluminacao-noturna.jpg` | Acervo Veneza Piscinas; original preservado em `assets/sources/products/originals/`. |
