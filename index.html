@@ -446,11 +446,12 @@
 
     .priority-card {
       position: relative;
-      min-height: 220px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(170px, .75fr);
+      min-height: 330px;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: var(--md);
-      padding: 28px;
       background: rgba(249, 254, 255, .53);
       box-shadow: var(--shadow);
       -webkit-backdrop-filter: blur(6.75px) saturate(109.4%);
@@ -459,25 +460,90 @@
 
     .priority-card.featured {
       grid-column: 1/-1;
-      min-height: 265px;
-      padding: clamp(30px, 5vw, 48px);
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr);
+      min-height: 350px;
       color: #fff;
       background: linear-gradient(112deg, rgba(0, 84, 119, .68), rgba(1, 142, 164, .54));
       box-shadow: 0 10px 23px rgba(0, 41, 64, .09)
+    }
+
+    .priority-card__content {
+      display: flex;
+      min-width: 0;
+      padding: 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center
+    }
+
+    .priority-card.featured .priority-card__content {
+      padding: clamp(30px, 5vw, 48px)
     }
 
     .priority-number {
       display: block;
       margin-bottom: 28px;
       color: var(--blue);
-      font: 800 clamp(2rem, 4vw, 3.2rem)/1 Manrope, sans-serif;
+      font: 800 2.5rem/1 Manrope, sans-serif;
       letter-spacing: -.04em;
       opacity: .72
     }
 
     .priority-card[data-modal-trigger="filtracao"] .priority-number {
-      margin-bottom: 36px;
       color: #c9fbff
+    }
+
+    .priority-card__carousel {
+      position: relative;
+      min-width: 0;
+      min-height: 100%;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .9)
+    }
+
+    .priority-card__slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      opacity: 0;
+      transition: opacity .65s ease;
+      pointer-events: none
+    }
+
+    .priority-card__slide.is-active {
+      z-index: 1;
+      opacity: 1
+    }
+
+    .priority-card__slide img {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      object-fit: contain;
+      object-position: center
+    }
+
+    .priority-card__carousel--projects .priority-card__slide img {
+      padding: 0;
+      object-fit: cover
+    }
+
+    .priority-card__caption {
+      position: absolute;
+      z-index: 2;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      overflow: hidden;
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: #07384b;
+      background: rgba(255, 255, 255, .88);
+      font-size: .7rem;
+      font-weight: 800;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap
     }
 
     .priority-card[data-modal-trigger="aquecedores"] .priority-number { color: #b45309 }
@@ -508,6 +574,7 @@
 
     .card-label {
       position: absolute;
+      z-index: 3;
       top: 25px;
       right: 25px;
       border: 1px solid rgba(255, 255, 255, .27);
@@ -522,8 +589,8 @@
     }
 
     .featured .card-label {
-      color: #fff;
-      background: rgba(255, 255, 255, .045)
+      color: var(--blue-dark);
+      background: rgba(255, 255, 255, .88)
     }
 
     .priority-card.service {
@@ -1107,6 +1174,15 @@
         grid-column: auto
       }
 
+      .priority-card,
+      .priority-card.featured {
+        grid-template-columns: 1fr
+      }
+
+      .priority-card__carousel {
+        min-height: 240px
+      }
+
       .steps-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr))
       }
@@ -1218,7 +1294,11 @@
 
       .priority-card,
       .priority-card.featured {
-        min-height: 225px;
+        min-height: 0
+      }
+
+      .priority-card__content,
+      .priority-card.featured .priority-card__content {
         padding: 25px
       }
 
@@ -1662,7 +1742,8 @@
     }
 
     @media(prefers-reduced-motion:reduce) {
-      .hero-carousel .hero-photo {
+      .hero-carousel .hero-photo,
+      .priority-card__slide {
         transition: none
       }
     }
@@ -2186,49 +2267,90 @@
         <div class="products-priority">
           <article class="priority-card featured" data-modal-trigger="filtracao" role="button" tabindex="0"
             aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto em
-              destaque</span><span class="priority-number">01</span>
-            <h3>Filtros e Motobombas</h3>
-            <p>Mais do que filtrar a água, é preciso fazer isso com eficiência. Dimensionamos o sistema conforme a área,
-              o volume e o perfil de uso da piscina, equilibrando desempenho e consumo.</p><span
-              class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+              destaque</span>
+            <div class="priority-card__content"><span class="priority-number">01</span>
+              <h3>Filtros e Motobombas</h3>
+              <p>Mais do que filtrar a água, é preciso fazer isso com eficiência. Dimensionamos o sistema conforme a área,
+                o volume e o perfil de uso da piscina, equilibrando desempenho e consumo.</p><span
+                class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            </div>
+            <div class="priority-card__carousel" data-card-carousel aria-label="Fotos de filtros e motobombas">
+              <figure class="priority-card__slide is-active"><img src="assets/images/products/filtro-nautilus.jpg" alt="Filtro Nautilus"><figcaption class="priority-card__caption">Filtro Nautilus</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/filtro-syllent.png" alt="Filtro Syllent"><figcaption class="priority-card__caption">Filtro Syllent</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/filtro-albacete.webp" alt="Filtro Albacete"><figcaption class="priority-card__caption">Filtro Albacete</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/motobomba-nautilus.jpg" alt="Motobomba Nautilus"><figcaption class="priority-card__caption">Motobomba Nautilus</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/motobomba-syllent.png" alt="Motobomba Syllent"><figcaption class="priority-card__caption">Motobomba Syllent</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/motobomba-albacete.webp" alt="Motobomba Albacete"><figcaption class="priority-card__caption">Motobomba Albacete</figcaption></figure>
+            </div>
           </article>
           <article class="priority-card" data-modal-trigger="aquecedores" role="button" tabindex="0"
-            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto</span><span
-              class="priority-number">02</span>
-            <h3>Aquecedores de Piscinas</h3>
-            <p>Conforto térmico em todas as épocas do ano. Fazemos o dimensionamento técnico considerando a temperatura
-              inicial e a desejada, a área e o volume da piscina, a presença de borda infinita e a velocidade do vento.
-            </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto</span>
+            <div class="priority-card__content"><span class="priority-number">02</span>
+              <h3>Aquecedores de Piscinas</h3>
+              <p>Conforto térmico em todas as épocas do ano. Fazemos o dimensionamento técnico considerando a temperatura
+                inicial e a desejada, a área e o volume da piscina, a presença de borda infinita e a velocidade do vento.
+              </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            </div>
+            <div class="priority-card__carousel" data-card-carousel aria-label="Fotos de aquecedores de piscinas">
+              <figure class="priority-card__slide is-active"><img src="assets/images/products/aquecedor-nautilus.jpg" alt="Aquecedor Nautilus"><figcaption class="priority-card__caption">Aquecedor Nautilus</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/aquecedor-tholz.webp" alt="Aquecedor Tholz"><figcaption class="priority-card__caption">Aquecedor Tholz</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/aquecedor-fromtherm.png" alt="Aquecedor Fromtherm"><figcaption class="priority-card__caption">Aquecedor Fromtherm</figcaption></figure>
+            </div>
           </article>
           <article class="priority-card" data-modal-trigger="cloro" role="button" tabindex="0" aria-haspopup="dialog"
-            aria-controls="product-modal"><span class="card-label">Produto</span><span class="priority-number">03</span>
-            <h3>Gerador de Cloro</h3>
-            <p style="color: #082f49;">O gerador de cloro utiliza a eletrólise do sal (cloreto de sódio) para produzir o
-              cloro necessário à desinfecção da piscina. Isso simplifica o tratamento e ajuda a manter a água protegida.
-            </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            aria-controls="product-modal"><span class="card-label">Produto</span>
+            <div class="priority-card__content"><span class="priority-number">03</span>
+              <h3>Gerador de Cloro</h3>
+              <p style="color: #082f49;">O gerador de cloro utiliza a eletrólise do sal (cloreto de sódio) para produzir o
+                cloro necessário à desinfecção da piscina. Isso simplifica o tratamento e ajuda a manter a água protegida.
+              </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            </div>
+            <div class="priority-card__carousel" data-card-carousel aria-label="Fotos de geradores de cloro">
+              <figure class="priority-card__slide is-active"><img src="assets/images/products/cloro-nautilus.png" alt="Gerador de cloro Nautilus"><figcaption class="priority-card__caption">Gerador de cloro Nautilus</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/cloro-syllent.jpg" alt="Gerador de cloro Syllent"><figcaption class="priority-card__caption">Gerador de cloro Syllent</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/cloro-tholz.webp" alt="Gerador de cloro Tholz"><figcaption class="priority-card__caption">Gerador de cloro Tholz</figcaption></figure>
+            </div>
           </article>
           <article class="priority-card" data-modal-trigger="ozonio" role="button" tabindex="0" aria-haspopup="dialog"
-            aria-controls="product-modal"><span class="card-label">Produto</span><span class="priority-number">04</span>
-            <h3>Gerador de Ozônio</h3>
-            <p>A tecnologia de ozônio ajuda a purificar a água e a reduzir microrganismos, impurezas e odores. Como
-              complemento ao tratamento e à manutenção do equilíbrio químico, contribui para um banho mais confortável.
-            </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            aria-controls="product-modal"><span class="card-label">Produto</span>
+            <div class="priority-card__content"><span class="priority-number">04</span>
+              <h3>Gerador de Ozônio</h3>
+              <p>A tecnologia de ozônio ajuda a purificar a água e a reduzir microrganismos, impurezas e odores. Como
+                complemento ao tratamento e à manutenção do equilíbrio químico, contribui para um banho mais confortável.
+              </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
+            </div>
+            <div class="priority-card__carousel" data-card-carousel aria-label="Fotos de geradores de ozônio">
+              <figure class="priority-card__slide is-active"><img src="assets/images/products/ozonio-panozon.png" alt="Gerador de ozônio Panozon"><figcaption class="priority-card__caption">Gerador de ozônio Panozon</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/ozonio-ozon3.jpg" alt="Gerador de ozônio Ozon3"><figcaption class="priority-card__caption">Gerador de ozônio Ozon3</figcaption></figure>
+            </div>
           </article>
           <article class="priority-card" data-modal-trigger="iluminacao" role="button" tabindex="0"
-            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto</span><span
-              class="priority-number">05</span>
-            <h3>Iluminação LED e Refletores</h3>
-            <p>Iluminação que valoriza o ambiente, melhora a visibilidade e torna o banho noturno mais seguro. Nossa
-              equipe técnica orienta a escolha e o posicionamento dos refletores.</p><span class="priority-discover">Ver
-              marcas e equipamentos <span aria-hidden="true">→</span></span>
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Produto</span>
+            <div class="priority-card__content"><span class="priority-number">05</span>
+              <h3>Iluminação LED e Refletores</h3>
+              <p>Iluminação que valoriza o ambiente, melhora a visibilidade e torna o banho noturno mais seguro. Nossa
+                equipe técnica orienta a escolha e o posicionamento dos refletores.</p><span class="priority-discover">Ver
+                marcas e equipamentos <span aria-hidden="true">→</span></span>
+            </div>
+            <div class="priority-card__carousel" data-card-carousel aria-label="Fotos de iluminação LED e refletores">
+              <figure class="priority-card__slide is-active"><img src="assets/images/products/led-tholz.webp" alt="Iluminação LED Tholz"><figcaption class="priority-card__caption">Iluminação LED Tholz</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/products/led-syllent.png" alt="Iluminação LED Syllent"><figcaption class="priority-card__caption">Iluminação LED Syllent</figcaption></figure>
+            </div>
           </article>
           <article class="priority-card service" data-modal-trigger="projeto" role="button" tabindex="0"
-            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Solução técnica</span><span
-              class="priority-number">06</span>
-            <h3>Projeto Hidráulico</h3>
-            <p>Um projeto hidráulico bem dimensionado contribui para a segurança dos banhistas, a eficiência da
-              filtração e a qualidade da água, além de ajudar a evitar desperdícios e custos desnecessários.</p><span
-              class="priority-discover">Conhecer o projeto técnico <span aria-hidden="true">→</span></span>
+            aria-haspopup="dialog" aria-controls="product-modal"><span class="card-label">Solução técnica</span>
+            <div class="priority-card__content"><span class="priority-number">06</span>
+              <h3>Projeto Hidráulico</h3>
+              <p>Um projeto hidráulico bem dimensionado contribui para a segurança dos banhistas, a eficiência da
+                filtração e a qualidade da água, além de ajudar a evitar desperdícios e custos desnecessários.</p><span
+                class="priority-discover">Conhecer o projeto técnico <span aria-hidden="true">→</span></span>
+            </div>
+            <div class="priority-card__carousel priority-card__carousel--projects" data-card-carousel aria-label="Fotos de projetos de piscinas">
+              <figure class="priority-card__slide is-active"><img src="assets/images/hero/piscina-vista-ilha-pingo.jpg" alt="Projeto de piscina com vista para o mar"><figcaption class="priority-card__caption">Projeto de piscina com vista para o mar</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg" alt="Projeto de piscina para hotel"><figcaption class="priority-card__caption">Projeto de piscina para hotel</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/hero/piscina-santorini-sol-de-verao-pingo.jpg" alt="Projeto de piscina com borda infinita"><figcaption class="priority-card__caption">Projeto com borda infinita</figcaption></figure>
+              <figure class="priority-card__slide"><img src="assets/images/hero/piscina-casa-vista-montanhas-sol-de-verao-pingo.jpg" alt="Projeto de piscina residencial"><figcaption class="priority-card__caption">Projeto de piscina residencial</figcaption></figure>
+            </div>
           </article>
         </div>
       </div>
@@ -2523,6 +2645,32 @@
         carousel.classList.add('is-ready');
         showSlide(0);
         startCarousel();
+      }
+      var productCardCarousels = document.querySelectorAll('[data-card-carousel]');
+      if (productCardCarousels.length) {
+        var reduceCardMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        productCardCarousels.forEach(function (cardCarousel, carouselIndex) {
+          var cardSlides = cardCarousel.querySelectorAll('.priority-card__slide'), cardSlideIndex = 0, cardTimer;
+          if (cardSlides.length < 2 || reduceCardMotion) return;
+          function showCardSlide(index) {
+            cardSlideIndex = (index + cardSlides.length) % cardSlides.length;
+            cardSlides.forEach(function (slide, slideIndex) {
+              var active = slideIndex === cardSlideIndex;
+              slide.classList.toggle('is-active', active);
+              slide.setAttribute('aria-hidden', String(!active));
+            });
+          }
+          function startCardCarousel() {
+            window.clearInterval(cardTimer);
+            if (!document.hidden) cardTimer = window.setInterval(function () { showCardSlide(cardSlideIndex + 1) }, 5000);
+          }
+          cardSlides.forEach(function (slide, slideIndex) { slide.setAttribute('aria-hidden', String(slideIndex !== 0)) });
+          window.setTimeout(startCardCarousel, carouselIndex * 350);
+          document.addEventListener('visibilitychange', function () {
+            if (document.hidden) window.clearInterval(cardTimer);
+            else startCardCarousel();
+          });
+        });
       }
       var productModal = document.getElementById('product-modal');
       if (productModal) {
