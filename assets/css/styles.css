@@ -975,11 +975,112 @@ h1 span {
   gap: 18px
 }
 
+.google-rating-panel {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  border-radius: var(--md);
+  padding: 18px 22px;
+  transition: border-color .2s ease, transform .2s ease
+}
+
+.google-rating-panel:hover,
+.google-rating-panel:focus-visible {
+  border-color: rgba(2, 125, 165, .55);
+  transform: translateY(-2px)
+}
+
+.google-rating-panel__brand,
+.google-review-badge>span {
+  color: #4285f4;
+  font-weight: 800
+}
+
+.google-rating-panel__brand {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 54, 77, .1);
+  font-size: 1.5rem
+}
+
+.google-rating-panel__score {
+  display: flex;
+  align-items: center;
+  gap: 9px
+}
+
+.google-rating-panel__score>strong {
+  font-size: 1.35rem
+}
+
+.google-rating-panel__stars {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  color: #b5c2c7;
+  letter-spacing: .1em;
+  font-size: .86rem;
+  white-space: nowrap
+}
+
+.google-rating-panel__stars::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 88%;
+  overflow: hidden;
+  color: #9a6700;
+  content: "★★★★★";
+  white-space: nowrap
+}
+
+.google-rating-panel__copy strong,
+.google-rating-panel__copy small {
+  display: block
+}
+
+.google-rating-panel__copy small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: .75rem
+}
+
+.google-rating-panel__link {
+  color: var(--blue-dark);
+  font-size: .8rem;
+  font-weight: 800
+}
+
 .quote {
   grid-column: span 5;
   min-height: 260px;
   border-radius: var(--md);
   padding: 27px
+}
+
+.quote--google {
+  display: flex;
+  flex-direction: column
+}
+
+.google-review-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(2, 125, 165, .18);
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: var(--blue-dark);
+  background: rgba(255, 255, 255, .68);
+  font-size: .68rem
 }
 
 .stars {
@@ -993,6 +1094,10 @@ h1 span {
   margin-bottom: 23px;
   color: var(--muted);
   font-size: .93rem
+}
+
+.quote--google blockquote {
+  flex: 1
 }
 
 .quote cite {
@@ -1572,6 +1677,27 @@ h1 span {
   .testimonials-grid>.quote--video:nth-last-child(2),
   .testimonials-grid>.quote--video:last-child {
     grid-column: 1
+  }
+
+  .google-rating-panel {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 7px 14px;
+    padding: 17px
+  }
+
+  .google-rating-panel__brand {
+    grid-column: 1;
+    grid-row: 1 / span 2
+  }
+
+  .google-rating-panel__score,
+  .google-rating-panel__copy {
+    grid-column: 2
+  }
+
+  .google-rating-panel__link {
+    grid-column: 1 / -1;
+    margin-top: 7px
   }
 
   .priority-card.featured {
