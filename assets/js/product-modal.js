@@ -12,7 +12,7 @@
     });
     const productLines = {
       filtracao: {
-        title: 'Filtros e Motobombas', intro: 'Conheça exemplos das marcas com que trabalhamos. Filtro e motobomba são escolhidos em conjunto, conforme o volume, a vazão e a rotina de uso da piscina.', items: [
+        title: 'Filtros e motobombas', intro: 'Conheça exemplos das marcas com que trabalhamos. O filtro e a motobomba são escolhidos em conjunto, conforme o volume, a vazão e a rotina de uso da piscina.', items: [
           { type: 'Filtro', brand: 'Nautilus', name: 'Filtro F950P', image: 'assets/images/products/filtro-nautilus.jpg' },
           { type: 'Filtro', brand: 'Syllent', name: 'Filtro SYL200', image: 'assets/images/products/filtro-syllent.png' },
           { type: 'Filtro', brand: 'Albacete', name: 'Filtro AP50', image: 'assets/images/products/filtro-albacete.webp' },
@@ -22,36 +22,36 @@
         ]
       },
       aquecedores: {
-        title: 'Aquecedores de Piscinas', intro: 'O aquecimento ideal considera volume, temperatura desejada, exposição ao vento e frequência de uso. Veja algumas das marcas que podemos indicar para seu projeto.', items: [
+        title: 'Aquecedores de piscinas', intro: 'O aquecimento ideal considera o volume, a temperatura desejada, a exposição ao vento e a frequência de uso. Veja algumas das marcas que podemos indicar para o seu projeto.', items: [
           { type: 'Aquecedor', brand: 'Nautilus', name: 'Bomba de calor Terma', image: 'assets/images/products/aquecedor-nautilus.jpg' },
           { type: 'Aquecedor', brand: 'Tholz', name: 'Trocador de calor X23', image: 'assets/images/products/aquecedor-tholz.webp' },
           { type: 'Aquecedor', brand: 'Fromtherm', name: 'Bomba de calor FTi', image: 'assets/images/products/aquecedor-fromtherm.png' }
         ]
       },
       cloro: {
-        title: 'Geradores de Cloro', intro: 'A eletrólise salina automatiza a produção de cloro durante a circulação da água. Indicamos a linha conforme o volume da piscina e as condições de instalação.', items: [
+        title: 'Geradores de cloro', intro: 'A eletrólise salina automatiza a produção de cloro durante a circulação da água. Indicamos a linha conforme o volume da piscina e as condições de instalação.', items: [
           { type: 'Gerador de cloro', brand: 'Nautilus', name: 'EasyClor Home G5-04', image: 'assets/images/products/cloro-nautilus-easyclor-home-g5-04.webp' },
           { type: 'Gerador de cloro', brand: 'Syllent', name: 'EcoChlor', image: 'assets/images/products/cloro-syllent.jpg' },
-          { type: 'Gerador de cloro', brand: 'Tholz', name: 'Gerador de Cloro', image: 'assets/images/products/cloro-tholz.webp' }
+          { type: 'Gerador de cloro', brand: 'Tholz', name: 'Gerador de cloro', image: 'assets/images/products/cloro-tholz.webp' }
         ]
       },
       ozonio: {
-        title: 'Geradores de Ozônio', intro: 'O ozônio complementa o tratamento da água. A indicação considera o volume, a circulação e o sistema de desinfecção da piscina.', items: [
+        title: 'Geradores de ozônio', intro: 'O ozônio complementa o tratamento da água. A indicação considera o volume, a circulação e o sistema de desinfecção da piscina.', items: [
           { type: 'Gerador de ozônio', brand: 'Panozon', name: 'Blue Star', image: 'assets/images/products/ozonio-panozon.png' },
           { type: 'Gerador de ozônio', brand: 'Ozon3', name: 'OZ60', image: 'assets/images/products/ozonio-ozon3.jpg' }
         ]
       },
       iluminacao: {
-        title: 'Iluminação LED e Refletores', intro: 'Refletores bem posicionados valorizam a piscina e melhoram a visibilidade à noite. Nossa equipe orienta quantidade, potência e acabamento.', items: [
+        title: 'Iluminação LED e refletores', intro: 'Refletores bem posicionados valorizam a piscina e melhoram a visibilidade à noite. Nossa equipe orienta sobre a quantidade, a potência e o acabamento.', items: [
           { type: 'Refletor LED', brand: 'Tholz', name: 'RGBW Premium', image: 'assets/images/products/led-tholz.webp' },
           { type: 'Refletor LED', brand: 'Syllent', name: 'Linhas Classic e Premium', image: 'assets/images/products/led-syllent.png' },
           { type: 'Iluminação LED', brand: 'Veneza Piscinas', name: 'Piscina residencial com iluminação noturna', image: 'assets/images/products/piscina-residencial-iluminacao-noturna.jpg' }
         ]
       },
       revestimento: {
-        title: 'Revestimento em Manta Armada',
+        title: 'Revestimento em manta armada',
         intro: 'Veja a instalação, a soldagem e o acabamento da manta armada. Para saber se essa solução atende à sua piscina, fale com um especialista e peça um orçamento.',
-        quoteMessage: 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.',
+        quoteMessage: 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir um orçamento para o revestimento em manta armada da minha piscina.',
         items: [
           { type: 'Vídeo do processo', brand: 'Veneza Piscinas', name: 'Soldagem da manta armada', image: 'assets/images/projects/manta-armada-soldagem-poster.jpg', video: 'assets/videos/projects/manta-armada-soldagem.mp4' },
           { type: 'Vídeo do processo', brand: 'Veneza Piscinas', name: 'Instalação do revestimento', image: 'assets/images/projects/manta-armada-instalacao-poster.jpg', video: 'assets/videos/projects/manta-armada-instalacao.mp4' },
@@ -61,9 +61,9 @@
         ]
       },
       projeto: {
-        title: 'Projeto Hidráulico',
+        title: 'Projeto hidráulico',
         intro: 'Planejamento técnico desenvolvido pela Veneza Piscinas para integrar todos os equipamentos à sua piscina.',
-        quoteMessage: 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de projeto hidráulico em BIM/Revit, DWG e PDF para minha piscina.',
+        quoteMessage: 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir um orçamento para o projeto hidráulico da minha piscina em BIM/Revit, DWG e PDF.',
         items: projectItems
       }
     };
@@ -122,7 +122,7 @@
       modalThumbs.querySelectorAll('button').forEach(function (button, buttonIndex) {
         button.setAttribute('aria-current', String(buttonIndex === activeImage));
       });
-      modalWhatsapp.href = whatsappUrl(activeLine.quoteMessage || 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento para ' + item.type.toLowerCase() + ' da marca ' + item.brand + '.');
+      modalWhatsapp.href = whatsappUrl(activeLine.quoteMessage || 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir um orçamento para ' + item.type.toLowerCase() + ' da marca ' + item.brand + '.');
     }
 
     function createThumbnail(item, index) {
@@ -157,7 +157,7 @@
       modalIntro.textContent = activeLine.intro;
       modalEyebrow.textContent = key === 'projeto' ? 'Solução técnica' : 'Nossa linha';
       modalGallery.hidden = !activeLine.items.length;
-      modalDisclaimer.textContent = key === 'revestimento' ? 'Vídeos e fotos de exemplos de revestimento. Conte sobre sua piscina para receber uma avaliação e orçamento.' : 'Fotos de referência das marcas. Consulte modelos e disponibilidade no atendimento.';
+      modalDisclaimer.textContent = key === 'revestimento' ? 'Vídeos e fotos de aplicações do revestimento. Conte sobre sua piscina para receber uma avaliação e um orçamento.' : 'Fotos de referência das marcas. Consulte os modelos e a disponibilidade durante o atendimento.';
       modalThumbs.replaceChildren();
       if (activeLine.items.length) {
         activeLine.items.forEach(function (item, index) {
@@ -165,7 +165,7 @@
         });
         showProductImage(0);
       } else {
-        modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.');
+        modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir um orçamento para o revestimento em manta armada da minha piscina.');
       }
       productModal.showModal();
       document.body.classList.add('modal-open');
