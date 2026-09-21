@@ -3,8 +3,10 @@
 - `images/hero/`: quatro slides finais, todos em JPEG com 1200 × 800 pixels.
 - `images/brand/`: logotipo e imagem de referência do Pingo (`pingo-mascote.png`).
 - `images/products/`: fotos de referência dos equipamentos exibidas no modal da seção “Nossa linha”; as origens estão em `images/products/README.md`.
+- `images/services/`: 21 imagens finais em JPEG 1280 × 960 usadas no carrossel e no modal de Projeto Hidráulico.
 - `images/backgrounds/`: textura de fundo em uso.
 - `sources/hero/`: fotos originais, edições em IA e versões anteriores preservadas.
+- `sources/services/originals/`: arquivos originais recebidos para a galeria de serviços, preservados antes do tratamento.
 - `sources/backgrounds/` e `sources/ui/`: materiais de referência fora de uso na página.
 
 Para recriar os quatro slides no Windows, execute `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-hero-images.ps1` a partir da raiz do projeto.
