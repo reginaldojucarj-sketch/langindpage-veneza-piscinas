@@ -598,6 +598,10 @@
       background: rgba(215, 245, 248, .54)
     }
 
+    .priority-card.service p + p {
+      margin-top: 10px
+    }
+
     .catalog-panel {
       border-radius: var(--lg);
       padding: clamp(24px, 4vw, 42px)
@@ -1869,9 +1873,9 @@
       position: fixed;
       inset: 0;
       width: min(1040px, calc(100% - 28px));
-      height: min(820px, calc(100dvh - 28px));
+      height: fit-content;
       max-width: none;
-      max-height: none;
+      max-height: calc(100dvh - 28px);
       margin: auto;
       overflow: hidden;
       border: 1px solid #d4e9ee;
@@ -1895,6 +1899,7 @@
 
     .product-modal__header {
       display: flex;
+      flex-shrink: 0;
       align-items: flex-start;
       justify-content: space-between;
       gap: 20px;
@@ -1935,7 +1940,7 @@
     }
 
     .product-modal__body {
-      flex: 1;
+      flex: 0 1 auto;
       min-height: 0;
       overflow-y: auto;
       padding: 24px 28px 30px;
@@ -2100,25 +2105,9 @@
       font-size: .94rem
     }
 
-    .product-modal__formats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 18px
-    }
-
-    .product-modal__formats span {
-      border: 1px solid #badde5;
-      border-radius: 999px;
-      padding: 8px 13px;
-      color: var(--blue-dark);
-      background: #fff;
-      font-size: .78rem;
-      font-weight: 800
-    }
-
     .product-modal__footer {
       display: flex;
+      flex-shrink: 0;
       align-items: center;
       justify-content: space-between;
       gap: 15px;
@@ -2152,7 +2141,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: clamp(330px, 48vh, 450px)
+        height: clamp(260px, 40dvh, 390px)
       }
 
       .product-modal__stage img {
@@ -2173,7 +2162,7 @@
       .product-modal__thumbs {
         grid-area: thumbs;
         flex-direction: column;
-        max-height: min(54vh, 490px);
+        max-height: min(46dvh, 430px);
         overflow-x: hidden;
         overflow-y: auto;
         padding: 3px 6px 3px 2px;
@@ -2188,6 +2177,32 @@
       .product-modal__disclaimer {
         grid-area: note;
         margin-top: 14px
+      }
+    }
+
+    @media(min-width:601px) and (max-height:650px) {
+      .product-modal__header {
+        padding-block: 14px 12px
+      }
+
+      .product-modal__body {
+        padding-block: 14px 16px
+      }
+
+      .product-modal__intro {
+        margin-bottom: 12px
+      }
+
+      .product-modal__stage {
+        height: min(34dvh, 230px)
+      }
+
+      .product-modal__thumbs {
+        max-height: min(34dvh, 230px)
+      }
+
+      .product-modal__footer {
+        padding-block: 12px
       }
     }
 
@@ -2206,7 +2221,7 @@
     @media(max-width:600px) {
       .product-modal {
         width: calc(100% - 12px);
-        height: calc(100dvh - 12px);
+        max-height: calc(100dvh - 12px);
         border-radius: 17px
       }
 
@@ -2219,7 +2234,7 @@
       }
 
       .product-modal__stage {
-        height: 245px
+        height: clamp(170px, 28dvh, 245px)
       }
 
       .product-modal__stage img {
@@ -2422,8 +2437,10 @@
             <div class="priority-card__content"><span class="priority-number">06</span>
               <h3>Projeto Hidráulico</h3>
               <p>Um projeto hidráulico bem dimensionado contribui para a segurança dos banhistas, a eficiência da
-                filtração e a qualidade da água, além de ajudar a evitar desperdícios e custos desnecessários.</p><span
-                class="priority-discover">Conhecer o projeto técnico <span aria-hidden="true">→</span></span>
+                filtração e a qualidade da água, além de ajudar a evitar desperdícios e custos desnecessários.</p>
+              <p>Desenvolvemos a documentação técnica da piscina em BIM/Revit, DWG e PDF. Para entender a melhor solução
+                para sua piscina, fale com um especialista e solicite um orçamento.</p><span
+                class="priority-discover">Ver projetos e pedir orçamento <span aria-hidden="true">→</span></span>
             </div>
             <div class="priority-card__carousel priority-card__carousel--projects" data-card-carousel aria-label="Fotos de projetos de piscinas">
               <figure class="priority-card__slide is-active"><img src="assets/images/services/projeto-hidraulico-rede-completa.jpg" alt="Modelo BIM da rede hidráulica completa"><figcaption class="priority-card__caption">Rede hidráulica completa em BIM</figcaption></figure>
@@ -2486,20 +2503,9 @@
         <div class="section-heading">
           <p class="kicker">Galeria de projetos</p>
           <h2 id="projetos-title">Piscinas e espaços de lazer em destaque</h2>
-          <p>Fotos e vídeos de piscinas, decks e áreas de convivência.</p>
+          <p>Fotos e vídeos de piscinas, casas de máquinas e áreas de convivência.</p>
         </div>
         <div class="gallery-grid">
-          <figure class="gallery-card"><img
-              src="assets/images/projects/piscina-deck-jardim-vista-01.jpg"
-              alt="Piscina com deck de madeira, guarda-sóis e jardim" width="1200" height="900" loading="lazy">
-            <figcaption><b>Piscina com deck e jardim</b>Área de lazer integrada ao verde.
-            </figcaption>
-          </figure>
-          <figure class="gallery-card"><img
-              src="assets/images/projects/piscina-deck-jardim-vista-02.jpg"
-              alt="Outro ângulo da piscina com deck, guarda-sóis e escada de acesso" width="1200" height="900" loading="lazy">
-            <figcaption><b>Deck e acesso à piscina</b>Outro ângulo do espaço de convivência.</figcaption>
-          </figure>
           <figure class="gallery-card"><img
               src="assets/images/projects/piscina-iluminacao-noturna.jpg"
               alt="Piscina iluminada à noite com escada de acesso" width="1200" height="900" loading="lazy">
@@ -2510,10 +2516,15 @@
               alt="Piscina com espreguiçadeiras amarelas e deck com vista para a água" width="1200" height="900" loading="lazy">
             <figcaption><b>Deck com vista para a água</b>Espaço aberto para aproveitar o sol.</figcaption>
           </figure>
+          <figure class="gallery-card"><img
+              src="assets/images/projects/piscina-manta-armada-borda-elevada.jpg"
+              alt="Piscina com revestimento em manta armada e borda elevada" width="1200" height="900" loading="lazy">
+            <figcaption><b>Piscina com manta armada</b>Detalhe do revestimento e da borda elevada.</figcaption>
+          </figure>
           <figure class="gallery-card">
             <video poster="assets/images/projects/piscina-area-gourmet-poster.jpg"
               aria-label="Vídeo da piscina junto à área gourmet com churrasqueira"
-              muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
               <source src="assets/videos/projects/piscina-area-gourmet.mp4" type="video/mp4">
             </video>
             <figcaption><b>Piscina e área gourmet</b>Integração com a churrasqueira e o espaço de convivência.</figcaption>
@@ -2521,10 +2532,66 @@
           <figure class="gallery-card">
             <video poster="assets/images/projects/piscina-bar-molhado-poster.jpg"
               aria-label="Vídeo da piscina com bar molhado e paisagismo"
-              muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
               <source src="assets/videos/projects/piscina-bar-molhado.mp4" type="video/mp4">
             </video>
             <figcaption><b>Piscina com bar molhado</b>Água, paisagismo e área de convivência.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-chale-maracaipe-cascata-poster.jpg"
+              aria-label="Vídeo da piscina com cascata em Maracaípe"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-chale-maracaipe-cascata.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Piscina com cascata</b>Jatos d’água e área de convivência em Maracaípe.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-borda-infinita-nova-cruz-poster.jpg"
+              aria-label="Vídeo da piscina de borda infinita em Nova Cruz"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-borda-infinita-nova-cruz.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Borda infinita em Nova Cruz</b>Deck e vista aberta para a água.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-resort-japaratinga-jardins-poster.jpg"
+              aria-label="Vídeo da piscina entre jardins e acomodações em Japaratinga"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-resort-japaratinga-jardins.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Piscina em Japaratinga</b>Área de lazer integrada aos jardins.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-resort-japaratinga-deck-molhado-poster.jpg"
+              aria-label="Vídeo da piscina com deck molhado em Japaratinga"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-resort-japaratinga-deck-molhado.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Deck molhado em Japaratinga</b>Áreas rasas, espreguiçadeiras e paisagismo.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-condominio-essenza-paiva-vertical-poster.jpg"
+              aria-label="Vídeo vertical da piscina do condomínio Essenza no Paiva"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-condominio-essenza-paiva-vertical.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Piscina no Paiva</b>Vista da área de lazer do condomínio Essenza.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/piscina-condominio-essenza-paiva-panorama-poster.jpg"
+              aria-label="Vídeo panorâmico da piscina do condomínio Essenza no Paiva"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/piscina-condominio-essenza-paiva-panorama.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Piscina e jardim no Paiva</b>Outro ângulo da área de lazer do Essenza.</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <video poster="assets/images/projects/casa-maquinas-polinezia-la-fleur-poster.jpg"
+              aria-label="Vídeo da casa de máquinas com filtros e motobombas"
+              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+              <source src="assets/videos/projects/casa-maquinas-polinezia-la-fleur.mp4" type="video/mp4">
+            </video>
+            <figcaption><b>Casa de máquinas</b>Filtros, motobombas e tubulações da Polinésia La Fleur.</figcaption>
           </figure>
         </div>
       </div>
@@ -2702,14 +2769,6 @@
         <p class="product-modal__disclaimer">Fotos de referência das marcas. Consulte modelos e disponibilidade no
           atendimento.</p>
       </div>
-      <div class="product-modal__detail" id="product-modal-project" hidden>
-        <h3>Projeto hidráulico em BIM/Revit, DWG e PDF</h3>
-        <p>Desenvolvemos o projeto hidráulico da piscina com documentação técnica nos formatos BIM/Revit, DWG e PDF.
-        </p>
-        <p>Para entender a melhor solução para sua piscina, fale com um especialista e solicite um orçamento.</p>
-        <div class="product-modal__formats" aria-label="Formatos e entregas"><span>BIM / Revit</span><span>Arquivos
-            DWG</span><span>Projeto em PDF</span><span>Atendimento com especialista</span></div>
-      </div>
       <div class="product-modal__detail" id="product-modal-revestimento" hidden>
         <h3>Revestimento em manta armada</h3>
         <p>Quer revestir ou renovar sua piscina? Fale com a nossa equipe para avaliar as medidas, o formato e as condições do local.</p>
@@ -2837,6 +2896,31 @@
           });
         });
       }
+      var galleryVideos = document.querySelectorAll('.gallery-card video');
+      if (galleryVideos.length) {
+        var visibleGalleryVideos = [];
+        function syncGalleryVideo(video, shouldPlay) {
+          if (!shouldPlay || document.hidden) { video.pause(); return }
+          var playback = video.play();
+          if (playback && typeof playback.catch === 'function') playback.catch(function () { });
+        }
+        if ('IntersectionObserver' in window) {
+          var galleryVideoObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              var index = visibleGalleryVideos.indexOf(entry.target);
+              if (entry.isIntersecting && index === -1) visibleGalleryVideos.push(entry.target);
+              if (!entry.isIntersecting && index !== -1) visibleGalleryVideos.splice(index, 1);
+              syncGalleryVideo(entry.target, entry.isIntersecting);
+            });
+          }, { rootMargin: '100px 0px', threshold: .01 });
+          galleryVideos.forEach(function (video) { galleryVideoObserver.observe(video) });
+        } else {
+          galleryVideos.forEach(function (video) { visibleGalleryVideos.push(video); syncGalleryVideo(video, true) });
+        }
+        document.addEventListener('visibilitychange', function () {
+          galleryVideos.forEach(function (video) { syncGalleryVideo(video, visibleGalleryVideos.indexOf(video) !== -1) });
+        });
+      }
       var productModal = document.getElementById('product-modal');
       if (productModal) {
         var projectItems = Array.prototype.map.call(document.querySelectorAll('[data-modal-trigger="projeto"] .priority-card__slide'), function (slide) {
@@ -2886,9 +2970,14 @@
             ]
           },
           revestimento: { title: 'Revestimento em Manta Armada', intro: 'Conheça as possibilidades de revestimento para sua piscina e solicite uma avaliação com nossa equipe.', items: [] },
-          projeto: { title: 'Projeto Hidráulico', intro: 'Planejamento técnico desenvolvido pela Veneza Piscinas para integrar todos os equipamentos à sua piscina.', items: projectItems }
+          projeto: {
+            title: 'Projeto Hidráulico',
+            intro: 'Planejamento técnico desenvolvido pela Veneza Piscinas para integrar todos os equipamentos à sua piscina.',
+            quoteMessage: 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de projeto hidráulico em BIM/Revit, DWG e PDF para minha piscina.',
+            items: projectItems
+          }
         };
-        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalProject = document.getElementById('product-modal-project'), modalRevestimento = document.getElementById('product-modal-revestimento'), modalImage = document.getElementById('product-modal-image'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), activeLine = null, activeImage = 0, previousFocus = null;
+        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalRevestimento = document.getElementById('product-modal-revestimento'), modalImage = document.getElementById('product-modal-image'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), activeLine = null, activeImage = 0, previousFocus = null;
         function whatsappUrl(message) { return 'https://wa.me/5581982983545?text=' + encodeURIComponent(message) }
         function showProductImage(index) {
           activeImage = (index + activeLine.items.length) % activeLine.items.length;
@@ -2899,7 +2988,7 @@
           modalImageName.textContent = item.name + ' · ' + item.brand;
           modalImageCount.textContent = (activeImage + 1) + ' de ' + activeLine.items.length;
           modalThumbs.querySelectorAll('button').forEach(function (button, i) { button.setAttribute('aria-current', String(i === activeImage)) });
-          modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento para ' + item.type.toLowerCase() + ' da marca ' + item.brand + '.');
+          modalWhatsapp.href = whatsappUrl(activeLine.quoteMessage || 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento para ' + item.type.toLowerCase() + ' da marca ' + item.brand + '.');
         }
         function openProductModal(key, trigger) {
           activeLine = productLines[key]; if (!activeLine) return;
@@ -2908,7 +2997,6 @@
           modalIntro.textContent = activeLine.intro;
           modalEyebrow.textContent = key === 'projeto' ? 'Solução técnica' : 'Nossa linha';
           modalGallery.hidden = !activeLine.items.length;
-          modalProject.hidden = key !== 'projeto';
           modalRevestimento.hidden = key !== 'revestimento';
           modalThumbs.replaceChildren();
           if (activeLine.items.length) {
@@ -2921,9 +3009,7 @@
             });
             showProductImage(0);
           } else {
-            modalWhatsapp.href = whatsappUrl(key === 'projeto'
-              ? 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de projeto hidráulico em BIM/Revit, DWG e PDF para minha piscina.'
-              : 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.');
+            modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.');
           }
           productModal.showModal(); document.body.classList.add('modal-open'); productModal.querySelector('.product-modal__close').focus();
         }
