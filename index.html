@@ -440,15 +440,15 @@
 
     .products-priority {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 18px
     }
 
     .priority-card {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(170px, .75fr);
-      min-height: 330px;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr);
+      min-height: 350px;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: var(--md);
@@ -459,9 +459,6 @@
     }
 
     .priority-card.featured {
-      grid-column: 1/-1;
-      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr);
-      min-height: 350px;
       color: #fff;
       background: linear-gradient(112deg, rgba(0, 84, 119, .68), rgba(1, 142, 164, .54));
       box-shadow: 0 10px 23px rgba(0, 41, 64, .09)
