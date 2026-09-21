@@ -20,12 +20,32 @@
       <a class="brand" href="#inicio" aria-label="Veneza Piscinas — voltar ao início"><img
           src="assets/images/brand/logo.png" alt="Veneza Piscinas"></a>
       <nav class="main-nav" aria-label="Navegação principal">
-        <a class="nav-link" href="#produtos" data-modal-link="filtracao" aria-haspopup="dialog" aria-controls="product-modal">Filtros e motobombas</a>
-        <a class="nav-link" href="#produtos" data-modal-link="cloro" aria-haspopup="dialog" aria-controls="product-modal">Ger. de cloro</a>
-        <a class="nav-link" href="#produtos" data-modal-link="ozonio" aria-haspopup="dialog" aria-controls="product-modal">Ger. de ozônio</a>
-        <a class="nav-link" href="#produtos" data-modal-link="aquecedores" aria-haspopup="dialog" aria-controls="product-modal">Aquecedores</a>
-        <a class="nav-link" href="#produtos" data-modal-link="iluminacao" aria-haspopup="dialog" aria-controls="product-modal">Iluminação</a>
-        <a class="nav-link" href="#produtos" data-modal-link="revestimento" aria-haspopup="dialog" aria-controls="product-modal">Revest. em manta armada</a>
+        <button class="compact-products-toggle" type="button" aria-expanded="false"
+          aria-controls="nav-products-menu">Produtos <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg></button>
+        <div class="nav-products-menu" id="nav-products-menu">
+          <a class="nav-link" href="#produtos" data-modal-link="filtracao" aria-haspopup="dialog" aria-controls="product-modal">Filtros e motobombas</a>
+          <a class="nav-link" href="#produtos" data-modal-link="cloro" aria-haspopup="dialog" aria-controls="product-modal">Ger. de cloro</a>
+          <a class="nav-link" href="#produtos" data-modal-link="ozonio" aria-haspopup="dialog" aria-controls="product-modal">Ger. de ozônio</a>
+          <a class="nav-link" href="#produtos" data-modal-link="aquecedores" aria-haspopup="dialog" aria-controls="product-modal">Aquecedores</a>
+          <a class="nav-link" href="#produtos" data-modal-link="iluminacao" aria-haspopup="dialog" aria-controls="product-modal">Iluminação</a>
+          <a class="nav-link" href="#produtos" data-modal-link="revestimento" aria-haspopup="dialog" aria-controls="product-modal">Revest. em manta armada</a>
+        </div>
+      </nav>
+      <nav class="header-socials" aria-label="Redes sociais">
+        <a class="header-social" href="https://www.facebook.com/VenezaPiscinasRecife/?locale=pt_BR" target="_blank"
+          rel="noopener noreferrer" aria-label="Veneza Piscinas no Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="social-icon-fill" d="M14 8.3V6.7c0-.8.5-1 1-1h2.7V2.1L14.6 2C11.5 2 10 3.8 10 6.4v1.9H7v4h3V22h4v-9.7h3.3l.5-4H14Z" /></svg>
+        </a>
+        <a class="header-social" href="https://www.instagram.com/venezapiscinas/" target="_blank"
+          rel="noopener noreferrer" aria-label="Veneza Piscinas no Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.7" r="1" class="social-icon-fill" /></svg>
+        </a>
+        <a class="header-social" href="https://www.youtube.com/channel/UCx-IWTxAN5stY0jU_yWRKOA" target="_blank"
+          rel="noopener noreferrer" aria-label="Veneza Piscinas no YouTube" title="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="social-icon-fill" d="M21 7.2a3 3 0 0 0-2.1-2.1C17 4.6 12 4.6 12 4.6s-5 0-6.9.5A3 3 0 0 0 3 7.2 31 31 0 0 0 2.5 12 31 31 0 0 0 3 16.8a3 3 0 0 0 2.1 2.1c1.9.5 6.9.5 6.9.5s5 0 6.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8Z" /><path d="m10 15.3 5.2-3.3L10 8.7v6.6Z" class="social-icon-cutout" /></svg>
+        </a>
       </nav>
     </div>
   </header>
@@ -576,10 +596,6 @@
       <button class="gallery-viewer__arrow gallery-viewer__prev" type="button" aria-label="Item anterior" hidden>‹</button>
       <div class="gallery-viewer__media" id="gallery-viewer-media"></div>
       <button class="gallery-viewer__arrow gallery-viewer__next" type="button" aria-label="Próximo item" hidden>›</button>
-      <button class="gallery-viewer__zoom" id="gallery-viewer-zoom" type="button" aria-pressed="false">
-        <span class="gallery-viewer__zoom-icon" aria-hidden="true">⛶</span>
-        <span id="gallery-viewer-zoom-label">Ampliar</span>
-      </button>
     </div>
     <div class="gallery-viewer__footer">
       <span id="gallery-viewer-count" aria-live="polite"></span>

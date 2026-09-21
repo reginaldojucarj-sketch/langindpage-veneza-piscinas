@@ -16,12 +16,9 @@
   const viewerCloseButton = galleryViewer.querySelector('.gallery-viewer__close');
   const viewerPreviousButton = galleryViewer.querySelector('.gallery-viewer__prev');
   const viewerNextButton = galleryViewer.querySelector('.gallery-viewer__next');
-  const viewerZoomButton = document.getElementById('gallery-viewer-zoom');
-  const viewerZoomLabel = document.getElementById('gallery-viewer-zoom-label');
 
   if (!viewerStage || !viewerMedia || !viewerTitle || !viewerCount ||
-    !viewerCloseButton || !viewerPreviousButton || !viewerNextButton ||
-    !viewerZoomButton || !viewerZoomLabel) return;
+    !viewerCloseButton || !viewerPreviousButton || !viewerNextButton) return;
 
   const cardStates = [];
   const stateByCard = new Map();
@@ -107,9 +104,57 @@
 
   function setViewerZoom(isZoomed) {
     viewerMedia.classList.toggle('is-zoomed', isZoomed);
-    viewerZoomButton.setAttribute('aria-pressed', String(isZoomed));
-    viewerZoomButton.setAttribute('aria-label', isZoomed ? 'Reduzir mídia' : 'Ampliar mídia');
-    viewerZoomLabel.textContent = isZoomed ? 'Reduzir' : 'Ampliar';
+    const image = viewerMedia.querySelector('img.can-zoom');
+    if (!image) return;
+
+    image.setAttribute('aria-label', isZoomed ? 'Reduzir imagem' : 'Ampliar imagem');
+    if (isZoomed) window.clearTimeout(viewerTimer);
+    else if (viewerItems.length > 1) {
+      window.clearTimeout(viewerTimer);
+      viewerTimer = window.setTimeout(function () {
+        showViewerItem(viewerIndex + 1);
+      }, IMAGE_DURATION_MS);
+    }
+  }
+
+  function updateViewerZoomAvailability(image) {
+    if (!image || image.tagName !== 'IMG' || !image.naturalWidth || !image.naturalHeight) return;
+
+    const containerStyles = window.getComputedStyle(viewerMedia);
+    const horizontalPadding = parseFloat(containerStyles.paddingLeft) + parseFloat(containerStyles.paddingRight);
+    const verticalPadding = parseFloat(containerStyles.paddingTop) + parseFloat(containerStyles.paddingBottom);
+    const availableWidth = Math.max(0, viewerMedia.clientWidth - horizontalPadding);
+    const availableHeight = Math.max(0, viewerMedia.clientHeight - verticalPadding);
+    const maximumScale = Math.min(
+      availableWidth / image.naturalWidth,
+      availableHeight / image.naturalHeight,
+      1
+    );
+    const maximumWidth = image.naturalWidth * maximumScale;
+    const maximumHeight = image.naturalHeight * maximumScale;
+    const defaultHeightLimit = window.innerHeight * (window.innerWidth <= 600 ? 0.64 : 0.68);
+    const defaultScale = Math.min(
+      Math.min(1040, availableWidth) / image.naturalWidth,
+      Math.min(defaultHeightLimit, availableHeight) / image.naturalHeight,
+      1
+    );
+    const defaultWidth = image.naturalWidth * defaultScale;
+    const defaultHeight = image.naturalHeight * defaultScale;
+    const canZoom = maximumWidth > defaultWidth + 8 || maximumHeight > defaultHeight + 8;
+
+    image.classList.toggle('can-zoom', canZoom);
+    if (canZoom) {
+      image.tabIndex = 0;
+      image.setAttribute('role', 'button');
+      image.setAttribute('aria-label', 'Ampliar imagem');
+      image.title = 'Clique para ampliar';
+    } else {
+      image.removeAttribute('tabindex');
+      image.removeAttribute('role');
+      image.removeAttribute('aria-label');
+      image.removeAttribute('title');
+      viewerMedia.classList.remove('is-zoomed');
+    }
   }
 
   function showViewerItem(index) {
@@ -121,7 +166,7 @@
     const source = viewerItems[viewerIndex];
     const media = createViewerMedia(source);
 
-    setViewerZoom(false);
+    viewerMedia.classList.remove('is-zoomed');
     viewerMedia.replaceChildren(media);
     viewerCount.textContent = viewerItems.length > 1
       ? (viewerIndex + 1) + ' de ' + viewerItems.length
@@ -129,7 +174,20 @@
 
     if (source.tagName === 'VIDEO') {
       playMuted(media);
-    } else if (viewerItems.length > 1) {
+    } else {
+      const detectZoom = function () {
+        window.requestAnimationFrame(function () {
+          updateViewerZoomAvailability(media);
+        });
+      };
+      if (media.complete) detectZoom();
+      else {
+        media.addEventListener('load', detectZoom, { once: true });
+        if (typeof media.decode === 'function') media.decode().then(detectZoom).catch(function () { });
+      }
+    }
+
+    if (source.tagName !== 'VIDEO' && viewerItems.length > 1) {
       viewerTimer = window.setTimeout(function () {
         showViewerItem(viewerIndex + 1);
       }, IMAGE_DURATION_MS);
@@ -230,17 +288,13 @@
   viewerNextButton.addEventListener('click', function () {
     showViewerItem(viewerIndex + 1);
   });
-  viewerZoomButton.addEventListener('click', function () {
-    setViewerZoom(!viewerMedia.classList.contains('is-zoomed'));
-  });
-
   viewerStage.addEventListener('click', function (event) {
     if (suppressStageClick || event.target.closest('button')) return;
 
     const media = viewerMedia.querySelector('img, video');
     if (!media) return;
 
-    if (event.target === media) {
+    if (event.target === media && media.matches('img.can-zoom')) {
       setViewerZoom(!viewerMedia.classList.contains('is-zoomed'));
       return;
     }
@@ -249,6 +303,23 @@
     const clickedOutsideMedia = event.clientX < mediaBounds.left || event.clientX > mediaBounds.right ||
       event.clientY < mediaBounds.top || event.clientY > mediaBounds.bottom;
     if (clickedOutsideMedia) galleryViewer.close();
+  });
+
+  viewerMedia.addEventListener('keydown', function (event) {
+    const image = event.target.closest('img.can-zoom');
+    if (!image || (event.key !== 'Enter' && event.key !== ' ')) return;
+    event.preventDefault();
+    setViewerZoom(!viewerMedia.classList.contains('is-zoomed'));
+  });
+
+  window.addEventListener('resize', function () {
+    if (!galleryViewer.open) return;
+    const image = viewerMedia.querySelector('img');
+    if (!image) return;
+    viewerMedia.classList.remove('is-zoomed');
+    window.requestAnimationFrame(function () {
+      updateViewerZoomAvailability(image);
+    });
   });
 
   galleryViewer.addEventListener('keydown', function (event) {
@@ -272,7 +343,7 @@
     if (video) video.pause();
 
     viewerMedia.replaceChildren();
-    setViewerZoom(false);
+    viewerMedia.classList.remove('is-zoomed');
     viewerItems = [];
     dragStart = null;
     viewerMedia.style.transform = '';
