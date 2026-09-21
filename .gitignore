@@ -1,2 +1,3 @@
 # WhatsApp source videos may contain audio; publish only the silent gallery exports.
 /assets/sources/projects/*-original.mp4
+/assets/sources/testimonials/*-original.mp4

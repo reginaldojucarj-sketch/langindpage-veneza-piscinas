@@ -1,74 +1,148 @@
 (function () {
   'use strict';
-  var carousel = document.querySelector('.hero-carousel');
-  if (carousel) {
-    var slides = carousel.querySelectorAll('.hero-photo'), dots = carousel.querySelectorAll('.carousel-dot'), activeSlide = 0, carouselTimer;
-    function fallbackToPoster(video) {
+
+  const HERO_INTERVAL_MS = 12000;
+  const PRODUCT_INTERVAL_MS = 5000;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroCarousel = document.querySelector('.hero-carousel');
+
+  if (heroCarousel) {
+    let heroSlides = heroCarousel.querySelectorAll('.hero-photo');
+    const heroDots = heroCarousel.querySelectorAll('.carousel-dot');
+    const previousButton = heroCarousel.querySelector('.carousel-prev');
+    const nextButton = heroCarousel.querySelector('.carousel-next');
+    let activeSlideIndex = 0;
+    let heroTimer;
+
+    function replaceVideoWithPoster(video) {
       if (!video.isConnected) return;
-      var photo = document.createElement('img');
-      photo.className = video.className;
-      photo.src = video.poster;
-      photo.alt = video.getAttribute('aria-label') || 'Piscina Veneza Piscinas';
-      photo.setAttribute('aria-hidden', video.getAttribute('aria-hidden'));
-      video.replaceWith(photo);
-      slides = carousel.querySelectorAll('.hero-photo');
+
+      const poster = document.createElement('img');
+      poster.className = video.className;
+      poster.src = video.poster;
+      poster.alt = video.getAttribute('aria-label') || 'Piscina Veneza Piscinas';
+      poster.setAttribute('aria-hidden', video.getAttribute('aria-hidden'));
+      video.replaceWith(poster);
+      heroSlides = heroCarousel.querySelectorAll('.hero-photo');
     }
-    slides.forEach(function (slide) {
-      if (slide.tagName === 'VIDEO') slide.addEventListener('error', function () { fallbackToPoster(slide) });
-    });
-    function showSlide(index) {
-      activeSlide = (index + slides.length) % slides.length;
-      slides.forEach(function (slide, i) {
-        var active = i === activeSlide;
-        slide.classList.toggle('is-active', active);
-        slide.setAttribute('aria-hidden', String(!active));
-        if (slide.tagName === 'VIDEO') {
-          if (active) {
-            slide.currentTime = 0;
-            var playback = slide.play();
-            if (playback && typeof playback.catch === 'function') playback.catch(function (error) {
-              if (error.name !== 'AbortError') fallbackToPoster(slide);
-            });
-          }
-          else { slide.pause() }
-        }
-      });
-      dots.forEach(function (dot, i) { dot.setAttribute('aria-current', String(i === activeSlide)) });
-    }
-    function stopCarousel() { window.clearTimeout(carouselTimer) }
-    function startCarousel() { stopCarousel(); if (!document.hidden) { carouselTimer = window.setTimeout(function () { showSlide(activeSlide + 1); startCarousel() }, 12000) } }
-    carousel.querySelector('.carousel-prev').addEventListener('click', function () { showSlide(activeSlide - 1); startCarousel() });
-    carousel.querySelector('.carousel-next').addEventListener('click', function () { showSlide(activeSlide + 1); startCarousel() });
-    dots.forEach(function (dot, i) { dot.addEventListener('click', function () { showSlide(i); startCarousel() }) });
-    document.addEventListener('visibilitychange', function () { if (document.hidden) { stopCarousel() } else { startCarousel() } });
-    carousel.classList.add('is-ready');
-    showSlide(0);
-    startCarousel();
-  }
-  var productCardCarousels = document.querySelectorAll('[data-card-carousel]');
-  if (productCardCarousels.length) {
-    var reduceCardMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    productCardCarousels.forEach(function (cardCarousel, carouselIndex) {
-      var cardSlides = cardCarousel.querySelectorAll('.priority-card__slide'), cardSlideIndex = 0, cardTimer;
-      if (cardSlides.length < 2 || reduceCardMotion) return;
-      function showCardSlide(index) {
-        cardSlideIndex = (index + cardSlides.length) % cardSlides.length;
-        cardSlides.forEach(function (slide, slideIndex) {
-          var active = slideIndex === cardSlideIndex;
-          slide.classList.toggle('is-active', active);
-          slide.setAttribute('aria-hidden', String(!active));
+
+    function playHeroVideo(video) {
+      video.currentTime = 0;
+      const playback = video.play();
+
+      if (playback && typeof playback.catch === 'function') {
+        playback.catch(function (error) {
+          if (error.name === 'NotSupportedError') replaceVideoWithPoster(video);
         });
       }
-      function startCardCarousel() {
-        window.clearInterval(cardTimer);
-        if (!document.hidden) cardTimer = window.setInterval(function () { showCardSlide(cardSlideIndex + 1) }, 5000);
+    }
+
+    function showHeroSlide(index) {
+      activeSlideIndex = (index + heroSlides.length) % heroSlides.length;
+
+      heroSlides.forEach(function (slide, slideIndex) {
+        const isActive = slideIndex === activeSlideIndex;
+        slide.classList.toggle('is-active', isActive);
+        slide.setAttribute('aria-hidden', String(!isActive));
+
+        if (slide.tagName !== 'VIDEO') return;
+        if (isActive) playHeroVideo(slide);
+        else slide.pause();
+      });
+
+      heroDots.forEach(function (dot, dotIndex) {
+        dot.setAttribute('aria-current', String(dotIndex === activeSlideIndex));
+      });
+    }
+
+    function stopHeroCarousel() {
+      window.clearTimeout(heroTimer);
+    }
+
+    function startHeroCarousel() {
+      stopHeroCarousel();
+      if (document.hidden || prefersReducedMotion) return;
+
+      heroTimer = window.setTimeout(function () {
+        showHeroSlide(activeSlideIndex + 1);
+        startHeroCarousel();
+      }, HERO_INTERVAL_MS);
+    }
+
+    heroSlides.forEach(function (slide) {
+      if (slide.tagName === 'VIDEO') {
+        slide.addEventListener('error', function () {
+          replaceVideoWithPoster(slide);
+        });
       }
-      cardSlides.forEach(function (slide, slideIndex) { slide.setAttribute('aria-hidden', String(slideIndex !== 0)) });
-      window.setTimeout(startCardCarousel, carouselIndex * 350);
-      document.addEventListener('visibilitychange', function () {
-        if (document.hidden) window.clearInterval(cardTimer);
-        else startCardCarousel();
+    });
+
+    if (previousButton) {
+      previousButton.addEventListener('click', function () {
+        showHeroSlide(activeSlideIndex - 1);
+        startHeroCarousel();
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', function () {
+        showHeroSlide(activeSlideIndex + 1);
+        startHeroCarousel();
+      });
+    }
+
+    heroDots.forEach(function (dot, dotIndex) {
+      dot.addEventListener('click', function () {
+        showHeroSlide(dotIndex);
+        startHeroCarousel();
       });
     });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopHeroCarousel();
+      else startHeroCarousel();
+    });
+
+    heroCarousel.classList.add('is-ready');
+    showHeroSlide(0);
+    startHeroCarousel();
   }
+
+  const productCarousels = document.querySelectorAll('[data-card-carousel]');
+
+  productCarousels.forEach(function (carousel, carouselIndex) {
+    const slides = carousel.querySelectorAll('.priority-card__slide');
+    let activeIndex = 0;
+    let timer;
+
+    if (slides.length < 2 || prefersReducedMotion) return;
+
+    function showProductSlide(index) {
+      activeIndex = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, slideIndex) {
+        const isActive = slideIndex === activeIndex;
+        slide.classList.toggle('is-active', isActive);
+        slide.setAttribute('aria-hidden', String(!isActive));
+      });
+    }
+
+    function startProductCarousel() {
+      window.clearInterval(timer);
+      if (document.hidden) return;
+
+      timer = window.setInterval(function () {
+        showProductSlide(activeIndex + 1);
+      }, PRODUCT_INTERVAL_MS);
+    }
+
+    slides.forEach(function (slide, slideIndex) {
+      slide.setAttribute('aria-hidden', String(slideIndex !== 0));
+    });
+
+    window.setTimeout(startProductCarousel, carouselIndex * 350);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) window.clearInterval(timer);
+      else startProductCarousel();
+    });
+  });
 }());
