@@ -16,9 +16,12 @@
   const viewerCloseButton = galleryViewer.querySelector('.gallery-viewer__close');
   const viewerPreviousButton = galleryViewer.querySelector('.gallery-viewer__prev');
   const viewerNextButton = galleryViewer.querySelector('.gallery-viewer__next');
+  const viewerZoomButton = document.getElementById('gallery-viewer-zoom');
+  const viewerZoomLabel = document.getElementById('gallery-viewer-zoom-label');
 
   if (!viewerStage || !viewerMedia || !viewerTitle || !viewerCount ||
-    !viewerCloseButton || !viewerPreviousButton || !viewerNextButton) return;
+    !viewerCloseButton || !viewerPreviousButton || !viewerNextButton ||
+    !viewerZoomButton || !viewerZoomLabel) return;
 
   const cardStates = [];
   const stateByCard = new Map();
@@ -28,6 +31,7 @@
   let closeIntroTimer;
   let viewerTrigger = null;
   let dragStart = null;
+  let suppressStageClick = false;
 
   function playMuted(video) {
     video.muted = true;
@@ -101,6 +105,13 @@
     return video;
   }
 
+  function setViewerZoom(isZoomed) {
+    viewerMedia.classList.toggle('is-zoomed', isZoomed);
+    viewerZoomButton.setAttribute('aria-pressed', String(isZoomed));
+    viewerZoomButton.setAttribute('aria-label', isZoomed ? 'Reduzir mídia' : 'Ampliar mídia');
+    viewerZoomLabel.textContent = isZoomed ? 'Reduzir' : 'Ampliar';
+  }
+
   function showViewerItem(index) {
     window.clearTimeout(viewerTimer);
     const previousVideo = viewerMedia.querySelector('video');
@@ -110,6 +121,7 @@
     const source = viewerItems[viewerIndex];
     const media = createViewerMedia(source);
 
+    setViewerZoom(false);
     viewerMedia.replaceChildren(media);
     viewerCount.textContent = viewerItems.length > 1
       ? (viewerIndex + 1) + ' de ' + viewerItems.length
@@ -218,6 +230,26 @@
   viewerNextButton.addEventListener('click', function () {
     showViewerItem(viewerIndex + 1);
   });
+  viewerZoomButton.addEventListener('click', function () {
+    setViewerZoom(!viewerMedia.classList.contains('is-zoomed'));
+  });
+
+  viewerStage.addEventListener('click', function (event) {
+    if (suppressStageClick || event.target.closest('button')) return;
+
+    const media = viewerMedia.querySelector('img, video');
+    if (!media) return;
+
+    if (event.target === media) {
+      setViewerZoom(!viewerMedia.classList.contains('is-zoomed'));
+      return;
+    }
+
+    const mediaBounds = media.getBoundingClientRect();
+    const clickedOutsideMedia = event.clientX < mediaBounds.left || event.clientX > mediaBounds.right ||
+      event.clientY < mediaBounds.top || event.clientY > mediaBounds.bottom;
+    if (clickedOutsideMedia) galleryViewer.close();
+  });
 
   galleryViewer.addEventListener('keydown', function (event) {
     if (viewerItems.length < 2) return;
@@ -240,6 +272,7 @@
     if (video) video.pause();
 
     viewerMedia.replaceChildren();
+    setViewerZoom(false);
     viewerItems = [];
     dragStart = null;
     viewerMedia.style.transform = '';
@@ -260,6 +293,8 @@
 
     const horizontalDistance = event.clientX - dragStart.x;
     const verticalDistance = event.clientY - dragStart.y;
+    suppressStageClick = Math.abs(horizontalDistance) > 8 || Math.abs(verticalDistance) > 8;
+    window.setTimeout(function () { suppressStageClick = false; }, 0);
     resetViewerDrag();
 
     const isVerticalClose = Math.abs(verticalDistance) > VERTICAL_CLOSE_DISTANCE_PX &&
