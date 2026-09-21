@@ -813,8 +813,31 @@
     }
 
     .gallery-card {
+      position: relative;
       overflow: hidden;
       border-radius: var(--md)
+    }
+
+    .gallery-card__media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #d9edf0
+    }
+
+    .gallery-card__media .gallery-card__slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s ease
+    }
+
+    .gallery-card__media .gallery-card__slide.is-active {
+      opacity: 1;
+      visibility: visible
     }
 
     .gallery-card img,
@@ -843,6 +866,39 @@
       color: var(--ink);
       font-family: "Space Grotesk", Arial, sans-serif;
       font-size: .92rem
+    }
+
+    .gallery-card__open {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in
+    }
+
+    .gallery-card__open::after {
+      content: 'Ampliar ↗';
+      position: absolute;
+      right: 12px;
+      bottom: 75px;
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: #fff;
+      background: rgba(3, 44, 64, .88);
+      font: 800 .78rem "Space Grotesk", Arial, sans-serif;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, .2)
+    }
+
+    .gallery-card__open:hover::after,
+    .gallery-card__open:focus-visible::after {
+      background: #087da1
+    }
+
+    .gallery-card__open:focus-visible {
+      outline: 3px solid #087da1;
+      outline-offset: -4px
     }
 
     .testimonials-grid {
@@ -1869,6 +1925,194 @@
       overflow: hidden
     }
 
+    .gallery-viewer {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+      padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+      border: 0;
+      color: #fff;
+      background: #071a24;
+      overscroll-behavior: contain
+    }
+
+    .gallery-viewer[open] {
+      display: flex;
+      flex-direction: column
+    }
+
+    .gallery-viewer::backdrop {
+      background: rgba(0, 0, 0, .86)
+    }
+
+    .gallery-viewer__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 64px;
+      max-width: 1500px;
+      width: 100%;
+      margin: 0 auto
+    }
+
+    .gallery-viewer__title {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      line-height: 1.2
+    }
+
+    .gallery-viewer__close {
+      flex: 0 0 auto;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      padding: 0 15px;
+      color: #fff;
+      background: #087da1;
+      box-shadow: 0 6px 22px rgba(0, 0, 0, .4);
+      cursor: pointer;
+      transition: width .7s ease, border-radius .7s ease, gap .7s ease
+    }
+
+    .gallery-viewer__close-mark {
+      flex: 0 0 22px;
+      font-size: 2rem;
+      line-height: 1
+    }
+
+    .gallery-viewer__close-label {
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      font: 800 .95rem "Space Grotesk", Arial, sans-serif;
+      transition: max-width .7s ease, opacity .7s ease
+    }
+
+    .gallery-viewer__close:hover,
+    .gallery-viewer__close:focus-visible,
+    .gallery-viewer__close.is-intro {
+      width: 132px;
+      gap: 8px;
+      border-radius: 999px;
+      background: #056987
+    }
+
+    .gallery-viewer__close:hover .gallery-viewer__close-label,
+    .gallery-viewer__close:focus-visible .gallery-viewer__close-label,
+    .gallery-viewer__close.is-intro .gallery-viewer__close-label {
+      max-width: 80px;
+      opacity: 1
+    }
+
+    .gallery-viewer__close.is-intro {
+      animation: whatsapp-attention .32s ease-in-out infinite
+    }
+
+    .gallery-viewer__close:hover {
+      animation: whatsapp-attention .32s ease-in-out infinite
+    }
+
+    .gallery-viewer__stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      flex: 1 1 auto;
+      min-height: 0;
+      max-width: 1500px;
+      width: 100%;
+      margin: 0 auto;
+      touch-action: none;
+      user-select: none
+    }
+
+    .gallery-viewer__media {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      transition: transform .18s ease, opacity .18s ease
+    }
+
+    .gallery-viewer__media img,
+    .gallery-viewer__media video {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain
+    }
+
+    .gallery-viewer__arrow {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      transform: translateY(-50%);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(2, 70, 95, .88);
+      font-size: 2rem;
+      cursor: pointer
+    }
+
+    .gallery-viewer__arrow[hidden] { display: none }
+    .gallery-viewer__prev { left: 0 }
+    .gallery-viewer__next { right: 0 }
+
+    .gallery-viewer__footer {
+      flex: 0 0 auto;
+      max-width: 1500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 0 4px;
+      text-align: center;
+      font-size: .85rem
+    }
+
+    .gallery-viewer__hint {
+      display: block;
+      margin-top: 5px;
+      color: #b9dbe3
+    }
+
+    @media (max-width: 600px) {
+      .gallery-viewer { padding-inline: 10px }
+      .gallery-viewer__header { gap: 8px }
+      .gallery-viewer__close:hover,
+      .gallery-viewer__close:focus-visible,
+      .gallery-viewer__close.is-intro { width: 112px }
+      .gallery-viewer__close-label { font-size: .82rem }
+      .gallery-viewer__arrow { width: 44px; height: 44px }
+      .gallery-viewer__prev { left: 4px }
+      .gallery-viewer__next { right: 4px }
+      .gallery-viewer__hint { max-width: 330px; margin-inline: auto }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-viewer__close.is-intro,
+      .gallery-viewer__close:hover { animation: none }
+      .gallery-viewer__media { transition: none }
+    }
+
     .product-modal {
       position: fixed;
       inset: 0;
@@ -1970,12 +2214,16 @@
       background: #fff
     }
 
-    .product-modal__stage img {
+    .product-modal__stage img,
+    .product-modal__stage video {
       width: 100%;
       height: 100%;
       padding: 18px 72px;
       object-fit: contain
     }
+
+    .product-modal__stage video[hidden],
+    .product-modal__stage img[hidden] { display: none }
 
     .product-modal__brand {
       position: absolute;
@@ -2511,10 +2759,16 @@
               alt="Piscina iluminada à noite com escada de acesso" width="1200" height="900" loading="lazy">
             <figcaption><b>Piscina à noite</b>Iluminação azul e reflexos na água.</figcaption>
           </figure>
-          <figure class="gallery-card"><img
-              src="assets/images/projects/piscina-deck-vista-agua.jpg"
-              alt="Piscina com espreguiçadeiras amarelas e deck com vista para a água" width="1200" height="900" loading="lazy">
-            <figcaption><b>Deck com vista para a água</b>Espaço aberto para aproveitar o sol.</figcaption>
+          <figure class="gallery-card">
+            <div class="gallery-card__media">
+              <video class="gallery-card__slide is-active" poster="assets/images/projects/piscina-borda-infinita-nova-cruz-poster.jpg"
+                aria-label="Vídeo da piscina de borda infinita em Nova Cruz" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                <source src="assets/videos/projects/piscina-borda-infinita-nova-cruz.mp4" type="video/mp4">
+              </video>
+              <img class="gallery-card__slide" src="assets/images/projects/piscina-deck-vista-agua.jpg"
+                alt="Piscina com espreguiçadeiras amarelas e deck com vista para a água" width="1200" height="900" loading="lazy">
+            </div>
+            <figcaption><b>Borda infinita em Nova Cruz</b>Vídeo da piscina e foto do deck com vista para a água.</figcaption>
           </figure>
           <figure class="gallery-card"><img
               src="assets/images/projects/piscina-manta-armada-borda-elevada.jpg"
@@ -2538,36 +2792,42 @@
             <figcaption><b>Piscina com bar molhado</b>Água, paisagismo e área de convivência.</figcaption>
           </figure>
           <figure class="gallery-card">
-            <video poster="assets/images/projects/piscina-chale-maracaipe-cascata-poster.jpg"
-              aria-label="Vídeo da piscina com cascata em Maracaípe"
-              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
-              <source src="assets/videos/projects/piscina-chale-maracaipe-cascata.mp4" type="video/mp4">
-            </video>
-            <figcaption><b>Piscina com cascata</b>Jatos d’água e área de convivência em Maracaípe.</figcaption>
+            <div class="gallery-card__media">
+              <video class="gallery-card__slide is-active" poster="assets/images/projects/piscina-resort-japaratinga-jardins-poster.jpg"
+                aria-label="Vídeo da piscina entre jardins e acomodações em Japaratinga" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                <source src="assets/videos/projects/piscina-resort-japaratinga-jardins.mp4" type="video/mp4">
+              </video>
+              <video class="gallery-card__slide" poster="assets/images/projects/piscina-resort-japaratinga-deck-molhado-poster.jpg"
+                aria-label="Vídeo da piscina com deck molhado em Japaratinga" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                <source src="assets/videos/projects/piscina-resort-japaratinga-deck-molhado.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption><b>Piscina em Japaratinga</b>Jardins, espreguiçadeiras e deck molhado em dois vídeos.</figcaption>
           </figure>
           <figure class="gallery-card">
-            <video poster="assets/images/projects/piscina-borda-infinita-nova-cruz-poster.jpg"
-              aria-label="Vídeo da piscina de borda infinita em Nova Cruz"
-              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
-              <source src="assets/videos/projects/piscina-borda-infinita-nova-cruz.mp4" type="video/mp4">
-            </video>
-            <figcaption><b>Borda infinita em Nova Cruz</b>Deck e vista aberta para a água.</figcaption>
+            <div class="gallery-card__media">
+              <video class="gallery-card__slide is-active" poster="assets/images/projects/manta-armada-soldagem-poster.jpg"
+                aria-label="Vídeo da soldagem da manta armada" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                <source src="assets/videos/projects/manta-armada-soldagem.mp4" type="video/mp4">
+              </video>
+              <video class="gallery-card__slide" poster="assets/images/projects/manta-armada-instalacao-poster.jpg"
+                aria-label="Vídeo da instalação da manta armada" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                <source src="assets/videos/projects/manta-armada-instalacao.mp4" type="video/mp4">
+              </video>
+              <video class="gallery-card__slide" poster="assets/images/projects/manta-armada-aplicada-poster.jpg"
+                aria-label="Vídeo do revestimento em manta armada aplicado" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                <source src="assets/videos/projects/manta-armada-aplicada.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption><b>Aplicação de manta armada</b>Soldagem, instalação e acabamento do revestimento.</figcaption>
           </figure>
           <figure class="gallery-card">
-            <video poster="assets/images/projects/piscina-resort-japaratinga-jardins-poster.jpg"
-              aria-label="Vídeo da piscina entre jardins e acomodações em Japaratinga"
+            <video poster="assets/images/projects/manta-armada-borda-infinita-exemplo-poster.jpg"
+              aria-label="Vídeo de piscina revestida com manta armada e borda infinita"
               muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
-              <source src="assets/videos/projects/piscina-resort-japaratinga-jardins.mp4" type="video/mp4">
+              <source src="assets/videos/projects/manta-armada-borda-infinita-exemplo.mp4" type="video/mp4">
             </video>
-            <figcaption><b>Piscina em Japaratinga</b>Área de lazer integrada aos jardins.</figcaption>
-          </figure>
-          <figure class="gallery-card">
-            <video poster="assets/images/projects/piscina-resort-japaratinga-deck-molhado-poster.jpg"
-              aria-label="Vídeo da piscina com deck molhado em Japaratinga"
-              muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
-              <source src="assets/videos/projects/piscina-resort-japaratinga-deck-molhado.mp4" type="video/mp4">
-            </video>
-            <figcaption><b>Deck molhado em Japaratinga</b>Áreas rasas, espreguiçadeiras e paisagismo.</figcaption>
+            <figcaption><b>Manta armada e borda infinita</b>Exemplo de acabamento em piscina com borda infinita.</figcaption>
           </figure>
           <figure class="gallery-card">
             <video poster="assets/images/projects/piscina-condominio-essenza-paiva-vertical-poster.jpg"
@@ -2748,6 +3008,23 @@
       </div>
     </section>
   </main>
+  <dialog class="gallery-viewer" id="gallery-viewer" aria-labelledby="gallery-viewer-title" aria-describedby="gallery-viewer-hint">
+    <div class="gallery-viewer__header">
+      <h2 class="gallery-viewer__title" id="gallery-viewer-title"></h2>
+      <button class="gallery-viewer__close" type="button" aria-label="Fechar tela cheia">
+        <span class="gallery-viewer__close-mark" aria-hidden="true">×</span><span class="gallery-viewer__close-label">Fechar</span>
+      </button>
+    </div>
+    <div class="gallery-viewer__stage" id="gallery-viewer-stage">
+      <button class="gallery-viewer__arrow gallery-viewer__prev" type="button" aria-label="Item anterior" hidden>‹</button>
+      <div class="gallery-viewer__media" id="gallery-viewer-media"></div>
+      <button class="gallery-viewer__arrow gallery-viewer__next" type="button" aria-label="Próximo item" hidden>›</button>
+    </div>
+    <div class="gallery-viewer__footer">
+      <span id="gallery-viewer-count" aria-live="polite"></span>
+      <span class="gallery-viewer__hint" id="gallery-viewer-hint">Arraste a imagem para cima ou para baixo para fechar.</span>
+    </div>
+  </dialog>
   <dialog class="product-modal" id="product-modal" aria-labelledby="product-modal-title"
     aria-describedby="product-modal-intro">
     <div class="product-modal__header">
@@ -2760,19 +3037,14 @@
       <div class="product-modal__gallery" id="product-modal-gallery">
         <div class="product-modal__stage"><span class="product-modal__brand" id="product-modal-brand"></span><button
             class="product-modal__arrow product-modal__prev" type="button" aria-label="Foto anterior">‹</button><img
-            id="product-modal-image" alt="" width="800" height="600"><button
+            id="product-modal-image" alt="" width="800" height="600"><video id="product-modal-video" muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback hidden></video><button
             class="product-modal__arrow product-modal__next" type="button" aria-label="Próxima foto">›</button></div>
         <p class="product-modal__caption" aria-live="polite"><strong id="product-modal-image-name"></strong><span
             id="product-modal-image-count"></span></p>
         <div class="product-modal__thumbs" id="product-modal-thumbs" role="group"
           aria-label="Selecionar foto do equipamento"></div>
-        <p class="product-modal__disclaimer">Fotos de referência das marcas. Consulte modelos e disponibilidade no
+        <p class="product-modal__disclaimer" id="product-modal-disclaimer">Fotos de referência das marcas. Consulte modelos e disponibilidade no
           atendimento.</p>
-      </div>
-      <div class="product-modal__detail" id="product-modal-revestimento" hidden>
-        <h3>Revestimento em manta armada</h3>
-        <p>Quer revestir ou renovar sua piscina? Fale com a nossa equipe para avaliar as medidas, o formato e as condições do local.</p>
-        <p>Entre em contato para conhecer as opções disponíveis e solicitar um orçamento.</p>
       </div>
     </div>
     <div class="product-modal__footer">
@@ -2896,29 +3168,176 @@
           });
         });
       }
-      var galleryVideos = document.querySelectorAll('.gallery-card video');
-      if (galleryVideos.length) {
-        var visibleGalleryVideos = [];
-        function syncGalleryVideo(video, shouldPlay) {
-          if (!shouldPlay || document.hidden) { video.pause(); return }
+      var galleryViewer = document.getElementById('gallery-viewer');
+      if (galleryViewer) {
+        var viewerStage = document.getElementById('gallery-viewer-stage');
+        var viewerMedia = document.getElementById('gallery-viewer-media');
+        var viewerClose = galleryViewer.querySelector('.gallery-viewer__close');
+        var viewerPrev = galleryViewer.querySelector('.gallery-viewer__prev');
+        var viewerNext = galleryViewer.querySelector('.gallery-viewer__next');
+        var viewerCount = document.getElementById('gallery-viewer-count');
+        var cardStates = [], viewerItems = [], viewerIndex = 0, viewerTimer = 0, closeIntroTimer = 0, viewerTrigger = null, dragStart = null;
+        function playSilent(video) {
+          video.muted = true;
           var playback = video.play();
           if (playback && typeof playback.catch === 'function') playback.catch(function () { });
         }
+        function stopCard(state) {
+          window.clearTimeout(state.timer);
+          state.items.forEach(function (item) { if (item.tagName === 'VIDEO') item.pause() });
+        }
+        function playCard(state) {
+          stopCard(state);
+          if (!state.visible || document.hidden || galleryViewer.open) return;
+          var item = state.items[state.index];
+          if (item.tagName === 'VIDEO') playSilent(item);
+          else if (state.items.length > 1) state.timer = window.setTimeout(function () { showCardItem(state, state.index + 1) }, 5000);
+        }
+        function showCardItem(state, index) {
+          stopCard(state);
+          state.index = (index + state.items.length) % state.items.length;
+          state.items.forEach(function (item, i) {
+            item.classList.toggle('is-active', i === state.index);
+            if (state.items.length > 1) item.setAttribute('aria-hidden', String(i !== state.index));
+          });
+          var current = state.items[state.index];
+          if (current.tagName === 'VIDEO') current.currentTime = 0;
+          playCard(state);
+        }
+        document.querySelectorAll('.gallery-card').forEach(function (card) {
+          var items = Array.prototype.slice.call(card.querySelectorAll('img, video'));
+          if (!items.length) return;
+          var state = { card: card, items: items, index: 0, visible: false, timer: 0 };
+          cardStates.push(state);
+          items.forEach(function (item) {
+            if (item.tagName === 'VIDEO') {
+              item.muted = true;
+              item.loop = items.length === 1;
+              if (items.length > 1) item.addEventListener('ended', function () {
+                if (state.items[state.index] === item) showCardItem(state, state.index + 1);
+              });
+            }
+          });
+          var openButton = document.createElement('button');
+          openButton.type = 'button';
+          openButton.className = 'gallery-card__open';
+          openButton.setAttribute('aria-label', 'Ampliar ' + card.querySelector('figcaption b').textContent);
+          openButton.setAttribute('aria-haspopup', 'dialog');
+          openButton.setAttribute('aria-controls', 'gallery-viewer');
+          openButton.addEventListener('click', function () { openGalleryViewer(state, openButton) });
+          card.appendChild(openButton);
+        });
         if ('IntersectionObserver' in window) {
-          var galleryVideoObserver = new IntersectionObserver(function (entries) {
+          var cardObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-              var index = visibleGalleryVideos.indexOf(entry.target);
-              if (entry.isIntersecting && index === -1) visibleGalleryVideos.push(entry.target);
-              if (!entry.isIntersecting && index !== -1) visibleGalleryVideos.splice(index, 1);
-              syncGalleryVideo(entry.target, entry.isIntersecting);
+              var state = cardStates.find(function (candidate) { return candidate.card === entry.target });
+              if (!state) return;
+              state.visible = entry.isIntersecting;
+              playCard(state);
             });
           }, { rootMargin: '100px 0px', threshold: .01 });
-          galleryVideos.forEach(function (video) { galleryVideoObserver.observe(video) });
+          cardStates.forEach(function (state) { cardObserver.observe(state.card) });
         } else {
-          galleryVideos.forEach(function (video) { visibleGalleryVideos.push(video); syncGalleryVideo(video, true) });
+          cardStates.forEach(function (state) { state.visible = true; playCard(state) });
         }
         document.addEventListener('visibilitychange', function () {
-          galleryVideos.forEach(function (video) { syncGalleryVideo(video, visibleGalleryVideos.indexOf(video) !== -1) });
+          cardStates.forEach(playCard);
+          if (galleryViewer.open) {
+            var media = viewerMedia.querySelector('video');
+            if (media) { if (document.hidden) media.pause(); else playSilent(media) }
+          }
+        });
+        function showViewerItem(index) {
+          window.clearTimeout(viewerTimer);
+          var previous = viewerMedia.querySelector('video');
+          if (previous) previous.pause();
+          viewerIndex = (index + viewerItems.length) % viewerItems.length;
+          var source = viewerItems[viewerIndex], media;
+          if (source.tagName === 'VIDEO') {
+            media = document.createElement('video');
+            media.src = source.querySelector('source').getAttribute('src');
+            media.poster = source.getAttribute('poster') || '';
+            media.muted = true;
+            media.defaultMuted = true;
+            media.autoplay = true;
+            media.playsInline = true;
+            media.setAttribute('webkit-playsinline', '');
+            media.setAttribute('disablepictureinpicture', '');
+            media.loop = viewerItems.length === 1;
+            if (viewerItems.length > 1) media.addEventListener('ended', function () { showViewerItem(viewerIndex + 1) });
+          } else {
+            media = document.createElement('img');
+            media.src = source.getAttribute('src');
+            media.alt = source.alt;
+          }
+          viewerMedia.replaceChildren(media);
+          viewerCount.textContent = viewerItems.length > 1 ? (viewerIndex + 1) + ' de ' + viewerItems.length : '1 de 1';
+          if (source.tagName === 'VIDEO') playSilent(media);
+          else if (viewerItems.length > 1) viewerTimer = window.setTimeout(function () { showViewerItem(viewerIndex + 1) }, 5000);
+        }
+        function openGalleryViewer(state, trigger) {
+          viewerItems = state.items;
+          viewerTrigger = trigger;
+          document.getElementById('gallery-viewer-title').textContent = state.card.querySelector('figcaption b').textContent;
+          viewerPrev.hidden = viewerItems.length < 2;
+          viewerNext.hidden = viewerItems.length < 2;
+          galleryViewer.showModal();
+          document.body.classList.add('modal-open');
+          cardStates.forEach(stopCard);
+          viewerClose.classList.add('is-intro');
+          window.clearTimeout(closeIntroTimer);
+          closeIntroTimer = window.setTimeout(function () { viewerClose.classList.remove('is-intro') }, 3000);
+          showViewerItem(state.index);
+          viewerClose.focus();
+        }
+        viewerClose.addEventListener('click', function () { galleryViewer.close() });
+        viewerPrev.addEventListener('click', function () { showViewerItem(viewerIndex - 1) });
+        viewerNext.addEventListener('click', function () { showViewerItem(viewerIndex + 1) });
+        galleryViewer.addEventListener('keydown', function (event) {
+          if (viewerItems.length < 2) return;
+          if (event.key === 'ArrowLeft') { event.preventDefault(); showViewerItem(viewerIndex - 1) }
+          if (event.key === 'ArrowRight') { event.preventDefault(); showViewerItem(viewerIndex + 1) }
+        });
+        galleryViewer.addEventListener('close', function () {
+          window.clearTimeout(viewerTimer);
+          window.clearTimeout(closeIntroTimer);
+          viewerClose.classList.remove('is-intro');
+          var media = viewerMedia.querySelector('video');
+          if (media) media.pause();
+          viewerMedia.replaceChildren();
+          viewerItems = [];
+          dragStart = null;
+          viewerMedia.style.transform = '';
+          viewerMedia.style.opacity = '';
+          document.body.classList.remove('modal-open');
+          cardStates.forEach(playCard);
+          if (viewerTrigger) viewerTrigger.focus();
+        });
+        viewerStage.addEventListener('pointerdown', function (event) {
+          if (event.target.closest('button')) return;
+          dragStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+          viewerStage.setPointerCapture(event.pointerId);
+        });
+        viewerStage.addEventListener('pointermove', function (event) {
+          if (!dragStart || event.pointerId !== dragStart.id) return;
+          var distance = event.clientY - dragStart.y;
+          viewerMedia.style.transform = 'translateY(' + Math.max(-140, Math.min(140, distance * .45)) + 'px)';
+          viewerMedia.style.opacity = String(Math.max(.5, 1 - Math.abs(distance) / 450));
+        });
+        function finishViewerDrag(event) {
+          if (!dragStart || event.pointerId !== dragStart.id) return;
+          var dx = event.clientX - dragStart.x, dy = event.clientY - dragStart.y;
+          dragStart = null;
+          viewerMedia.style.transform = '';
+          viewerMedia.style.opacity = '';
+          if (Math.abs(dy) > 85 && Math.abs(dy) > Math.abs(dx) * 1.15) galleryViewer.close();
+          else if (viewerItems.length > 1 && Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy)) showViewerItem(viewerIndex + (dx < 0 ? 1 : -1));
+        }
+        viewerStage.addEventListener('pointerup', finishViewerDrag);
+        viewerStage.addEventListener('pointercancel', function () {
+          dragStart = null;
+          viewerMedia.style.transform = '';
+          viewerMedia.style.opacity = '';
         });
       }
       var productModal = document.getElementById('product-modal');
@@ -2969,7 +3388,18 @@
               { type: 'Iluminação LED', brand: 'Veneza Piscinas', name: 'Piscina residencial com iluminação noturna', image: 'assets/images/products/piscina-residencial-iluminacao-noturna.jpg' }
             ]
           },
-          revestimento: { title: 'Revestimento em Manta Armada', intro: 'Conheça as possibilidades de revestimento para sua piscina e solicite uma avaliação com nossa equipe.', items: [] },
+          revestimento: {
+            title: 'Revestimento em Manta Armada',
+            intro: 'Veja a instalação, a soldagem e o acabamento da manta armada. Para saber se essa solução atende à sua piscina, fale com um especialista e peça um orçamento.',
+            quoteMessage: 'Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.',
+            items: [
+              { type: 'Vídeo do processo', brand: 'Veneza Piscinas', name: 'Soldagem da manta armada', image: 'assets/images/projects/manta-armada-soldagem-poster.jpg', video: 'assets/videos/projects/manta-armada-soldagem.mp4' },
+              { type: 'Vídeo do processo', brand: 'Veneza Piscinas', name: 'Instalação do revestimento', image: 'assets/images/projects/manta-armada-instalacao-poster.jpg', video: 'assets/videos/projects/manta-armada-instalacao.mp4' },
+              { type: 'Vídeo do resultado', brand: 'Veneza Piscinas', name: 'Manta armada aplicada', image: 'assets/images/projects/manta-armada-aplicada-poster.jpg', video: 'assets/videos/projects/manta-armada-aplicada.mp4' },
+              { type: 'Vídeo do resultado', brand: 'Veneza Piscinas', name: 'Exemplo com borda infinita', image: 'assets/images/projects/manta-armada-borda-infinita-exemplo-poster.jpg', video: 'assets/videos/projects/manta-armada-borda-infinita-exemplo.mp4' },
+              { type: 'Foto do resultado', brand: 'Veneza Piscinas', name: 'Detalhe do revestimento e da borda', image: 'assets/images/projects/piscina-manta-armada-borda-elevada.jpg' }
+            ]
+          },
           projeto: {
             title: 'Projeto Hidráulico',
             intro: 'Planejamento técnico desenvolvido pela Veneza Piscinas para integrar todos os equipamentos à sua piscina.',
@@ -2977,13 +3407,28 @@
             items: projectItems
           }
         };
-        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalRevestimento = document.getElementById('product-modal-revestimento'), modalImage = document.getElementById('product-modal-image'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), activeLine = null, activeImage = 0, previousFocus = null;
+        var modalTitle = document.getElementById('product-modal-title'), modalIntro = document.getElementById('product-modal-intro'), modalEyebrow = document.getElementById('product-modal-eyebrow'), modalGallery = document.getElementById('product-modal-gallery'), modalImage = document.getElementById('product-modal-image'), modalVideo = document.getElementById('product-modal-video'), modalBrand = document.getElementById('product-modal-brand'), modalImageName = document.getElementById('product-modal-image-name'), modalImageCount = document.getElementById('product-modal-image-count'), modalThumbs = document.getElementById('product-modal-thumbs'), modalWhatsapp = document.getElementById('product-modal-whatsapp'), modalDisclaimer = document.getElementById('product-modal-disclaimer'), activeLine = null, activeImage = 0, previousFocus = null;
         function whatsappUrl(message) { return 'https://wa.me/5581982983545?text=' + encodeURIComponent(message) }
         function showProductImage(index) {
           activeImage = (index + activeLine.items.length) % activeLine.items.length;
           var item = activeLine.items[activeImage];
-          modalImage.src = item.image;
-          modalImage.alt = item.name + ' da marca ' + item.brand;
+          modalVideo.pause();
+          modalVideo.removeAttribute('src');
+          modalVideo.load();
+          modalVideo.hidden = !item.video;
+          modalImage.hidden = !!item.video;
+          if (item.video) {
+            modalVideo.poster = item.image;
+            modalVideo.src = item.video;
+            modalVideo.setAttribute('aria-label', item.name);
+            modalVideo.loop = true;
+            modalVideo.muted = true;
+            var videoPlayback = modalVideo.play();
+            if (videoPlayback && typeof videoPlayback.catch === 'function') videoPlayback.catch(function () { });
+          } else {
+            modalImage.src = item.image;
+            modalImage.alt = item.name + ' da marca ' + item.brand;
+          }
           modalBrand.textContent = item.brand;
           modalImageName.textContent = item.name + ' · ' + item.brand;
           modalImageCount.textContent = (activeImage + 1) + ' de ' + activeLine.items.length;
@@ -2997,7 +3442,7 @@
           modalIntro.textContent = activeLine.intro;
           modalEyebrow.textContent = key === 'projeto' ? 'Solução técnica' : 'Nossa linha';
           modalGallery.hidden = !activeLine.items.length;
-          modalRevestimento.hidden = key !== 'revestimento';
+          modalDisclaimer.textContent = key === 'revestimento' ? 'Vídeos e fotos de exemplos de revestimento. Conte sobre sua piscina para receber uma avaliação e orçamento.' : 'Fotos de referência das marcas. Consulte modelos e disponibilidade no atendimento.';
           modalThumbs.replaceChildren();
           if (activeLine.items.length) {
             activeLine.items.forEach(function (item, index) {
@@ -3011,7 +3456,12 @@
           } else {
             modalWhatsapp.href = whatsappUrl('Olá, Veneza Piscinas! Quero falar com um especialista e pedir orçamento de revestimento em manta armada para minha piscina.');
           }
-          productModal.showModal(); document.body.classList.add('modal-open'); productModal.querySelector('.product-modal__close').focus();
+          productModal.showModal(); document.body.classList.add('modal-open');
+          if (activeLine.items.length && activeLine.items[activeImage].video) {
+            var modalPlayback = modalVideo.play();
+            if (modalPlayback && typeof modalPlayback.catch === 'function') modalPlayback.catch(function () { });
+          }
+          productModal.querySelector('.product-modal__close').focus();
         }
         document.querySelectorAll('[data-modal-trigger]').forEach(function (card) {
           card.addEventListener('click', function () { openProductModal(card.dataset.modalTrigger, card) });
@@ -3026,7 +3476,7 @@
         productModal.querySelector('.product-modal__next').addEventListener('click', function () { showProductImage(activeImage + 1) });
         productModal.addEventListener('keydown', function (event) { if (modalGallery.hidden) return; if (event.key === 'ArrowLeft') { event.preventDefault(); showProductImage(activeImage - 1) } else if (event.key === 'ArrowRight') { event.preventDefault(); showProductImage(activeImage + 1) } });
         productModal.addEventListener('click', function (event) { var box = productModal.getBoundingClientRect(); if (event.target === productModal && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) { productModal.close() } });
-        productModal.addEventListener('close', function () { document.body.classList.remove('modal-open'); if (previousFocus) previousFocus.focus() });
+        productModal.addEventListener('close', function () { modalVideo.pause(); modalVideo.removeAttribute('src'); modalVideo.load(); document.body.classList.remove('modal-open'); if (previousFocus) previousFocus.focus() });
       }
       var siteHeader = document.querySelector('.site-header'), headerUpdatePending = false;
       function updateCompactHeader() {
