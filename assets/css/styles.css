@@ -2057,17 +2057,60 @@ body.modal-open {
   width: 100%;
   height: 100%;
   min-height: 0;
+  overflow: hidden;
+  padding: 16px 76px 12px;
   transition: transform .18s ease, opacity .18s ease
 }
 
 .gallery-viewer__media img,
 .gallery-viewer__media video {
   display: block;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: min(1040px, 100%);
+  max-height: min(68dvh, 100%);
   width: auto;
   height: auto;
-  object-fit: contain
+  object-fit: contain;
+  cursor: zoom-in;
+  transition: max-width .22s ease, max-height .22s ease
+}
+
+.gallery-viewer__media.is-zoomed {
+  padding-block: 4px
+}
+
+.gallery-viewer__media.is-zoomed img,
+.gallery-viewer__media.is-zoomed video {
+  max-width: 100%;
+  max-height: 100%;
+  cursor: zoom-out
+}
+
+.gallery-viewer__zoom {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: #fff;
+  background: rgba(2, 70, 95, .9);
+  font: 800 .8rem "Space Grotesk", Arial, sans-serif;
+  cursor: pointer
+}
+
+.gallery-viewer__zoom:hover,
+.gallery-viewer__zoom:focus-visible {
+  background: #087da1
+}
+
+.gallery-viewer__zoom-icon {
+  font-size: 1.15rem;
+  line-height: 1
 }
 
 .gallery-viewer__arrow {
@@ -2114,6 +2157,11 @@ body.modal-open {
   .gallery-viewer__close:focus-visible,
   .gallery-viewer__close.is-intro { width: 112px }
   .gallery-viewer__close-label { font-size: .82rem }
+  .gallery-viewer__media { padding: 12px 8px 10px }
+  .gallery-viewer__media img,
+  .gallery-viewer__media video { max-height: min(64dvh, 100%) }
+  .gallery-viewer__media.is-zoomed { padding: 2px }
+  .gallery-viewer__zoom { top: 6px; right: 6px; min-height: 40px; padding: 7px 11px }
   .gallery-viewer__arrow { width: 44px; height: 44px }
   .gallery-viewer__prev { left: 4px }
   .gallery-viewer__next { right: 4px }
