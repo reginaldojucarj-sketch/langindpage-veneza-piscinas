@@ -13,7 +13,7 @@ As imagens são referências visuais das linhas e marcas citadas na página. A d
 | `aquecedor-nautilus.jpg` | https://nautilusbr.com/produto/bomba-de-calor-terma-nautilus-07-trifasico-220v/ |
 | `aquecedor-tholz.webp` | https://tholz.com.br/aquecimento-residencial-piscinas/trocador-de-calor-piscina-cop-vinte-tres/ |
 | `aquecedor-fromtherm.png` | https://fromtherm.com.br/bombas-de-calor-fromtherm-para-piscinas-e-spas/ |
-| `cloro-nautilus.png` | https://nautilusbr.com/produto/gerador-de-cloro-nautilus-easyclor-pro-g5-02/ |
+| `cloro-nautilus-easyclor-home-g5-04.webp` | https://nautilusbr.com/produto/gerador-de-cloro-nautilus-easyclor-home-g5-04/ |
 | `cloro-syllent.jpg` | https://syllent.com.br/?taxonomy=categoria-do-produto&term=syllent-ecochlor |
 | `cloro-tholz.webp` | https://tholz.com.br/geradordecloro/ |
 | `ozonio-panozon.png` | https://panozon.com.br/produtos/blue-star/ |
