@@ -2,6 +2,8 @@
 
 - `images/hero/`: quatro slides finais, todos em JPEG com 1200 × 800 pixels.
 - `images/brand/`: logotipo e imagem de referência do Pingo (`pingo-mascote.png`).
+- `images/clients/`: logos dos clientes exibidos entre os depoimentos e o FAQ; fontes em [images/clients/README.md](images/clients/README.md).
+- `images/partners/`: logos das marcas parceiras; fontes em [images/partners/README.md](images/partners/README.md).
 - `images/products/`: fotos de referência dos equipamentos e da iluminação exibidas no modal da seção “Nossa linha”; as origens estão em `images/products/README.md`.
 - `images/services/`: 19 imagens finais em JPEG 1280 × 960 usadas no carrossel e no modal de Projeto Hidráulico.
 - `images/backgrounds/`: textura de fundo em uso.
