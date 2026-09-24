@@ -1408,6 +1408,18 @@ h1 span {
   font-size: .9rem
 }
 
+.faq-answer > * + * {
+  margin-top: 12px;
+}
+
+.faq-answer ol {
+  padding-left: 1.5em;
+}
+
+.faq-answer li + li {
+  margin-top: 8px;
+}
+
 .final-cta {
   padding-top: 62px
 }
