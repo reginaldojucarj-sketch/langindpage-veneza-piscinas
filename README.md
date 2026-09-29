@@ -17,7 +17,7 @@ Desenvolvida com **HTML, CSS e JavaScript puro**, sem framework, instalação de
 Na landing page:
 
 - Layout responsivo, painéis translúcidos e fundo com textura de água.
-- Carrossel de abertura com uma foto e cinco vídeos do mascote Pingo, cada vídeo com poster e formatos WebM/MP4.
+- Carrossel de abertura com uma foto e quatro vídeos do mascote Pingo, cada vídeo com poster e formatos WebM/MP4.
 - Destaques para filtros e motobombas, aquecedores, geradores de cloro e ozônio, iluminação LED e projeto hidráulico.
 - Modais de equipamentos e serviços, incluindo revestimento em manta armada, com mídias e mensagens de orçamento específicas.
 - Galeria de projetos com fotos, vídeos, visualização ampliada e navegação por gestos.
@@ -109,7 +109,7 @@ powershell.exe -NoProfile -File .\scripts\prepare-hero-images.ps1
 
 O script usa componentes de imagem do Windows e os originais de `assets/sources/hero/`. Ele sobrescreve os JPEGs correspondentes em `assets/images/hero/`.
 
-O hero atual usa uma dessas imagens como slide estático e as demais imagens necessárias como posters. Os três posters mais recentes têm 960 × 720. Os cinco vídeos possuem WebM VP9 e MP4 H.264, sem áudio, com resolução entre 480 × 360 e 640 × 360 e menos de 500 KB por arquivo. Eles são carregados conforme a navegação, tocam uma vez e avançam para o próximo slide. O vídeo originalmente vertical usa o quadro completo centralizado sobre uma extensão desfocada do próprio cenário, sem deformação.
+O hero atual usa uma dessas imagens como slide estático e as demais imagens necessárias como posters. Os dois posters mais recentes têm 960 × 720. Os quatro vídeos possuem WebM VP9 e MP4 H.264, sem áudio, com resolução entre 480 × 360 e 640 × 360 e menos de 500 KB por arquivo. Eles são carregados conforme a navegação, tocam uma vez e avançam para o próximo slide.
 
 Os vídeos publicados do hero e da galeria de projetos usam versões sem áudio. Os originais do hero e os arquivos com sufixo `-original.mp4` nas pastas de fontes são ignorados pelo Git; eles permanecem disponíveis localmente para novas conversões.
 
