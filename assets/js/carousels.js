@@ -74,6 +74,11 @@
         slide.addEventListener('error', function () {
           replaceVideoWithPoster(slide);
         });
+        slide.addEventListener('ended', function () {
+          if (prefersReducedMotion || !slide.classList.contains('is-active')) return;
+          showHeroSlide(activeSlideIndex + 1);
+          startHeroCarousel();
+        });
       }
     });
 

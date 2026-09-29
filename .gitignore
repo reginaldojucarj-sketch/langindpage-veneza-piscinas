@@ -1,3 +1,5 @@
-# WhatsApp source videos may contain audio; publish only the silent gallery exports.
+# Source videos may be large or contain audio; publish only the optimized, silent exports.
+/assets/sources/hero/*-original.mov
+/assets/sources/hero/*-original.mp4
 /assets/sources/projects/*-original.mp4
 /assets/sources/testimonials/*-original.mp4
