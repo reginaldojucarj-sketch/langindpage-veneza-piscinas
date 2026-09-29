@@ -13,7 +13,7 @@ O texto visível ao público deve permanecer em português do Brasil, com lingua
 `index.html` segue este funil, nesta ordem:
 
 1. Cabeçalho compacto com logo, menu de produtos e redes sociais.
-2. Hero com proposta de valor, CTA de orçamento, carrossel de uma foto e cinco vídeos e quatro indicadores de confiança.
+2. Hero com proposta de valor, CTA de orçamento, carrossel de uma foto e quatro vídeos e quatro indicadores de confiança.
 3. `#produtos`, com seis cards: filtros/motobombas, aquecedores, cloro, ozônio, iluminação e projeto hidráulico.
 4. `#como-comprar`, com cinco passos do contato à instalação.
 5. `#projetos`, com portfólio em foto/vídeo e visualizador em tela cheia.

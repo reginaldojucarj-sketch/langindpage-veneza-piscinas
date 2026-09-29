@@ -1,6 +1,6 @@
 # Imagens do site
 
-- `images/hero/`: imagens e posters do hero. As quatro imagens fotográficas preparadas pelo script têm 1200 × 800; os três posters de vídeos adicionados em setembro de 2026 têm 960 × 720.
+- `images/hero/`: imagens e posters do hero. As quatro imagens fotográficas preparadas pelo script têm 1200 × 800; os dois posters de vídeos adicionados em setembro de 2026 têm 960 × 720.
 - `images/brand/`: logotipo e imagem de referência do Pingo (`pingo-mascote.png`).
 - `images/clients/`: logos dos clientes exibidos entre os depoimentos e o FAQ; fontes em [images/clients/README.md](images/clients/README.md).
 - `images/partners/`: logos das marcas parceiras; fontes em [images/partners/README.md](images/partners/README.md).
@@ -14,7 +14,7 @@
 
 Para recriar as quatro imagens fotográficas no Windows, execute `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare-hero-images.ps1` a partir da raiz do projeto.
 
-Os vídeos do hero foram preparados com o FFmpeg 7.1 incluído no Format Factory 5.22. As saídas não contêm áudio, usam VP9 no WebM e H.264 no MP4 e ficam abaixo de 500 KB por arquivo. `piscina-vista-ilha-pingo`, `piscina-iluminada-pingo`, `piscina-aquecida-pingo` e `piscina-aquecida-pingo-terma` têm 480 × 360; `piscina-hotel-pingo` preserva 640 × 360. O vídeo Terma era vertical; sua saída preserva o quadro vertical no centro e preenche as laterais com uma cópia desfocada do próprio vídeo. Os três posters mais recentes foram extraídos de quadros nítidos próximos ao final de cada animação.
+Os vídeos do hero foram preparados com o FFmpeg 7.1 incluído no Format Factory 5.22. As saídas não contêm áudio, usam VP9 no WebM e H.264 no MP4 e ficam abaixo de 500 KB por arquivo. `piscina-vista-ilha-pingo`, `piscina-iluminada-pingo` e `piscina-aquecida-pingo` têm 480 × 360; `piscina-hotel-pingo` preserva 640 × 360. Os dois posters mais recentes foram extraídos de quadros nítidos próximos ao final de cada animação.
 
 ## Edição em IA
 
