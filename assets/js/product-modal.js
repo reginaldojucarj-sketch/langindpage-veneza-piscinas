@@ -12,7 +12,7 @@
     });
     const productLines = {
       filtracao: {
-        title: 'Filtros e motobombas', intro: 'Conheça exemplos das marcas com que trabalhamos. O filtro e a motobomba são escolhidos em conjunto, conforme o volume, a vazão e a rotina de uso da piscina.', items: [
+        title: 'Filtros e motobombas', intro: 'Conheça exemplos das marcas com as quais trabalhamos. O filtro e a motobomba são escolhidos em conjunto, conforme o volume, a vazão e a rotina de uso da piscina.', items: [
           { type: 'Filtro', brand: 'Nautilus', name: 'Filtro F950P', image: 'assets/images/products/filtro-nautilus.jpg' },
           { type: 'Filtro', brand: 'Syllent', name: 'Filtro SYL200', image: 'assets/images/products/filtro-syllent.png' },
           { type: 'Filtro', brand: 'Albacete', name: 'Filtro AP50', image: 'assets/images/products/filtro-albacete.webp' },
