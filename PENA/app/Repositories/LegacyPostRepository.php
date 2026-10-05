@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Support\LegacyPostData;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -21,7 +22,7 @@ class LegacyPostRepository
         $rows = $query->orderByRaw('COALESCE(p.DATA_POSTAGEM_POST, p.DATA_CRIACAO_POST) DESC')
             ->orderByDesc('p.ID_POST')->get();
 
-        return $rows->map(fn ($row) => $this->normalize($row))->all();
+        return $rows->map(fn ($row) => LegacyPostData::fromRow($row))->all();
     }
 
     public function findPublished(int $id): ?array
@@ -29,7 +30,7 @@ class LegacyPostRepository
         $row = $this->query()->where('p.STATUS_POST', 'PP')
             ->where('p.ID_POST', $id)->first();
 
-        return $row ? $this->normalize($row) : null;
+        return $row ? LegacyPostData::fromRow($row) : null;
     }
 
     private function query()
@@ -68,31 +69,5 @@ class LegacyPostRepository
         }
 
         return $query;
-    }
-
-    private function normalize(object $row): array
-    {
-        $author = trim((string) ($row->author_signature ?: trim(($row->first_name ?? '').' '.($row->last_name ?? ''))));
-
-        return [
-            'id' => (int) $row->id,
-            'title' => $row->title,
-            'html' => $row->html,
-            'description' => $row->description,
-            'snippet' => $row->snippet,
-            'status' => $row->status,
-            'highlight' => $row->highlight,
-            'published_at' => $row->published_at,
-            'created_at' => $row->created_at,
-            'updated_at' => $row->updated_at,
-            'slug' => $row->slug,
-            'keywords' => $row->keywords,
-            'author' => $author ?: null,
-            'category' => $row->category,
-            'categories' => $row->categories ?: $row->category,
-            'image' => $row->post_image ?: $row->media_image,
-            'image_name' => $row->image_name,
-            'sort_order' => $row->sort_order === null ? null : (int) $row->sort_order,
-        ];
     }
 }

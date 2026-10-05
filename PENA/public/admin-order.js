@@ -20,7 +20,10 @@
       list.insertBefore(item.nextElementSibling, item);
     }
     refresh();
-    button.focus();
+    const focusTarget = button.disabled
+      ? item.querySelector('button[data-move]:not(:disabled)')
+      : button;
+    if (focusTarget) focusTarget.focus();
   });
 
   refresh();

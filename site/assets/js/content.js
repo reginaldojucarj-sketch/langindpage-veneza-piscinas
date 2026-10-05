@@ -80,7 +80,7 @@
   async function one(id) {
     if (!apiBase) return localPosts.find((post) => String(post.id) === String(id) && post.status === 'PP') || null;
     const remote = await fromApi('/api/public/posts/' + encodeURIComponent(id));
-    return remote && remote.id != null && remote.status === 'PP' ? remote : null;
+    return remote && String(remote.id) === String(id) && remote.status === 'PP' ? remote : null;
   }
 
   function articleUrl(post) {
