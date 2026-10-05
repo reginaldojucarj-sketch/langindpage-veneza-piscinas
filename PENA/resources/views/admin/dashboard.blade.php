@@ -18,6 +18,8 @@
             <h2>Integração pendente</h2>
             <p>Nenhuma alteração foi feita no banco de produção. As ferramentas de edição serão liberadas somente após uma cópia de segurança verificável.</p>
         </section>
+        <p><a href="{{ route('admin.posts.order.index') }}">Organizar a ordem dos artigos publicados →</a></p>
+        <p><a href="{{ route('admin.users.index') }}">Cadastrar usuários administrativos →</a></p>
     </main>
 </body>
 </html>

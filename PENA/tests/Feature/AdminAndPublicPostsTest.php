@@ -73,6 +73,8 @@ class AdminAndPublicPostsTest extends TestCase
     public function test_admin_requires_authentication(): void
     {
         $this->get('/admin')->assertRedirect('/admin/login');
+        $this->get('/admin/posts/order')->assertRedirect('/admin/login');
+        $this->get('/admin/users')->assertRedirect('/admin/login');
         $this->get('/admin/login')->assertOk()->assertSee('Acessar o painel');
     }
 
@@ -121,5 +123,46 @@ class AdminAndPublicPostsTest extends TestCase
 
         $this->post('/admin/login', ['email' => 'admin@example.com', 'password' => 'irrelevante'])
             ->assertSessionHasErrors('email');
+    }
+
+    public function test_admin_can_change_published_post_order_in_isolated_database(): void
+    {
+        Schema::create('pena_post_order', function (Blueprint $table) {
+            $table->unsignedBigInteger('post_id')->primary();
+            $table->unsignedInteger('sort_order');
+            $table->timestamps();
+        });
+        DB::table('POST_pena')->insert(['ID_POST' => 3, 'TITULO_POST' => 'Outro publicado', 'STATUS_POST' => 'PP']);
+        $user = AdminUser::create(['name' => 'Teste', 'email' => 'teste@example.com', 'password' => 'senha-de-teste-123']);
+
+        $this->actingAs($user)->get('/admin/posts/order')->assertOk()->assertSee('Ordem dos artigos');
+        $this->post('/admin/posts/order', ['ids' => [1, 2, 3]])->assertSessionHasErrors('ids');
+        $this->post('/admin/posts/order', ['ids' => [1, 3]])->assertRedirect('/admin/posts/order');
+        $this->getJson('/api/public/posts')->assertJsonPath('data.0.id', 1)->assertJsonPath('data.1.id', 3);
+        $this->post('/admin/posts/order', ['ids' => [3, 1]])->assertRedirect('/admin/posts/order');
+        $this->getJson('/api/public/posts')->assertJsonPath('data.0.id', 3)->assertJsonPath('data.1.id', 1);
+        $this->assertDatabaseHas('pena_post_order', ['post_id' => 3, 'sort_order' => 1]);
+    }
+
+    public function test_authenticated_admin_can_create_another_user(): void
+    {
+        $admin = AdminUser::create(['name' => 'Admin', 'email' => 'admin@example.com', 'password' => 'senha-de-teste-123']);
+        $this->actingAs($admin)->get('/admin/users')->assertOk()->assertSee('Usuários administrativos');
+
+        $this->post('/admin/users', [
+            'name' => 'Outro Gestor',
+            'email' => '  NOVO@example.com  ',
+            'password' => 'uma-senha-forte-123',
+            'password_confirmation' => 'uma-senha-forte-123',
+        ])->assertRedirect('/admin/users');
+
+        $this->assertDatabaseHas('pena_admin_users', ['name' => 'Outro Gestor', 'email' => 'novo@example.com']);
+        $this->assertNotSame('uma-senha-forte-123', AdminUser::where('email', 'novo@example.com')->first()->password);
+        $this->post('/admin/users', [
+            'name' => 'Duplicado',
+            'email' => 'novo@example.com',
+            'password' => 'uma-senha-forte-123',
+            'password_confirmation' => 'uma-senha-forte-123',
+        ])->assertSessionHasErrors('email');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class LegacyPostRepository
 {
@@ -12,8 +13,12 @@ class LegacyPostRepository
      */
     public function published(): array
     {
-        $rows = $this->query()->where('p.STATUS_POST', 'PP')
-            ->orderByRaw('COALESCE(p.DATA_POSTAGEM_POST, p.DATA_CRIACAO_POST) DESC')
+        $query = $this->query()->where('p.STATUS_POST', 'PP');
+        if (Schema::hasTable('pena_post_order')) {
+            $query->orderByRaw('ordering.sort_order IS NULL')->orderBy('ordering.sort_order');
+        }
+
+        $rows = $query->orderByRaw('COALESCE(p.DATA_POSTAGEM_POST, p.DATA_CRIACAO_POST) DESC')
             ->orderByDesc('p.ID_POST')->get();
 
         return $rows->map(fn ($row) => $this->normalize($row))->all();
@@ -29,7 +34,7 @@ class LegacyPostRepository
 
     private function query()
     {
-        return DB::table('POST_pena as p')
+        $query = DB::table('POST_pena as p')
             ->leftJoin('AUTOR_pena as a', 'a.ID_AUTOR', '=', 'p.ID_AUTOR')
             ->leftJoin('PESSOA_pena as person', 'person.ID_PESSOA', '=', 'p.ID_PESSOA')
             ->leftJoin('IMAGENS_pena as images', 'images.ID_IMAGENS', '=', 'p.ID_IMAGENS')
@@ -54,6 +59,15 @@ class LegacyPostRepository
                 'category_links.category_names as categories',
                 'images.ENDERECO_IMAGENS as media_image', 'images.NOME_IMAGENS as image_name',
             ]);
+
+        if (Schema::hasTable('pena_post_order')) {
+            $query->leftJoin('pena_post_order as ordering', 'ordering.post_id', '=', 'p.ID_POST')
+                ->addSelect('ordering.sort_order');
+        } else {
+            $query->selectRaw('NULL as sort_order');
+        }
+
+        return $query;
     }
 
     private function normalize(object $row): array
@@ -78,7 +92,7 @@ class LegacyPostRepository
             'categories' => $row->categories ?: $row->category,
             'image' => $row->post_image ?: $row->media_image,
             'image_name' => $row->image_name,
-            'sort_order' => null,
+            'sort_order' => $row->sort_order === null ? null : (int) $row->sort_order,
         ];
     }
 }
