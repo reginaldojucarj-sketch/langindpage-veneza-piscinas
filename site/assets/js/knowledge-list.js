@@ -85,5 +85,10 @@
       category.append(option);
     });
     render();
+  }).catch((error) => {
+    console.error('Não foi possível carregar os artigos.', error);
+    count.textContent = 'Artigos indisponíveis no momento.';
+    empty.textContent = 'Tente novamente mais tarde.';
+    empty.hidden = false;
   });
 })();

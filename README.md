@@ -6,6 +6,8 @@ Os destaques são filtros e motobombas, aquecedores, geradores de cloro e ozôni
 
 Desenvolvida com **HTML, CSS e JavaScript puro**, sem framework, instalação de pacotes ou etapa de build. Os arquivos podem ser servidos diretamente por uma hospedagem estática.
 
+O repositório também contém o [site institucional provisório](site/README.md) e o [PENA](PENA/README.md), aplicação Laravel ainda em desenvolvimento. O PENA não é publicado no GitHub Pages e não substitui a landing page.
+
 ## Páginas e funcionalidades
 
 | Página | Conteúdo |
@@ -73,6 +75,8 @@ O Python é apenas uma opção de servidor para desenvolvimento. O site publicad
 │   ├── export-posts.sql         # Consulta de exportação dos artigos
 │   ├── build-posts-data.ps1     # Conversão de JSONL para dados do navegador
 │   └── prepare-hero-images.ps1  # Preparação das imagens de abertura no Windows
+├── site/                      # Site institucional provisório
+├── PENA/                      # Aplicação Laravel em desenvolvimento
 └── .github/workflows/
     └── deploy-pages.yml        # Publicação no GitHub Pages
 ```
@@ -138,9 +142,9 @@ O conversor seleciona os campos editoriais previstos, rejeita uma exportação v
 
 O workflow [deploy-pages.yml](.github/workflows/deploy-pages.yml) publica o site no **GitHub Pages** quando há um push na branch `main` ou quando é acionado manualmente por `workflow_dispatch`.
 
-Ele faz checkout do repositório, configura o Pages, envia a raiz como artefato e realiza o deploy, sem compilação. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
+Ele faz checkout do repositório, configura o Pages e publica apenas os HTMLs da raiz, `assets/`, os HTMLs de `site/` e `site/assets/`, sem compilação. A aplicação PHP em `PENA/` fica fora do artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
 
-Como o artefato usa a raiz do repositório, arquivos versionados em `assets/sources/` também entram na publicação.
+Arquivos versionados em `assets/sources/` ainda entram na publicação porque são copiados com `assets/`.
 
 ## Checklist de revisão
 
@@ -153,4 +157,4 @@ Antes de publicar mudanças, confira no navegador:
 - Busca, filtro por assunto e leitura dos artigos em `posts.html`.
 - Console e painel de rede sem erros de JavaScript ou arquivos locais ausentes.
 
-O repositório não possui uma suíte de testes automatizados configurada; essa conferência é manual.
+A landing não possui suíte automatizada; sua conferência é manual. O site institucional tem testes básicos de integração editorial em `site/tests/`, e o PENA tem testes locais em SQLite, descritos no seu README.

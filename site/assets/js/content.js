@@ -50,7 +50,7 @@
   }
 
   function ordered(posts) {
-    return posts.filter((post) => post && post.id != null && post.status !== 'PE' && post.status !== 'PO')
+    return posts.filter((post) => post && post.id != null && post.status === 'PP')
       .sort((a, b) => {
         const aOrder = a.sort_order == null || !Number.isFinite(Number(a.sort_order)) ? Infinity : Number(a.sort_order);
         const bOrder = b.sort_order == null || !Number.isFinite(Number(b.sort_order)) ? Infinity : Number(b.sort_order);
@@ -64,25 +64,23 @@
 
   async function fromApi(path) {
     if (!apiBase) return null;
-    try {
-      const response = await fetch(apiBase + path, { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      return unpack(await response.json());
-    } catch (error) {
-      console.warn('API de artigos indisponível; usando cópia local.', error);
-      return null;
-    }
+    const response = await fetch(apiBase + path, { headers: { Accept: 'application/json' } });
+    if (response.status === 404 || response.status === 410) return null;
+    if (!response.ok) throw new Error('API de artigos: HTTP ' + response.status);
+    return unpack(await response.json());
   }
 
   async function list() {
+    if (!apiBase) return ordered(localPosts);
     const remote = await fromApi('/api/public/posts');
-    return ordered(Array.isArray(remote) ? remote : localPosts);
+    if (!Array.isArray(remote)) throw new Error('Resposta inválida da API de artigos.');
+    return ordered(remote);
   }
 
   async function one(id) {
+    if (!apiBase) return localPosts.find((post) => String(post.id) === String(id) && post.status === 'PP') || null;
     const remote = await fromApi('/api/public/posts/' + encodeURIComponent(id));
-    if (remote && remote.id != null && remote.status !== 'PE' && remote.status !== 'PO') return remote;
-    return localPosts.find((post) => String(post.id) === String(id) && post.status === 'PP') || null;
+    return remote && remote.id != null && remote.status === 'PP' ? remote : null;
   }
 
   function articleUrl(post) {
