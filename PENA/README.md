@@ -4,10 +4,10 @@ Aplicação Laravel 13 em desenvolvimento para administrar o acervo do PENA. O p
 
 ## Estado desta entrega
 
-- Estrutura Laravel e Docker local, tela de login, sessão, logout e proteção de `/admin` implementados. Login usa a tabela nova `pena_admin_users`, cuja migração **não foi executada**.
-- API pública de leitura preparada para as tabelas legadas de `../scripts/export-posts.sql`: filtra `STATUS_POST = PP`, devolve o contrato esperado pelo site institucional e não expõe rascunhos. A consulta foi testada com esquema sintético em SQLite; **não foi validada na base real**.
+- Estrutura Laravel e Docker local, tela de login, sessão, logout e proteção de `/admin` implementados. Há cadastro autenticado de outros usuários administrativos em `/admin/users`. Login usa a tabela nova `pena_admin_users`, cuja migração **não foi executada**.
+- API pública de leitura preparada para as tabelas legadas de `../scripts/export-posts.sql`: filtra `STATUS_POST = PP`, devolve o contrato esperado pelo site institucional e não expõe rascunhos. A ordem editorial pode ser modificada em `/admin/posts/order` e armazenada na tabela auxiliar `pena_post_order`, que também **não foi criada na base real**. A consulta e a ordenação foram testadas com esquema sintético em SQLite; **não foram validadas na base real**.
 - Nenhum dado da base existente foi alterado. Não foi produzido um backup físico porque o servidor MySQL remoto não oferece TLS e ainda não há acesso seguro à hospedagem para exportação.
-- Ainda não há CRUD de usuários, autores, mídias ou posts, nem reordenação editorial. Não existe administrador real cadastrado. O site institucional continua usando o snapshot local enquanto `apiBaseUrl` estiver vazio.
+- Ainda não há edição/desativação de usuários nem CRUD de autores, mídias ou posts. Não existe administrador real cadastrado. O site institucional continua usando o snapshot local enquanto `apiBaseUrl` estiver vazio.
 
 ## Rodar localmente sem banco
 
@@ -34,8 +34,8 @@ Os testes usam SQLite em memória e dados fictícios. O `.env` local não conté
 
 1. Obter da hospedagem um dump completo por canal seguro (por exemplo, exportação pelo painel HTTPS ou dump gerado no servidor e transferido por SFTP/SSH). Solicitar também uma forma segura de acessar o MySQL: TLS habilitado ou túnel SSH. A conexão TCP atual aceita login, mas o servidor informa que **não suporta TLS**; por isso não faremos dump nem migração por essa conexão.
 2. Guardar o dump fora do repositório, em `C:\dev\veneza-backups` ou outro diretório privado, verificar o SHA-256 e testar restauração em banco isolado. O backup deve conter estrutura e dados; confirmar também triggers, rotinas e eventos, se existirem.
-3. Inspecionar o esquema real e comparar tabelas, campos, índices, estados editoriais e relacionamentos com o adaptador em `app/Repositories/LegacyPostRepository.php`. Confirmar se `pena_admin_users` já existe antes de aplicar a migração proposta. Não modificar tabelas legadas às cegas.
-4. Só então configurar `.env` com acesso seguro, `APP_DEBUG=false` fora do ambiente local, aplicar migrações revisadas e criar a conta inicial. O comando `php artisan pena:create-admin --backup=<caminho> --sha256=<hash>` solicita nome, e-mail e senha sem mostrá-la no terminal e exige um dump físico correspondente ao hash. A migração deve ser revisada e executada separadamente após o mesmo portão.
+3. Inspecionar o esquema real e comparar tabelas, campos, índices, estados editoriais e relacionamentos com o adaptador em `app/Repositories/LegacyPostRepository.php`. Confirmar se `pena_admin_users` ou `pena_post_order` já existem antes de aplicar as migrações propostas. Não modificar tabelas legadas às cegas.
+4. Só então configurar `.env` com acesso seguro, `APP_DEBUG=false` fora do ambiente local, aplicar migrações revisadas e criar a conta inicial. O comando `php artisan pena:create-admin --backup=<caminho> --sha256=<hash>` solicita nome, e-mail e senha sem mostrá-la no terminal e exige um arquivo de backup não vazio com o hash informado; a restauração deve ter sido verificada manualmente antes. Dentro do Docker, monte o diretório do backup somente para leitura, por exemplo `-v "C:\dev\veneza-backups:/backups:ro"`, e use o caminho `/backups/<arquivo.sql>` no comando. As migrações devem ser revisadas e executadas separadamente após o mesmo portão.
 
 Sem acesso SSH/painel, peça ao provedor um dump por link HTTPS temporário autenticado e habilitação de TLS no MySQL, ou acesso SSH temporário para túnel. Não envie o dump por e-mail sem proteção e não faça a exportação por MySQL sem criptografia.
 
@@ -46,7 +46,7 @@ Após hospedar o PENA em origem HTTPS, adicionar a origem exata do site em `PUBL
 ## Pendências para concluir o produto
 
 - Backup e transporte seguro do banco; validação do esquema real e dos estados `PP`/`PO`/`PE`.
-- CRUD autenticado com autorização por papel para usuários, autores, mídias e posts; upload seguro, validação de HTML e trilha de auditoria.
-- Ordenação editorial persistente sem perder a ordem histórica; migrations aditivas revisadas após conhecer o esquema.
+- Completar edição/desativação de usuários e CRUD autenticado de autores, mídias e posts, com autorização por papel, upload seguro, validação de HTML e trilha de auditoria.
+- Revisar a tabela de ordem editorial e as migrações aditivas contra o esquema real antes de instalá-las; testar reordenação e reversão em cópia restaurada sem perder a ordem histórica.
 - Testes de integração com cópia restaurada da base real; criação da conta inicial; HTTPS, domínio, CORS e hospedagem PHP.
 - Ativar API no site, validar publicação/despublicação, artigos antigos, 404, falha da API e metadados SEO.

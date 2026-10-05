@@ -23,6 +23,7 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ]);
+        $credentials['email'] = strtolower(trim($credentials['email']));
 
         if (config('database.default') === 'mysql' && ! config('database.connections.mysql.host')) {
             return back()->withErrors(['email' => 'O acesso ainda não está configurado.'])->onlyInput('email');
