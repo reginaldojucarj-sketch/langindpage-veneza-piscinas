@@ -1,12 +1,12 @@
 # Pendências para a integração com o PENA
 
-Registro da revisão da Central de Conhecimento em 05/10/2026. São problemas conhecidos da versão provisória, não funcionalidades concluídas. O site institucional continua estático e a API do PENA ainda não existe neste projeto.
+Registro da revisão da Central de Conhecimento em 05/10/2026. São problemas conhecidos da versão provisória, não funcionalidades concluídas. O site institucional continua estático; a API do PENA está apenas preparada localmente, sem integração com a base real ou implantação.
 
-## Prioridade alta — respeitar a retirada de publicações
+## Prioridade alta — validar a retirada de publicações na integração real
 
-Hoje, `assets/js/content.js` usa o snapshot local quando a consulta de um artigo na API falha ou retorna um estado não público. Isso pode voltar a mostrar pelo link direto um artigo que tenha sido retirado no PENA. A listagem também pode reapresentar conteúdos antigos durante indisponibilidade da API.
+O código foi ajustado para usar o snapshot somente enquanto `apiBaseUrl` estiver vazio. Após configurar a API, respostas `404`/`410` e falhas não ressuscitam artigos do snapshot. Falta validar esse comportamento com a API real e decidir a política editorial para períodos de indisponibilidade.
 
-- Distinguir falha de rede/servidor de resposta editorial `404`, `410` ou estado não publicado. Não usar o snapshot para contornar remoções ou despublicações.
+- Testar a distinção entre falha de rede/servidor e resposta editorial `404`, `410` ou estado não publicado com a API implantada.
 - Definir com o PENA se o fallback será permitido após a API entrar em produção. Se for, estabelecer prazo de validade e mecanismo de invalidação para a cópia local.
 - A API pública deve entregar apenas conteúdos publicados. Validar o estado também na leitura individual; não depender somente da interface para proteger rascunhos.
 - Testar publicação, alteração, despublicação, exclusão, `404`, `410` e indisponibilidade temporária da API, inclusive com URL direta de artigo antigo.

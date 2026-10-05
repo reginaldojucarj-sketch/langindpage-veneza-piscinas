@@ -145,7 +145,7 @@ Não existe suíte automatizada configurada. Antes de concluir uma alteração:
 
 ## Publicação e limitações conhecidas
 
-`.github/workflows/deploy-pages.yml` publica a raiz inteira no GitHub Pages em push para `main` ou por acionamento manual. Não há build. Como a raiz completa vira artefato, `assets/sources/` também é publicada atualmente.
+`.github/workflows/deploy-pages.yml` publica os HTMLs da raiz, `assets/`, os HTMLs de `site/` e `site/assets/` no GitHub Pages em push para `main` ou por acionamento manual. Não há build. `PENA/` fica fora do artefato; `assets/sources/` ainda é publicada com `assets/`.
 
 O estado atual tem estas particularidades:
 
