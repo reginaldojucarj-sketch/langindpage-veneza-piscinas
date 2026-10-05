@@ -8,4 +8,8 @@ As tabelas legadas conhecidas aparecem em `../scripts/export-posts.sql`. O adapt
 
 O Docker local executa a aplicação sem alterar PHP/Composer globais. `PENA/.env` é local e ignorado. Testes usam SQLite em memória; não provam compatibilidade do esquema real. O GitHub Pages da raiz publica apenas arquivos estáticos e exclui esta aplicação PHP. Não configure `site/assets/js/config.js` para a API antes de implantá-la em HTTPS e testar as regras editoriais.
 
+A hospedagem alvo é ServHost com cPanel. O painel informa SSH por chave pública autorizada, SSL ativo, Nginx caching, Git Version Control, Application Manager, bancos MySQL e PHP 8.3/8.4 disponíveis no seletor. Domínios existentes podem estar herdando PHP 7.4; confirmar e ajustar somente o subdomínio do PENA. Não armazenar a chave privada SSH, senha do cPanel ou credenciais do banco no repositório, nos `AGENTS.md` ou no chat.
+
+Planejamento de subdomínios: domínio da landing; `pena.<domínio>` para o painel Laravel; `api.<domínio>` para a API e documentação OpenAPI protegida. Antes do deploy, confirmar document root em `PENA/public`, extensões `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `tokenizer`, `xml` e `ctype`, Composer/SSH, banco MySQL, HTTPS e regras de CORS. O GitHub Actions da raiz não hospeda o PENA.
+
 Siga o Gitflow e as validações em `../AGENTS.md`. Mantenha mudanças focadas; não publique esta branch como produto concluído enquanto o backup, o CRUD e a conta inicial estiverem pendentes.

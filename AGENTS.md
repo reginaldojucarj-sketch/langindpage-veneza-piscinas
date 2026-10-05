@@ -157,3 +157,11 @@ O estado atual tem estas particularidades:
 - Fontes do Google, imagens remotas de artigos, WhatsApp e destinos sociais dependem de internet.
 
 Trate essas limitações como contexto, não como autorização para refatoração ampla. Faça alterações focadas e preserve o comportamento existente salvo quando a tarefa pedir explicitamente uma mudança maior.
+
+## Hospedagem disponível para o PENA
+
+O provedor ServHost disponibiliza cPanel para a conta da Veneza Piscinas. O painel mostra acesso SSH por chaves, com uma chave pública `id_rsa` já autorizada; a chave privada não deve ser versionada nem enviada ao chat. A conta possui gerenciador de arquivos, Git Version Control, backup/restauração, bancos MySQL e seletor de versões PHP.
+
+O seletor do cPanel oferece PHP 8.3 e 8.4, compatíveis com o Laravel 13 usado pelo PENA; os domínios existentes ainda aparecem em PHP 7.4, portanto não se deve alterar a versão herdada sem selecionar o domínio correto. O cPanel também mostra SSL ativo, Nginx caching ativo, diretório inicial `/home/veneza`, Application Manager e Setup Node.js/Python/Ruby. A disponibilidade desses recursos não substitui a confirmação de extensões PHP, Composer, document root e permissões no domínio/subdomínio.
+
+Há espaço para criar subdomínios (o painel indica 4 de 10 em uso). Arquitetura planejada: domínio da landing estática, `pena.<domínio>` para o painel Laravel e `api.<domínio>` para a API/documentação OpenAPI. O GitHub Pages continua publicando somente a landing/site estáticos; o PENA deverá ser implantado separadamente no ServHost por SSH/cPanel.

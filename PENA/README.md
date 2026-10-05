@@ -2,6 +2,8 @@
 
 Aplicação Laravel 13 em desenvolvimento para administrar o acervo do PENA. O painel começa em `/admin`; a leitura pública dos artigos usa `/api/public/posts` e `/api/public/posts/{id}`. Este diretório **não é publicado pelo GitHub Pages** da landing page. Não há deploy PHP configurado.
 
+A hospedagem planejada é a ServHost, que disponibiliza cPanel, SSH por chave, SSL, Git Version Control, Application Manager, MySQL e seleção de PHP 8.3/8.4. Isso torna o deploy viável, mas ainda é necessário confirmar extensões, Composer, document root e acesso seguro ao banco. Não reutilize a versão PHP 7.4 herdada por alguns domínios sem configurar o subdomínio correto.
+
 ## Estado desta entrega
 
 - Estrutura Laravel e Docker local, tela de login, sessão, logout e proteção de `/admin` implementados. Há cadastro autenticado de outros usuários administrativos em `/admin/users`. Login usa a tabela nova `pena_admin_users`, cuja migração **não foi executada**.
