@@ -1,0 +1,39 @@
+name: PENA and site tests
+
+on:
+  push:
+    paths:
+      - 'PENA/**'
+      - 'site/assets/js/**'
+      - 'site/assets/data/**'
+      - 'site/tests/**'
+      - '.github/workflows/pena-tests.yml'
+  pull_request:
+    paths:
+      - 'PENA/**'
+      - 'site/assets/js/**'
+      - 'site/assets/data/**'
+      - 'site/tests/**'
+      - '.github/workflows/pena-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pena:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install locked dependencies in isolated PHP container
+        run: docker run --rm -v "$PWD/PENA:/app" -w /app composer:2 composer install --no-interaction --prefer-dist
+      - name: Unit and HTTP integration tests (SQLite in memory only)
+        run: docker run --rm --network none -v "$PWD/PENA:/app" -w /app composer:2 php vendor/bin/phpunit
+  site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static site contract and admin interaction tests
+        run: docker run --rm --network none -v "$PWD:/app:ro" -w /app node:22-alpine node --test site/tests/content.test.cjs PENA/tests/js/admin-order.test.cjs

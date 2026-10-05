@@ -26,7 +26,7 @@ class PostOrderController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'ids' => ['required', 'array', 'min:1', 'max:500'],
+            'ids' => ['required', 'array', 'list', 'min:1', 'max:500'],
             'ids.*' => ['required', 'integer', 'distinct', 'min:1'],
         ]);
 

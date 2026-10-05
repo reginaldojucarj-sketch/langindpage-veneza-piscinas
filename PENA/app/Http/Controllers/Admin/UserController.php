@@ -21,11 +21,13 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $email = strtolower(trim((string) $request->input('email')));
-        $request->merge(['email' => $email]);
+        $email = $request->input('email');
+        if (is_string($email)) {
+            $request->merge(['email' => strtolower(trim($email))]);
+        }
         $data = $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:120'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('pena_admin_users', 'email')],
+            'email' => ['bail', 'required', 'string', 'email', 'max:255', Rule::unique('pena_admin_users', 'email')],
             'password' => ['required', 'string', 'min:12', 'confirmed'],
         ]);
 
