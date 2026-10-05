@@ -2,7 +2,7 @@
 
 Esta pasta é um protótipo autônomo para o futuro repositório do site institucional. A landing page existente na raiz do repositório não foi alterada. O site usa HTML, CSS e JavaScript puro, sem build ou dependências.
 
-No repositório atual, o GitHub Actions publica a raiz inteira em cada push para `main`. Portanto, ao versionar esta pasta na `main`, o protótipo também ficará acessível no subcaminho `/site/` do GitHub Pages existente. Isso não cria o novo repositório nem substitui a landing principal.
+No repositório atual, o GitHub Actions publica os HTMLs da raiz, `assets/`, os HTMLs de `site/` e `site/assets/` em cada push para `main`, excluindo o PENA. Portanto, ao versionar esta pasta na `main`, o protótipo também ficará acessível no subcaminho `/site/` do GitHub Pages existente. Isso não cria o novo repositório nem substitui a landing principal.
 
 ## Páginas
 

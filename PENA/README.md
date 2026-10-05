@@ -2,7 +2,7 @@
 
 Aplicação Laravel 13 em desenvolvimento para administrar o acervo do PENA. O painel começa em `/admin`; a leitura pública dos artigos usa `/api/public/posts` e `/api/public/posts/{id}`. Este diretório **não é publicado pelo GitHub Pages** da landing page. Não há deploy PHP configurado.
 
-A hospedagem planejada é a ServHost, que disponibiliza cPanel, SSH por chave, SSL, Git Version Control, Application Manager, MySQL e seleção de PHP 8.3/8.4. Isso torna o deploy viável, mas ainda é necessário confirmar extensões, Composer, document root e acesso seguro ao banco. Não reutilize a versão PHP 7.4 herdada por alguns domínios sem configurar o subdomínio correto.
+A hospedagem planejada é a ServHost com cPanel. Em 05/10/2026, o suporte (#091143) confirmou bloqueio do SSH externo e ofereceu liberar o Terminal web do cPanel; o usuário solicitou a liberação, ainda não confirmada. O painel também oferece SSL, Git Version Control, Application Manager, MySQL e PHP 8.3/8.4. O **lock atual exige PHP >= 8.4.1** por suas dependências Symfony. Confirmar a versão tanto no Terminal quanto no subdomínio, extensões, Composer, document root e acesso seguro ao banco. Não alterar o PHP herdado de outros sites.
 
 ## Estado desta entrega
 
@@ -31,6 +31,21 @@ docker run --rm -v "${PWD}:/app" -w /app composer:2 php artisan test
 ```
 
 Os testes usam SQLite em memória e dados fictícios. O `.env` local não contém as credenciais de produção e é ignorado pelo Git. Nunca versione senhas, dumps ou arquivos `.env`.
+
+## Revisão e testes locais
+
+Consulte [RELATORIO-REVISAO-LOCAL.md](RELATORIO-REVISAO-LOCAL.md) para resultados, correções e pendências. A suíte PHP cobre normalização de dados (unitários), rotas HTTP, autenticação/CSRF, cadastro, ordenação, API, migrações aditivas e o comando de criação de administrador (integração com SQLite sintético).
+
+Na raiz do repositório, com dependências já instaladas:
+
+```powershell
+docker run --rm --network none -v "${PWD}/PENA:/app" -w /app composer:2 php vendor/bin/phpunit
+docker run --rm --network none -v "${PWD}:/app:ro" -w /app node:22-alpine node --test site/tests/content.test.cjs PENA/tests/js/admin-order.test.cjs
+```
+
+Com o serviço Docker ativo, também é possível executar `docker compose -f PENA/compose.yaml exec -T app php artisan test`. O PHPUnit força o ambiente de teste em `env` e `server`, inclusive quando o Compose fornece variáveis próprias. `tests/TestCase.php` interrompe a suíte antes das fixtures se a configuração não for `testing` + SQLite `:memory:` sem `DB_URL`. Não remova essa trava nem use as fixtures no banco real.
+
+`.github/workflows/pena-tests.yml` prepara as mesmas verificações em push/PR com alterações relevantes e execução manual, sem credenciais e sem deploy. A execução no GitHub depende de versionar/enviar o workflow; criar o arquivo local não aciona o Actions. O job de instalação precisa de rede para obter dependências, mas os contêineres dos testes são executados com `--network none`.
 
 ## Portão obrigatório antes de qualquer escrita na base existente
 
