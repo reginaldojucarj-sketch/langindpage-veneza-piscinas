@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Use a fixed destination and discard all incoming query parameters.
+RewriteRule ^admin/?$ https://pena.venezapiscinas.com.br/ [R=302,L,QSD]
+
+RewriteRule ^conhecimento\.html$ /conhecimento/ [R=302,L,QSD]
+
+# Keep links shared as artigo.html?id=N by resolving the ID server-side.
+RewriteRule ^artigo\.html$ article.php [L,QSA]
+
+# Only simple, lower-case slugs may reach the public article renderer.
+RewriteRule ^conhecimento/([a-z0-9]+(?:-[a-z0-9]+)*)/?$ article.php?slug=$1 [L,QSD]
