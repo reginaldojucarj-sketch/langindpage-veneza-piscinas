@@ -112,7 +112,7 @@ Não remova CTAs principais sem avaliar o funil completo. Os pontos de conversã
 
 `posts.html` é uma página independente, com busca textual, filtro por assunto e leitura em `dialog`. O conteúdo vem de `assets/data/posts-data.js`, não de uma API em tempo real. URLs relativas herdadas são resolvidas contra `https://pena.venezapiscinas.com.br/`.
 
-O snapshot descrito no README contém 184 artigos extraídos em 17/09/2026. Para atualizá-lo, siga o fluxo documentado no README usando `scripts/export-posts.sql` e `scripts/build-posts-data.ps1`. Se a quantidade, data ou distribuição editorial mudar, atualize também a documentação.
+O snapshot público descrito no README contém 152 artigos `PP` da extração de 17/09/2026; os 32 registros `PO`/`PE` da base não pertencem ao artefato estático. O exportador e o conversor filtram `PP`, `posts.js` reforça essa regra e `tests/public-posts.test.cjs` bloqueia um snapshot inseguro no workflow de Pages. Para atualizar, siga o fluxo documentado no README. O histórico Git antigo pode continuar contendo a versão com registros não públicos; não reescreva histórico compartilhado sem autorização específica.
 
 `posts.js` sanitiza o HTML importado com uma lista de elementos permitidos e bloqueados. Não substitua essa montagem segura por `innerHTML` direto. Preserve a validação de protocolos e a restrição de iframes incorporados ao YouTube.
 
@@ -132,7 +132,7 @@ py -m http.server 8000
 
 Acesse `http://localhost:8000/`, `posts.html` e, quando relevante, `font-showcase.html`. Abrir o HTML diretamente serve para uma inspeção rápida, mas o servidor local representa melhor a hospedagem.
 
-Não existe suíte automatizada configurada. Antes de concluir uma alteração:
+Há um teste automatizado de segurança dos snapshots; as interações da landing ainda exigem validação manual. Antes de concluir uma alteração:
 
 1. Verifique `git diff` e preserve mudanças do usuário que não façam parte da tarefa.
 2. Se JavaScript mudou e Node estiver disponível, execute `node --check` em cada arquivo alterado.
@@ -145,7 +145,7 @@ Não existe suíte automatizada configurada. Antes de concluir uma alteração:
 
 ## Publicação e limitações conhecidas
 
-`.github/workflows/deploy-pages.yml` publica os HTMLs da raiz, `assets/`, os HTMLs de `site/` e `site/assets/` no GitHub Pages em push para `main` ou por acionamento manual. Não há build. `PENA/` fica fora do artefato; `assets/sources/` ainda é publicada com `assets/`.
+`.github/workflows/deploy-pages.yml` testa se os snapshots de artigos contêm apenas `PP` e então publica os HTMLs da raiz, as pastas públicas `assets/{css,data,images,js,videos}`, os HTMLs de `site/` e `site/assets/{css,data,images,js}` no GitHub Pages. O job só publica commits da `main`, inclusive no acionamento manual. Não há build. `PENA/` e `assets/sources/` ficam fora dos novos artefatos; versões anteriores do Git ou de artefatos não são apagadas por isso.
 
 O estado atual tem estas particularidades:
 
@@ -173,3 +173,11 @@ O `PENA/composer.lock` atual inclui dependências Symfony que exigem PHP >= 8.4.
 Decisão posterior do usuário (05/10/2026): `venezapiscinas.com.br` receberá o site institucional de `site/`, não a landing da raiz. `/admin` no domínio principal deverá redirecionar para `pena.venezapiscinas.com.br`, com login no PENA; `api.venezapiscinas.com.br` deverá oferecer documentação interativa autenticada usando a mesma base de usuários. Artigos deverão ter URLs amigáveis; `POST_pena.LINK_POST` é candidato conhecido pela exportação, ainda sujeito a inspeção real de unicidade e conteúdo. Não confundir definição de arquitetura com funcionalidade já implementada.
 
 O suporte confirmou a liberação do Terminal dentro do cPanel no chamado #091143; isso atualiza a pendência anterior, mas não comprova liberação de SSH externo. A captura de domínios mostra `api` em `/public_html/api.pena`, `pena` em `/public_html/pena.venezapiscinas` e domínio principal em `/public_html`, com redirecionamento para `www` a revisar. Preservar `loja` e arquivos de mídia legados; fazer backup dos arquivos e banco antes de substituir a publicação atual.
+
+Backup do banco recebido em `C:\dev\veneza-backups\veneza_pena.sql.gz`, fora do repositório: integridade, SHA-256 e restauração isolada em MariaDB 10.11.19 verificados. Vistoria e limitações em `PENA/RELATORIO-BANCO.md`. O leitor do PENA passou com os 152 publicados e 32 não públicos; slugs públicos de `LINK_POST` válidos/únicos. Dez tabelas usam MyISAM/utf8mb3: revisar concorrência antes de liberar escrita. Isso não substitui backup dos arquivos/mídias nem conclui o desenvolvimento ou deploy. Nunca versionar o dump ou dados de autenticação legados.
+
+Atualização editorial local (backlog 04): reordenação isolada usa mutex/revisão e auditoria InnoDB; leitura pública aplica HTML Purifier sem alterar conteúdo armazenado. O digest do conjunto `PP` invalida a ordem manual depois de publicação/despublicação legada. Isso **não** habilita CRUD sobre as tabelas MyISAM: nenhuma conversão foi aprovada/aplicada, e a validação utf8mb3 ainda deve ser integrada aos formulários futuros. Ver `PENA/SEGURANCA-EDITORIAL.md`; os testes concorrentes usam somente MariaDB sintético descartável.
+
+Integração institucional local (backlog 06, ainda sem deploy): o PENA oferece `GET /api/public/posts/slug/{slug}` para `LINK_POST` publicado. O site em `site/` preserva a prévia estática, mas prepara páginas SSR em PHP para `/conhecimento/<slug>` com SEO no HTML inicial, estados HTTP reais e sem fallback para o snapshot quando a API estiver ativa. `site/.htaccess` prepara `/admin` como redirecionamento fixo ao PENA e o ID antigo como redirecionamento ao slug. GitHub Pages não executa PHP nem `.htaccess`. O canonical preparado é sem `www`; revisar antes de publicar o redirecionamento atual do cPanel para `www` para não criar loop. Não implantar em `/public_html` sem backup dos arquivos e preservação da loja/mídias legadas.
+
+Backlog 07: roteiro em `PENA/HOMOLOGACAO-E-RELEASE.md` e empacotador de commit limpo em `scripts/prepare-pena-release.ps1`. A imagem de homologação local usa PHP 8.4. Preparação não equivale a instalação: faltam backup atualizado de banco/arquivos/mídias, decisão sobre escrita MyISAM, confirmação de PHP web e raízes seguras, preservação das URLs antigas de imagens no host `pena`, correção do conflito `www` e autorização de corte. Nunca publicar a landing da raiz como site institucional nem sobrescrever `public_html`/`loja` sem inventário e retorno ensaiado.

@@ -119,13 +119,13 @@ Os vídeos publicados do hero e da galeria de projetos usam versões sem áudio.
 
 ## Atualização dos artigos
 
-O arquivo `assets/data/posts-data.js` contém **184 artigos** da extração de **17/09/2026** do banco `veneza_pena`. A cópia inclui os estados `PP` (152), `PO` (26) e `PE` (6); a página não restringe a exibição por estado editorial.
+O arquivo público `assets/data/posts-data.js` contém **152 artigos publicados (`PP`)** da extração de **17/09/2026** do banco `veneza_pena`. A base da época tinha também 26 `PO` e 6 `PE`; esses registros não devem entrar no snapshot nem aparecer em `posts.html`. Uma cópia antiga desses dados existiu no histórico do repositório: retirar registros do arquivo atual não apaga versões anteriores do Git ou artefatos já publicados.
 
 O navegador lê `window.VENEZA_POSTS` desse arquivo, sem consultar o banco. Imagens e links relativos dos artigos são resolvidos a partir de `https://pena.venezapiscinas.com.br/`, conforme definido em `assets/js/posts.js`.
 
 Para gerar uma nova cópia:
 
-1. Execute [scripts/export-posts.sql](scripts/export-posts.sql) no banco de origem. A consulta combina `POST_pena` com as tabelas relacionadas de autores, pessoas, imagens e categorias.
+1. Execute [scripts/export-posts.sql](scripts/export-posts.sql) no banco de origem. A consulta exporta **somente `PP`** e combina `POST_pena` com as tabelas relacionadas de autores, pessoas, imagens e categorias.
 2. Salve a coluna `article` em um arquivo **JSONL**: um objeto JSON por linha, sem cabeçalho ou formatação de tabela.
 3. Na raiz do projeto, execute o conversor com PowerShell. O destino deve ser relativo à raiz:
 
@@ -136,15 +136,15 @@ Para gerar uma nova cópia:
 4. Confira acentos, quantidade de artigos, busca, assuntos, imagens e abertura dos textos em `posts.html`.
 5. Versione o arquivo gerado junto das alterações necessárias. Se a extração mudar, atualize a data e as contagens nesta seção.
 
-O conversor seleciona os campos editoriais previstos, rejeita uma exportação vazia ou com IDs duplicados e grava o JavaScript em UTF-8. A consulta não exporta credenciais nem registros das tabelas de clientes, e-mail ou logs.
+O conversor seleciona os campos editoriais previstos, mantém apenas `PP` mesmo se a entrada contiver outros estados, rejeita ausência de publicados ou IDs duplicados e grava o JavaScript em UTF-8. Antes de publicar, execute `node --test tests/public-posts.test.cjs` e `powershell -NoProfile -ExecutionPolicy Bypass -File tests/build-posts-data.test.ps1`; o workflow de Pages também executa esses testes. A consulta não exporta credenciais nem registros das tabelas de clientes, e-mail ou logs.
 
 ## Publicação
 
-O workflow [deploy-pages.yml](.github/workflows/deploy-pages.yml) publica o site no **GitHub Pages** quando há um push na branch `main` ou quando é acionado manualmente por `workflow_dispatch`.
+O workflow [deploy-pages.yml](.github/workflows/deploy-pages.yml) publica o site no **GitHub Pages** em push para `main` ou por acionamento manual de um commit da própria `main`. Execuções manuais em outras branches não publicam.
 
-Ele faz checkout do repositório, configura o Pages e publica apenas os HTMLs da raiz, `assets/`, os HTMLs de `site/` e `site/assets/`, sem compilação. A aplicação PHP em `PENA/` fica fora do artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
+Ele faz checkout do repositório, configura o Pages e publica apenas os HTMLs da raiz, as pastas públicas `assets/css`, `assets/data`, `assets/images`, `assets/js` e `assets/videos`, os HTMLs de `site/` e as pastas públicas `site/assets/css`, `site/assets/data`, `site/assets/images` e `site/assets/js`, sem compilação. A aplicação PHP em `PENA/` fica fora do artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
 
-Arquivos versionados em `assets/sources/` ainda entram na publicação porque são copiados com `assets/`.
+`assets/sources/` não entra nos novos artefatos do Pages. Isso não remove cópias de artefatos anteriores nem arquivos do histórico Git; uma limpeza de histórico/retenção exigiria decisão separada.
 
 ## Checklist de revisão
 
@@ -157,4 +157,4 @@ Antes de publicar mudanças, confira no navegador:
 - Busca, filtro por assunto e leitura dos artigos em `posts.html`.
 - Console e painel de rede sem erros de JavaScript ou arquivos locais ausentes.
 
-A landing não possui suíte automatizada; sua conferência é manual. O site institucional tem testes básicos de integração editorial em `site/tests/`, e o PENA tem testes locais em SQLite, descritos no seu README.
+A landing continua exigindo conferência manual das interações; há um teste automatizado para impedir a publicação de artigos não públicos no snapshot. O site institucional tem testes de integração editorial em `site/tests/`, e o PENA tem testes locais em SQLite, descritos no seu README.
