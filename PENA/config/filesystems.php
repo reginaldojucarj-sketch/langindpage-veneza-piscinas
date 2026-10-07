@@ -47,6 +47,21 @@ return [
             'report' => false,
         ],
 
+        // Both disks live below storage/app/private and are never symlinked into public/.
+        'pena_originals' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/pena/originals'),
+            'throw' => true,
+            'report' => false,
+        ],
+
+        'pena_derivatives' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/pena/derivatives'),
+            'throw' => true,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

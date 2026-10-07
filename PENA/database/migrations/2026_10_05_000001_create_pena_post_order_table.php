@@ -9,6 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pena_post_order', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->unsignedBigInteger('post_id')->primary();
             $table->unsignedInteger('sort_order');
             $table->timestamps();

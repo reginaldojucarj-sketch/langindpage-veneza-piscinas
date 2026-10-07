@@ -1,1 +1,15 @@
-.panel{background:white;border-radius:14px;padding:1.5rem;margin:2rem 0}.panel h2{margin-top:0}.form-stack{display:grid;gap:.6rem;max-width:440px}.form-stack button{justify-self:start}.user-list{list-style:none;padding:0;margin:0}.user-list li{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-top:1px solid #dcebf0}.user-list span{overflow-wrap:anywhere}@media(max-width:520px){.user-list li{flex-direction:column;gap:.25rem}}
+.user-list { list-style: none; padding: 0; margin: 0; }
+.user-list li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .7rem 0;
+    border-top: 1px solid var(--pena-divider);
+    overflow-wrap: anywhere;
+}
+.user-list span { overflow-wrap: anywhere; }
+
+@media (max-width: 520px) {
+    .user-list li { flex-direction: column; gap: .25rem; }
+}

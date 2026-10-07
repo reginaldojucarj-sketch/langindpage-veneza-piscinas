@@ -17,6 +17,8 @@
 /.mcp.json
 /boost.json
 /node_modules
+/tools/openapi/node_modules
+/tests/Browser/node_modules
 /public/build
 /public/fonts-manifest.dev.json
 /public/hot
