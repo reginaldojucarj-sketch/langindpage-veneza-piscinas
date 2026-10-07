@@ -9,8 +9,27 @@
   const empty = document.getElementById('content-empty');
   const more = document.getElementById('content-more');
   const featured = document.getElementById('content-featured');
+  let allPosts = [];
   let posts = [];
+  let remoteSearchActive = false;
+  let searchRequest = 0;
+  let searchTimer = null;
   let visible = 12;
+  const searchIndex = new WeakMap();
+
+  function searchableText(post) {
+    if (!searchIndex.has(post)) {
+      searchIndex.set(post, service.normalize([
+        post.title, post.description, post.snippet, post.keywords, post.author,
+        service.plainText(post.html)
+      ].join(' ')));
+    }
+    return searchIndex.get(post);
+  }
+
+  function listingChanged(error) {
+    return /lista de artigos mudou/i.test(String(error && error.message || ''));
+  }
 
   function card(post, isFeatured) {
     const item = document.createElement('article');
@@ -56,9 +75,9 @@
   function render() {
     const term = service.normalize(search.value.trim());
     const selected = category.value;
+    empty.textContent = 'Nenhum artigo encontrado. Tente outra busca ou assunto.';
     const matched = posts.filter((post) => {
-      const text = service.normalize([post.title, post.description, post.snippet, post.keywords, post.author, service.plainText(post.html)].join(' '));
-      return (!term || text.includes(term)) && (!selected || service.categories(post).includes(selected));
+      return (remoteSearchActive || !term || searchableText(post).includes(term)) && (!selected || service.categories(post).includes(selected));
     });
     const showFeatured = !term && !selected && matched.length > 0;
     featured.hidden = !showFeatured;
@@ -73,17 +92,56 @@
     more.hidden = listed.length <= visible;
   }
 
-  search.addEventListener('input', () => { visible = 12; render(); });
+  function updateSearch() {
+    visible = 12;
+    const term = search.value.trim();
+    const request = ++searchRequest;
+    window.clearTimeout(searchTimer);
+
+    if (!service.apiEnabled || !term) {
+      remoteSearchActive = false;
+      posts = allPosts;
+      render();
+      return;
+    }
+
+    count.textContent = 'Buscando artigos…';
+    searchTimer = window.setTimeout(() => {
+      service.search(term).then((items) => {
+        if (request !== searchRequest) return;
+        posts = items;
+        remoteSearchActive = true;
+        render();
+      }).catch((error) => {
+        if (request !== searchRequest) return;
+        console.error('Não foi possível pesquisar os artigos.', error);
+        posts = [];
+        remoteSearchActive = true;
+        render();
+        count.textContent = listingChanged(error) ? 'A lista mudou durante a busca.' : 'Busca temporariamente indisponível.';
+        empty.textContent = listingChanged(error) ? 'Recarregue a página para consultar a lista atualizada.' : 'Tente novamente mais tarde.';
+      });
+    }, 250);
+  }
+
+  search.addEventListener('input', updateSearch);
   category.addEventListener('change', () => { visible = 12; render(); });
   more.addEventListener('click', () => { visible += 12; render(); });
   service.list().then((items) => {
-    posts = items;
-    [...new Set(posts.flatMap(service.categories))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach((name) => {
+    allPosts = items;
+    posts = allPosts;
+    [...new Set(allPosts.flatMap(service.categories))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach((name) => {
       const option = document.createElement('option');
       option.value = name;
       option.textContent = name;
       category.append(option);
     });
-    render();
+    if (service.apiEnabled && search.value.trim()) updateSearch();
+    else render();
+  }).catch((error) => {
+    console.error('Não foi possível carregar os artigos.', error);
+    count.textContent = listingChanged(error) ? 'A lista mudou durante o carregamento.' : 'Artigos indisponíveis no momento.';
+    empty.textContent = listingChanged(error) ? 'Recarregue a página para consultar a lista atualizada.' : 'Tente novamente mais tarde.';
+    empty.hidden = false;
   });
 })();

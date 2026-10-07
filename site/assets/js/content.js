@@ -2,10 +2,11 @@
   'use strict';
 
   const config = window.VENEZA_CONTENT_CONFIG || {};
-  const localPosts = Array.isArray(window.VENEZA_POSTS) ? window.VENEZA_POSTS : [];
+  let localPostsPromise;
   const parser = new DOMParser();
   const legacyBase = config.legacyMediaBaseUrl || 'https://pena.venezapiscinas.com.br/';
   const apiBase = String(config.apiBaseUrl || '').replace(/\/+$/, '');
+  const friendlyBase = String(config.friendlyArticleBase || '');
   const allowedTags = new Set(['p', 'div', 'section', 'br', 'h2', 'h3', 'h4', 'h5', 'ul', 'ol', 'li', 'strong', 'b', 'em', 'i', 'u', 'blockquote', 'figure', 'figcaption', 'small', 'sup', 'sub', 'hr', 'pre', 'code']);
   const blockedTags = new Set(['script', 'style', 'form', 'input', 'button', 'object', 'embed', 'link', 'meta', 'svg', 'math', 'textarea', 'select', 'video', 'audio']);
 
@@ -50,7 +51,7 @@
   }
 
   function ordered(posts) {
-    return posts.filter((post) => post && post.id != null && post.status !== 'PE' && post.status !== 'PO')
+    return posts.filter((post) => post && post.id != null && post.status === 'PP')
       .sort((a, b) => {
         const aOrder = a.sort_order == null || !Number.isFinite(Number(a.sort_order)) ? Infinity : Number(a.sort_order);
         const bOrder = b.sort_order == null || !Number.isFinite(Number(b.sort_order)) ? Infinity : Number(b.sort_order);
@@ -62,30 +63,83 @@
     return payload && Object.prototype.hasOwnProperty.call(payload, 'data') ? payload.data : payload;
   }
 
+  async function requestApi(path) {
+    const response = await fetch(apiBase + path, { headers: { Accept: 'application/json' } });
+    if (response.status === 404 || response.status === 410) return null;
+    if (response.status === 409) throw new Error('A lista de artigos mudou durante o carregamento. Recarregue e tente novamente.');
+    if (!response.ok) throw new Error('API de artigos: HTTP ' + response.status);
+    return response.json();
+  }
+
+  function localPosts() {
+    if (Array.isArray(window.VENEZA_POSTS)) return Promise.resolve(window.VENEZA_POSTS);
+    if (localPostsPromise) return localPostsPromise;
+    localPostsPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'assets/data/posts-data.js';
+      script.onload = () => Array.isArray(window.VENEZA_POSTS)
+        ? resolve(window.VENEZA_POSTS) : reject(new Error('Cópia local de artigos inválida.'));
+      script.onerror = () => reject(new Error('Cópia local de artigos indisponível.'));
+      document.head.append(script);
+    });
+    return localPostsPromise;
+  }
+
   async function fromApi(path) {
     if (!apiBase) return null;
-    try {
-      const response = await fetch(apiBase + path, { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      return unpack(await response.json());
-    } catch (error) {
-      console.warn('API de artigos indisponível; usando cópia local.', error);
-      return null;
+    const payload = await requestApi(path);
+    return payload === null ? null : unpack(payload);
+  }
+
+  async function fromApiPages(searchTerm = '') {
+    const pageSize = 100;
+    const searchQuery = searchTerm ? '&q=' + encodeURIComponent(searchTerm) : '';
+    const firstPayload = await requestApi('/api/public/posts?per_page=' + pageSize + searchQuery);
+    const firstPage = unpack(firstPayload);
+    if (!Array.isArray(firstPage)) throw new Error('Resposta inválida da API de artigos.');
+
+    const meta = firstPayload && firstPayload.meta;
+    if (!meta) return ordered(firstPage);
+    const lastPage = Number(meta.last_page);
+    if (!Number.isSafeInteger(lastPage) || lastPage < 1 || Number(meta.current_page) !== 1) {
+      throw new Error('Paginação inválida na API de artigos.');
     }
+    const snapshot = String(meta.snapshot || '');
+    if (!/^[a-f0-9]{64}$/.test(snapshot)) throw new Error('Versão da listagem inválida na API de artigos.');
+
+    const remote = [...firstPage];
+    for (let page = 2; page <= lastPage; page += 1) {
+      const payload = await requestApi('/api/public/posts?page=' + page + '&per_page=' + pageSize + searchQuery);
+      const items = unpack(payload);
+      if (!Array.isArray(items) || !payload.meta || payload.meta.snapshot !== snapshot || Number(payload.meta.current_page) !== page) {
+        throw new Error('A lista de artigos mudou durante o carregamento. Atualize a página e tente novamente.');
+      }
+      remote.push(...items);
+    }
+
+    return ordered(remote);
   }
 
   async function list() {
-    const remote = await fromApi('/api/public/posts');
-    return ordered(Array.isArray(remote) ? remote : localPosts);
+    if (!apiBase) return ordered(await localPosts());
+    return fromApiPages();
+  }
+
+  async function search(term) {
+    const query = String(term || '').trim().slice(0, 150);
+    if (!apiBase) return ordered(await localPosts());
+    return fromApiPages(query);
   }
 
   async function one(id) {
+    if (!apiBase) return (await localPosts()).find((post) => String(post.id) === String(id) && post.status === 'PP') || null;
     const remote = await fromApi('/api/public/posts/' + encodeURIComponent(id));
-    if (remote && remote.id != null && remote.status !== 'PE' && remote.status !== 'PO') return remote;
-    return localPosts.find((post) => String(post.id) === String(id) && post.status === 'PP') || null;
+    return remote && String(remote.id) === String(id) && remote.status === 'PP' ? remote : null;
   }
 
   function articleUrl(post) {
+    if (apiBase && friendlyBase && typeof post.slug === 'string' && post.slug.length <= 200
+      && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)) return friendlyBase + post.slug;
     return 'artigo.html?id=' + encodeURIComponent(post.id);
   }
 
@@ -156,5 +210,5 @@
     if (!target.textContent.trim() && !target.querySelector('img, iframe')) target.textContent = 'Este artigo não possui texto disponível.';
   }
 
-  window.VENEZA_CONTENT = { list, one, categories, summary, normalize, safeUrl, dateLabel, articleUrl, image, renderBody, plainText };
+  window.VENEZA_CONTENT = { list, search, apiEnabled: Boolean(apiBase), one, categories, summary, normalize, safeUrl, dateLabel, articleUrl, image, renderBody, plainText };
 })();

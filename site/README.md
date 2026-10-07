@@ -1,8 +1,8 @@
 # Site institucional da Veneza Piscinas — versão provisória
 
-Esta pasta é um protótipo autônomo para o futuro repositório do site institucional. A landing page existente na raiz do repositório não foi alterada. O site usa HTML, CSS e JavaScript puro, sem build ou dependências.
+Esta pasta é um protótipo autônomo para o futuro repositório do site institucional. A landing page existente na raiz do repositório não foi alterada. A prévia estática usa HTML, CSS e JavaScript puro, sem build. A publicação definitiva dos artigos acrescenta uma pequena camada PHP sem framework para devolver HTML e metadados já renderizados.
 
-No repositório atual, o GitHub Actions publica a raiz inteira em cada push para `main`. Portanto, ao versionar esta pasta na `main`, o protótipo também ficará acessível no subcaminho `/site/` do GitHub Pages existente. Isso não cria o novo repositório nem substitui a landing principal.
+No repositório atual, o GitHub Actions publica os HTMLs da raiz, as subpastas públicas `assets/{css,data,images,js,videos}`, os HTMLs de `site/` e `site/assets/{css,data,images,js}` em cada push para `main`. `PENA/` e `assets/sources/` ficam fora dos novos artefatos. Portanto, ao versionar esta pasta na `main`, o protótipo também ficará acessível no subcaminho `/site/` do GitHub Pages existente. Isso não cria o novo repositório nem substitui a landing principal.
 
 ## Páginas
 
@@ -11,8 +11,9 @@ No repositório atual, o GitHub Actions publica a raiz inteira em cada push para
 | `index.html` | Home, necessidades do visitante, projeto hidráulico e entrada para as demais páginas. |
 | `solucoes.html` | Soluções organizadas pela necessidade da piscina. |
 | `produtos.html` | Vitrine consultiva das linhas atualmente apresentadas na landing. |
-| `conhecimento.html` | Central de Conhecimento com busca, assuntos, listagem de artigos e orientações da landing. |
-| `artigo.html?id=<id>` | Leitura individual de cada artigo publicado. |
+| `conhecimento.html` | Prévia estática da Central de Conhecimento. Na hospedagem PHP, `/conhecimento/` serve a mesma página. |
+| `artigo.html?id=<id>` | Leitor legado para a prévia estática; na hospedagem PHP, redireciona por ID para a URL canônica. |
+| `/conhecimento/<slug>` | Página individual renderizada pelo PHP (`article.php`) com 404/410/503 reais e SEO no HTML inicial. |
 | `projetos.html` | Seleção de projetos e imagens já publicados na landing. |
 | `veneza.html` | Apresentação institucional, diferenciais, clientes e parceiros. |
 | `contato.html` | Dados de contato e formulário que prepara uma mensagem para o WhatsApp. |
@@ -28,7 +29,7 @@ cd site
 py -m http.server 8000
 ```
 
-Se o Python não estiver disponível, qualquer servidor estático serve. Ao levar para o novo repositório, copie **o conteúdo de `site/`** para a raiz do novo projeto, mantendo os caminhos relativos.
+Se o Python não estiver disponível, qualquer servidor estático serve **para a prévia**. URLs amigáveis dependem de PHP, cURL, DOM, mbstring e `mod_rewrite` Apache; o GitHub Pages não executa essa camada. Ao levar para o novo repositório, copie **o conteúdo de `site/`** para a raiz do novo projeto, mantendo os caminhos relativos. Antes de misturar `.htaccess` com a hospedagem existente, revisar as regras atuais e preservar a loja e os arquivos legados.
 
 ## Fontes de conteúdo
 
@@ -52,12 +53,20 @@ Se o Python não estiver disponível, qualquer servidor estático serve. Ao leva
 
 ## Central de Conhecimento e futura API do PENA
 
-O nome da seção é **Central de Conhecimento** porque o acervo vai além de piscinas: inclui tratamento da água, equipamentos, aquecimento, banheiras, saunas e segurança. A página `conhecimento.html` preserva as seis orientações curtas anteriores e acrescenta um artigo em destaque, busca, filtro por assunto e cartões que levam a `artigo.html?id=<id>`. O destaque é o primeiro item da ordem recebida, sem repetição na lista. A cópia local em `assets/data/posts-data.js` foi gerada do snapshot da landing de 17/09/2026: 152 registros com estado `PP`. Os outros 32 registros (`PO` e `PE`, incluindo testes) continuam intactos no snapshot original da landing, mas não são exibidos aqui. Nenhuma base de dados foi alterada.
+O nome da seção é **Central de Conhecimento** porque o acervo vai além de piscinas: inclui tratamento da água, equipamentos, aquecimento, banheiras, saunas e segurança. A página `conhecimento.html` preserva as seis orientações curtas anteriores e acrescenta um artigo em destaque, busca, filtro por assunto e cartões que levam a `artigo.html?id=<id>`. O destaque é o primeiro item da ordem recebida, sem repetição na lista. A cópia local em `assets/data/posts-data.js` contém 152 registros `PP` da extração de 17/09/2026. O snapshot atual da landing também foi limitado a `PP`; os 32 registros não públicos permanecem apenas na base privada e possivelmente no histórico Git anterior. Nenhuma base de dados foi alterada.
 
-`assets/js/config.js` centraliza `apiBaseUrl` (vazio por padrão) e a base das mídias legadas. Quando a API pública estiver disponível, configure ali sua origem HTTPS, sem `/` final. `assets/js/content.js` consulta `GET {apiBaseUrl}/api/public/posts` (array JSON completo, ou `{ "data": [...] }`) e `GET {apiBaseUrl}/api/public/posts/{id}` (objeto JSON, ou `{ "data": {...} }`). Em falha de rede ou resposta inválida, a interface usa o snapshot local. A API deverá permitir CORS para a origem do site, retornar somente artigos públicos e fornecer `id`, `title`, `html`, `status`, `published_at`, `created_at`, `category`, `categories`, `image`, `image_name`, `author`, `description` e `snippet`. O campo opcional `sort_order` controla a ordem crescente; artigos sem ordem definida vêm depois, por data mais recente. O HTML é sanitizado no navegador; essa proteção não substitui a validação no servidor.
+`assets/js/config.js` habilita automaticamente `https://api.venezapiscinas.com.br` e links `/conhecimento/<slug>` apenas quando o site estiver em HTTPS nos hosts `venezapiscinas.com.br` ou `www.venezapiscinas.com.br`. Em localhost/GitHub Pages, a prévia usa o snapshot local, carregado **sob demanda**; no domínio definitivo o arquivo de quase 1 MB não é carregado nem usado como fallback. Se a API falhar ou retirar um artigo, o site mostra indisponibilidade/404, nunca a cópia antiga. Não implante o site no domínio definitivo antes de configurar a API HTTPS e `PUBLIC_SITE_ORIGINS` no PENA.
 
-Para atualizar o fallback, exporte novamente os artigos conforme `../README.md` e gere esta cópia apenas com registros `PP`. Não edite manualmente o arquivo gerado. As imagens históricas ainda dependem do domínio `pena.venezapiscinas.com.br`; valide a disponibilidade dessas URLs e os direitos de uso antes de publicar o novo repositório.
+Na homologação HTTPS com outro hostname, `conhecimento/index.php` injeta no HTML a origem pública de `VENEZA_PUBLIC_API_ORIGIN` (apenas HTTPS, sem credenciais), que `config.js` usa para a listagem. Sem essa variável, a rota PHP responde 503 em vez de tentar carregar o snapshot que não entra no pacote de produção. A prévia estática local continua autônoma. O SSR de artigos usa a mesma variável no servidor; validar o CORS da origem de homologação separadamente.
 
-Como `artigo.html` é renderizado por JavaScript a partir de `?id=`, título e metadados de cada artigo são atualizados no navegador. Robôs de redes sociais que não executam JavaScript podem ver apenas os metadados genéricos. Para SEO e prévias sociais completas na publicação definitiva, a integração com o PENA deverá gerar HTML pré-renderizado ou páginas estáticas por artigo.
+`assets/js/content.js` consulta `GET {apiBaseUrl}/api/public/posts?per_page=100` e segue `meta.last_page`, conferindo `meta.snapshot` entre as páginas. A busca remota usa `q` e pode pesquisar o corpo sem devolvê-lo na listagem. Resumos não incluem HTML; os detalhes vêm de `GET /api/public/posts/{id}` no leitor estático ou de `GET /api/public/posts/slug/{slug}` no renderizador PHP. A API só entrega `PP` e responde `409` se o conjunto mudar durante a leitura. A listagem preserva a ordem do PENA, destaque único, filtro, busca sem acentos e paginação visual. O HTML é sanitizado no PENA e novamente na rota PHP ou no navegador, conforme o modo.
+
+Para atualizar a cópia local usada antes da ativação da API, exporte novamente os artigos conforme `../README.md` e gere esta cópia apenas com registros `PP`. Não edite manualmente o arquivo gerado. As imagens históricas ainda dependem do domínio `pena.venezapiscinas.com.br`; valide a disponibilidade dessas URLs e os direitos de uso antes de publicar o novo repositório.
+
+Na hospedagem Apache/PHP, `.htaccess` faz `/admin` redirecionar a um destino fixo no PENA, `/conhecimento.html` encaminhar a `/conhecimento/`, `/artigo.html?id=N` consultar o ID público e redirecionar ao slug, e `/conhecimento/<slug>` chegar a `article.php`. Defina no ambiente PHP `VENEZA_PUBLIC_API_ORIGIN=https://api.venezapiscinas.com.br` — sem credenciais e sem caminho. A página PHP consulta somente a API pública, valida ID/slug/status, não segue redirecionamentos, aplica limite de resposta e devolve `Cache-Control: no-store, private`. Título, descrição, canonical, Open Graph e JSON-LD saem no HTML inicial; título e texto são escapados e o corpo passa por sanitização DOM. Slugs de artigos já publicados ficam congelados até existir histórico de aliases aprovado. Sem API configurada, a página responde 503. A página antiga `artigo.html` continua genérica e `noindex` na prévia estática.
+
+O cPanel ainda redireciona o domínio sem `www` para `www`, enquanto o canonical preparado é sem `www` conforme o destino solicitado. **Antes do deploy**, rever esse redirecionamento e decidir a regra única, sem criar uma regra oposta que cause loop. Confirmar PHP web/extensões, HTTPS, CORS, cache Nginx e URLs das imagens legadas. Não substituir arquivos existentes em `/public_html` sem backup e plano de retorno.
 
 Os problemas identificados na revisão e os critérios para a futura integração estão registrados em [PENDENCIAS-PENA.md](PENDENCIAS-PENA.md).
+
+Os testes de contrato JavaScript estão em `tests/content.test.cjs`. `tests/run-http.sh` exercita PHP/HTTP com API sintética em loopback, inclusive URL direta, status, redirecionamentos e SEO inicial; `tests/browser.mjs` confere layout, teclado, busca, mídia e sanitização em Chromium. O workflow prepara esses testes sem acessar a API real. Eles não substituem ensaio no Apache, cPanel e domínio de produção.

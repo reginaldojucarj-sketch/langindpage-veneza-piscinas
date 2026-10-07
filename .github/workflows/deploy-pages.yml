@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -25,10 +26,22 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Reject non-public articles in static snapshots
+        run: node --test tests/public-posts.test.cjs
+      - name: Verify public snapshot generator
+        shell: pwsh
+        run: ./tests/build-posts-data.test.ps1
+      - name: Stage only public static files
+        run: |
+          mkdir -p _pages/assets _pages/site/assets
+          cp index.html posts.html font-showcase.html _pages/
+          cp -R assets/css assets/data assets/images assets/js assets/videos _pages/assets/
+          cp site/*.html _pages/site/
+          cp -R site/assets/css site/assets/data site/assets/images site/assets/js _pages/site/assets/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
