@@ -9,6 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pena_admin_users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->string('name');
             $table->string('email')->unique();

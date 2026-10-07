@@ -3,10 +3,28 @@
 namespace Tests\Feature;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Tests\Support\LegacyDatabaseTestCase;
 
 class AdminSecurityTest extends LegacyDatabaseTestCase
 {
+    public function test_validation_errors_use_portuguese_labels_and_messages(): void
+    {
+        $this->app->setLocale('pt_BR');
+
+        $errors = Validator::make(
+            ['email' => 'invalido', 'password' => 'curta', 'category_ids' => []],
+            ['email' => ['email'], 'password' => ['min:8'], 'category_ids' => ['array', 'min:1']]
+        )->errors();
+
+        $this->assertSame('O campo e-mail deve ser um endereço de e-mail válido.', $errors->first('email'));
+        $this->assertSame('O campo senha deve ter pelo menos 8 caracteres.', $errors->first('password'));
+        $this->assertSame('O campo categorias deve conter 1 ou mais itens.', $errors->first('category_ids'));
+
+        $this->post('/admin/login', ['email' => 'invalido', 'password' => 'senha-de-teste-123'])
+            ->assertSessionHasErrors(['email' => 'O campo e-mail deve ser um endereço de e-mail válido.']);
+    }
+
     public function test_guests_cannot_perform_administrative_writes(): void
     {
         foreach (['/admin/users', '/admin/posts/order', '/admin/logout'] as $route) {
@@ -45,9 +63,14 @@ class AdminSecurityTest extends LegacyDatabaseTestCase
         // after the in-memory DB safety guard has executed.
         $this->app->instance('env', 'local');
         $this->withSession(['_token' => 'expected-token']);
-        foreach (['/admin/users', '/admin/posts/order', '/admin/logout'] as $route) {
+        foreach (['/admin/users', '/admin/posts/order', '/admin/authors', '/admin/media', '/admin/logout'] as $route) {
             $this->post($route)->assertStatus(419);
         }
+        $this->patch('/admin/authors/1/deactivate')->assertStatus(419);
+        $this->patch('/admin/authors/1/activate')->assertStatus(419);
+        $this->patch('/admin/media/'.fake()->uuid().'/deactivate')->assertStatus(419);
+        $this->patch('/admin/media/'.fake()->uuid().'/activate')->assertStatus(419);
+        $this->patch('/admin/media/'.fake()->uuid().'/alt-text')->assertStatus(419);
         $this->assertDatabaseCount('pena_admin_users', 1);
     }
 

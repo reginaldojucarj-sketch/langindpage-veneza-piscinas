@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\AdminUser;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Tests\Support\LegacyDatabaseTestCase;
 
 class AdminAndPublicPostsTest extends LegacyDatabaseTestCase
@@ -67,26 +66,23 @@ class AdminAndPublicPostsTest extends LegacyDatabaseTestCase
 
     public function test_admin_can_change_published_post_order_in_isolated_database(): void
     {
-        Schema::create('pena_post_order', function (Blueprint $table) {
-            $table->unsignedBigInteger('post_id')->primary();
-            $table->unsignedInteger('sort_order');
-            $table->timestamps();
-        });
+        $this->installOrderTable();
         DB::table('POST_pena')->insert(['ID_POST' => 3, 'TITULO_POST' => 'Outro publicado', 'STATUS_POST' => 'PP']);
-        $user = AdminUser::create(['name' => 'Teste', 'email' => 'teste@example.com', 'password' => 'senha-de-teste-123']);
+        $user = $this->admin();
 
         $this->actingAs($user)->get('/admin/posts/order')->assertOk()->assertSee('Ordem dos artigos');
-        $this->post('/admin/posts/order', ['ids' => [1, 2, 3]])->assertSessionHasErrors('ids');
-        $this->post('/admin/posts/order', ['ids' => [1, 3]])->assertRedirect('/admin/posts/order');
+        $base = ['expected_revision' => 1, 'idempotency_key' => (string) Str::uuid()];
+        $this->post('/admin/posts/order', $base + ['ids' => [1, 2, 3]])->assertStatus(409);
+        $this->post('/admin/posts/order', ['expected_revision' => 1, 'idempotency_key' => (string) Str::uuid(), 'ids' => [1, 3]])->assertRedirect('/admin/posts/order');
         $this->getJson('/api/public/posts')->assertJsonPath('data.0.id', 1)->assertJsonPath('data.1.id', 3);
-        $this->post('/admin/posts/order', ['ids' => [3, 1]])->assertRedirect('/admin/posts/order');
+        $this->post('/admin/posts/order', ['expected_revision' => 2, 'idempotency_key' => (string) Str::uuid(), 'ids' => [3, 1]])->assertRedirect('/admin/posts/order');
         $this->getJson('/api/public/posts')->assertJsonPath('data.0.id', 3)->assertJsonPath('data.1.id', 1);
         $this->assertDatabaseHas('pena_post_order', ['post_id' => 3, 'sort_order' => 1]);
     }
 
     public function test_authenticated_admin_can_create_another_user(): void
     {
-        $admin = AdminUser::create(['name' => 'Admin', 'email' => 'admin@example.com', 'password' => 'senha-de-teste-123']);
+        $admin = $this->admin();
         $this->actingAs($admin)->get('/admin/users')->assertOk()->assertSee('Usuários administrativos');
 
         $this->post('/admin/users', [

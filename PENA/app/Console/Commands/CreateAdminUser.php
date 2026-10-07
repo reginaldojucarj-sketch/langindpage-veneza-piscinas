@@ -3,9 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\AdminUser;
+use App\Services\AdminAccounts;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\ValidationException;
 
 class CreateAdminUser extends Command
 {
@@ -28,7 +29,7 @@ class CreateAdminUser extends Command
             return self::FAILURE;
         }
 
-        if (! Schema::hasTable('pena_admin_users')) {
+        if (! Schema::hasTable('pena_admin_users') || ! Schema::hasTable('pena_admin_access_lock') || ! Schema::hasColumn('pena_admin_users', 'role')) {
             $this->error('A tabela pena_admin_users não existe. Verifique o esquema e aplique a migração somente após o backup.');
 
             return self::FAILURE;
@@ -52,7 +53,15 @@ class CreateAdminUser extends Command
             return self::FAILURE;
         }
 
-        AdminUser::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
+        try {
+            app(AdminAccounts::class)->createFromConsole([
+                'name' => $name, 'email' => $email, 'password' => $password, 'password_confirmation' => $confirmation,
+            ]);
+        } catch (ValidationException) {
+            $this->error('Dados inválidos. Nenhum usuário foi criado.');
+
+            return self::FAILURE;
+        }
         $this->info('Administrador criado. A senha não foi exibida nem gravada em texto aberto.');
 
         return self::SUCCESS;

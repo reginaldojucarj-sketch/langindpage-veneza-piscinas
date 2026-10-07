@@ -60,6 +60,8 @@ class CreateAdminCommandTest extends LegacyDatabaseTestCase
         $this->assertSame('admin@example.com', $user->email);
         $this->assertSame('Admin Teste', $user->name);
         $this->assertTrue(Hash::check('senha-local-teste-123', $user->password));
+        $this->assertTrue($user->isAdministrator());
+        $this->assertDatabaseHas('pena_admin_audit', ['actor_id' => null, 'target_id' => $user->id, 'action' => 'account.created_cli']);
     }
 
     public function test_password_mismatch_is_rejected(): void
@@ -71,6 +73,19 @@ class CreateAdminCommandTest extends LegacyDatabaseTestCase
             ->expectsQuestion('Confirme a senha', 'diferente')
             ->assertFailed();
         $this->assertDatabaseCount('pena_admin_users', 0);
+    }
+
+    public function test_cli_treats_hash_shaped_password_as_literal_text(): void
+    {
+        $literal = Hash::make('x');
+        $this->artisan('pena:create-admin', $this->backupOptions())
+            ->expectsQuestion('Nome do administrador', 'Synthetic Admin')
+            ->expectsQuestion('E-mail', 'admin@example.invalid')
+            ->expectsQuestion('Senha (mínimo de 12 caracteres)', $literal)
+            ->expectsQuestion('Confirme a senha', $literal)
+            ->assertSuccessful();
+        $this->assertTrue(Hash::check($literal, AdminUser::sole()->password));
+        $this->assertFalse(Hash::check('x', AdminUser::sole()->password));
     }
 
     public function test_existing_account_is_not_overwritten(): void
