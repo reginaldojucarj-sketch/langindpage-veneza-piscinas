@@ -1,0 +1,29 @@
+:root {
+    --pena-ink: #28183b;
+    --pena-background: #f7f3fc;
+    --pena-primary: #6d28d9;
+    --pena-primary-hover: #5521a8;
+    --pena-focus: #a45f00;
+}
+body { margin: 0; color: var(--pena-ink); background: var(--pena-background); font-family: Arial, sans-serif; }
+.pena-docs-header { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 2rem; color: white; background: #321951; }
+.pena-docs-header div { display: flex; align-items: center; gap: 1rem; }
+.pena-docs-header span { font-size: .85rem; opacity: .85; }
+.pena-docs-header a, .pena-docs-header button { color: white; background: none; border: 1px solid white; border-radius: .3rem; padding: .4rem .7rem; text-decoration: none; cursor: pointer; }
+.pena-docs-header a:hover, .pena-docs-header button:hover { background: #503273; }
+.pena-docs-header a:focus-visible, .pena-docs-header button:focus-visible,
+.swagger-ui a:focus-visible, .swagger-ui button:focus-visible {
+    outline: 3px solid var(--pena-focus);
+    outline-offset: 3px;
+}
+.pena-docs-warning { margin: 1rem 2rem; padding: .8rem 1rem; background: #fff4d7; border-left: .3rem solid #b36b00; }
+.swagger-ui .topbar { background-color: #321951; }
+.swagger-ui a, .swagger-ui .info a { color: var(--pena-primary); }
+.swagger-ui a:hover, .swagger-ui .info a:hover { color: var(--pena-primary-hover); }
+.swagger-ui .topbar a, .swagger-ui .topbar a:hover { color: #fff; }
+.swagger-ui .info .title { color: var(--pena-ink); }
+.swagger-ui .btn.execute { background-color: var(--pena-primary); border-color: var(--pena-primary); color: #fff; }
+.swagger-ui .btn.execute:hover { background-color: var(--pena-primary-hover); border-color: var(--pena-primary-hover); }
+.swagger-ui .btn.authorize { border-color: var(--pena-primary); color: var(--pena-primary); }
+.swagger-ui .btn.authorize svg { color: var(--pena-primary); }
+@media (max-width: 650px) { .pena-docs-header, .pena-docs-header div { flex-wrap: wrap; } }
