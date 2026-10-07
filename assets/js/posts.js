@@ -1,7 +1,9 @@
 (() => {
   'use strict';
 
-  const posts = Array.isArray(window.VENEZA_POSTS) ? window.VENEZA_POSTS : [];
+  const posts = Array.isArray(window.VENEZA_POSTS)
+    ? window.VENEZA_POSTS.filter((post) => post && post.status === 'PP')
+    : [];
   const legacyBase = 'https://pena.venezapiscinas.com.br/';
   const grid = document.getElementById('post-grid');
   const search = document.getElementById('search');

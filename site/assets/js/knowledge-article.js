@@ -53,5 +53,13 @@
       cover.addEventListener('error', () => { cover.hidden = true; });
     }
     service.renderBody(post.html, document.getElementById('article-body'));
+  }).catch((error) => {
+    console.error('Não foi possível carregar o artigo.', error);
+    const title = document.createElement('h1');
+    title.textContent = 'Artigo temporariamente indisponível';
+    const message = document.createElement('p');
+    message.textContent = 'Tente novamente mais tarde.';
+    target.replaceChildren(title, message);
+    document.title = 'Artigo indisponível | Veneza Piscinas';
   });
 })();
