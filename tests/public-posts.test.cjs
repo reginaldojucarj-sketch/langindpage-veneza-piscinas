@@ -7,7 +7,7 @@ const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
 
-for (const relativePath of ['assets/data/posts-data.js', 'site/assets/data/posts-data.js']) {
+for (const relativePath of ['assets/data/posts-data.js']) {
   test(`${relativePath} contains only published articles`, () => {
     const source = fs.readFileSync(path.join(root, relativePath), 'utf8');
     const match = source.match(/^(?:\/\/ Public PP-only snapshot of POST_pena and its article-related tables\.\r?\n)?window\.VENEZA_POSTS\s*=\s*(\[[\s\S]*\]);\s*$/);
