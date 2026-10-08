@@ -153,7 +153,7 @@ O estado atual tem estas particularidades:
 - `posts.html` mantém CSS próprio embutido e não herda automaticamente mudanças visuais da landing.
 - Produtos e contatos têm dados duplicados entre HTML e JavaScript.
 - `catalog-faq.js` ainda contém lógica de filtro de catálogo sem marcação correspondente na landing.
-- A página possui título e descrição básicos, mas não contém atualmente canonical, Open Graph, Twitter Cards ou dados estruturados.
+- A origem comercial preferida é `https://orcamento.venezapiscinas.com.br/`. A landing tem canonical, Open Graph, Twitter Card e dados estruturados WebSite; `posts.html` tem canonical próprio, e `font-showcase.html` usa `noindex`. Preserve a coerência com `robots.txt`, `sitemap.xml` e `tests/landing-seo.test.cjs`.
 - Fontes do Google, imagens remotas de artigos, WhatsApp e destinos sociais dependem de internet.
 
 Trate essas limitações como contexto, não como autorização para refatoração ampla. Faça alterações focadas e preserve o comportamento existente salvo quando a tarefa pedir explicitamente uma mudança maior.
@@ -168,3 +168,5 @@ Este workspace contém somente a landing comercial, suas páginas complementares
 Não recriar `PENA/`, `site/` ou `.tmp-backlog-pena/` neste workspace. Para trabalhar nesses projetos, usar seus próprios clones e ler seus respectivos `AGENTS.md` e READMEs. Implantação Laravel, banco, cPanel e publicação FTPS institucional não pertencem à landing.
 
 O workflow daqui publica somente a landing no GitHub Pages. Nunca usar este repositório para sobrescrever o site institucional em `public_html` ou instalar o PENA. O exportador/gerador público de artigos continua aqui porque abastece o leitor estático da própria landing.
+
+A landing também pode ser publicada, quando solicitado, na pasta exclusiva do subdomínio `orcamento.venezapiscinas.com.br`, confirmada no cPanel. Isso não autoriza substituir o domínio principal nem acrescentar implantação institucional/PENA ao workflow daqui. Publique apenas arquivos estáticos versionados, excluindo fontes, documentação, ferramentas e mídias ignoradas.

@@ -140,9 +140,26 @@ O conversor seleciona os campos editoriais previstos, mantém apenas `PP` mesmo 
 
 ## Publicação
 
+A URL comercial preferida da landing é `https://orcamento.venezapiscinas.com.br/`,
+no document root `/home/veneza/public_html/orcamento.venezapiscinas.com.br`,
+separado do site institucional, da loja e do PENA.
+A publicação nela é independente do workflow de Pages: enviar somente as três páginas
+HTML, `robots.txt`, `sitemap.xml`, `.htaccess` e os arquivos públicos versionados de
+`assets/{css,data,images,js,videos}`. Não publicar `.git`, documentação, ferramentas,
+testes, originais ou mídias locais ignoradas. Conferir no cPanel o document root antes
+de enviar; nunca extrair a landing diretamente na raiz institucional `public_html`.
+
+As páginas principal e de artigos indicam essa origem em seus canonicals. O sitemap
+lista somente essas duas páginas; a comparação de fontes tem `noindex`. O `.htaccess`
+serve apenas arquivos estáticos, desativa listagem de diretórios e normaliza HTTPS,
+`www` e `/index.html` na ServHost. O GitHub Pages não executa regras Apache. O nome do
+subdomínio não garante melhor ranking; sitemap e canonical ajudam os buscadores a
+descobrir e consolidar a versão preferida, sem garantir indexação. A solicitação de
+indexação no Search Console depende de uma propriedade verificada pelo responsável.
+
 O workflow [deploy-pages.yml](.github/workflows/deploy-pages.yml) publica o site no **GitHub Pages** em push para `main` ou por acionamento manual de um commit da própria `main`. Execuções manuais em outras branches não publicam.
 
-Ele faz checkout do repositório, configura o Pages e publica apenas `index.html`, `posts.html`, `font-showcase.html` e as pastas públicas `assets/css`, `assets/data`, `assets/images`, `assets/js` e `assets/videos`, sem compilação. Site institucional e PENA residem em outros repositórios e não integram o artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
+Ele faz checkout do repositório, configura o Pages e publica apenas `index.html`, `posts.html`, `font-showcase.html`, `robots.txt`, `sitemap.xml` e as pastas públicas `assets/css`, `assets/data`, `assets/images`, `assets/js` e `assets/videos`, sem compilação. Site institucional e PENA residem em outros repositórios e não integram o artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
 
 `assets/sources/` não entra nos novos artefatos do Pages. Isso não remove cópias de artefatos anteriores nem arquivos do histórico Git; uma limpeza de histórico/retenção exigiria decisão separada.
 

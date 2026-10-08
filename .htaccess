@@ -1,0 +1,20 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# This document root contains only the static landing, never PHP applications.
+<FilesMatch "\.(?:php[0-9]?|phtml|phar)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(?:www\.)?orcamento\.venezapiscinas\.com\.br$ [NC]
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^orcamento\.venezapiscinas\.com\.br$ [NC]
+RewriteRule ^ https://orcamento.venezapiscinas.com.br%{REQUEST_URI} [R=301,L,NE]
+
+# Avoid a second home-page URL, but leave hash navigation in the browser.
+RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
+RewriteRule ^index\.html$ / [R=301,L,NE]
