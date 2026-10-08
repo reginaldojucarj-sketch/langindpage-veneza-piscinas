@@ -10,11 +10,15 @@ DirectoryIndex index.html
 </FilesMatch>
 
 RewriteEngine On
-RewriteCond %{HTTP_HOST} ^(?:www\.)?orcamento\.venezapiscinas\.com\.br$ [NC]
-RewriteCond %{HTTPS} !=on [OR]
-RewriteCond %{HTTP_HOST} !^orcamento\.venezapiscinas\.com\.br$ [NC]
-RewriteRule ^ https://orcamento.venezapiscinas.com.br%{REQUEST_URI} [R=301,L,NE]
 
-# Avoid a second home-page URL, but leave hash navigation in the browser.
+# Normalize the home page in one hop on the two landing hosts only.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(?:orcamento|equipamentos)\.venezapiscinas\.com\.br$ [NC]
 RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
-RewriteRule ^index\.html$ / [R=301,L,NE]
+RewriteRule ^index\.html$ https://equipamentos.venezapiscinas.com.br/ [R=301,L,NE]
+
+# Installed in the old root after the new HTTPS landing is verified.
+# Keep each path and query string; never redirect institutional/PENA/shop hosts.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(?:orcamento|equipamentos)\.venezapiscinas\.com\.br$ [NC]
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^equipamentos\.venezapiscinas\.com\.br$ [NC]
+RewriteRule ^ https://equipamentos.venezapiscinas.com.br%{REQUEST_URI} [R=301,L,NE]
