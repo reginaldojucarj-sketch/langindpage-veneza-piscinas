@@ -5,4 +5,5 @@
 /assets/sources/testimonials/*-original.mp4
 # Local remnants of the application moved to github.com/fesizw/PENA.
 /PENA/
-/site/tests/Browser/node_modules/
+# Local remnants of the institutional site moved to github.com/fesizw/veneza_site.
+/site/

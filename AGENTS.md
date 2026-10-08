@@ -145,7 +145,7 @@ Há um teste automatizado de segurança dos snapshots; as interações da landin
 
 ## Publicação e limitações conhecidas
 
-`.github/workflows/deploy-pages.yml` testa se os snapshots de artigos contêm apenas `PP` e então publica os HTMLs da raiz, as pastas públicas `assets/{css,data,images,js,videos}`, os HTMLs de `site/` e `site/assets/{css,data,images,js}` no GitHub Pages. O job só publica commits da `main`, inclusive no acionamento manual. Não há build. `PENA/` e `assets/sources/` ficam fora dos novos artefatos; versões anteriores do Git ou de artefatos não são apagadas por isso.
+`.github/workflows/deploy-pages.yml` testa se o snapshot de artigos contém apenas `PP` e então publica `index.html`, `posts.html`, `font-showcase.html` e as pastas públicas `assets/{css,data,images,js,videos}` no GitHub Pages. O job só publica commits da `main`, inclusive no acionamento manual. Não há build. Site institucional e PENA residem em repositórios separados; `assets/sources/` fica fora dos novos artefatos. Versões anteriores do Git ou de artefatos não são apagadas por isso.
 
 O estado atual tem estas particularidades:
 
@@ -160,7 +160,9 @@ Trate essas limitações como contexto, não como autorização para refatoraç�
 
 ## Hospedagem disponível para o PENA
 
-Atualização de 08/10/2026: o código Laravel, painel, API, testes e ferramentas do PENA foram movidos para `https://github.com/fesizw/PENA`, clone local em `C:\dev\PENA`. Este repositório mantém somente a landing, o site institucional e seus consumidores da API. Os parágrafos históricos abaixo descrevem a implantação planejada e podem citar o antigo prefixo `PENA/`; não recrie essa pasta nem trate seus caminhos como código atual. O workflow local de testes do site é `.github/workflows/site-tests.yml`, com imagens próprias em `site/tests/`. Desenvolvimento, migrações e release Laravel pertencem ao novo repositório.
+Atualização posterior de 08/10/2026: o site institucional também foi extraído para `https://github.com/fesizw/veneza_site`, clone local em `C:\dev\veneza_site`, com HTML/PHP, recursos, testes e publicação FTPS próprios. Este repositório contém somente a landing e o leitor estático. Não recrie `site/`, nem configure deploy para `/public_html` aqui: o workflow ServHost pertence ao novo repositório institucional. A exportação/geração de artigos continua disponível aqui para a landing. As referências abaixo a `site/` e aos antigos workflows são históricas; use o README do novo repositório para comandos atuais.
+
+Atualização histórica anterior de 08/10/2026: o código Laravel, painel, API, testes e ferramentas do PENA foram movidos para `https://github.com/fesizw/PENA`, clone local em `C:\dev\PENA`. Naquele momento o institucional ainda estava aqui; sua extração posterior está registrada acima. Os parágrafos históricos abaixo descrevem a implantação planejada e podem citar os antigos prefixos `PENA/` e `site/`; não recrie essas pastas nem trate seus caminhos como código atual. Desenvolvimento, migrações e release Laravel pertencem ao repositório PENA; testes/publicação institucionais pertencem ao `veneza_site`.
 
 O provedor ServHost disponibiliza cPanel para a conta da Veneza Piscinas. O painel mostra acesso SSH por chaves, com uma chave pública `id_rsa` já autorizada; a chave privada não deve ser versionada nem enviada ao chat. A conta possui gerenciador de arquivos, Git Version Control, backup/restauração, bancos MySQL e seletor de versões PHP.
 
