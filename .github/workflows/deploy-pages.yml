@@ -1,4 +1,4 @@
-name: Deploy static site to GitHub Pages
+name: Deploy static landing to GitHub Pages
 
 on:
   push:
@@ -33,11 +33,9 @@ jobs:
         run: ./tests/build-posts-data.test.ps1
       - name: Stage only public static files
         run: |
-          mkdir -p _pages/assets _pages/site/assets
+          mkdir -p _pages/assets
           cp index.html posts.html font-showcase.html _pages/
           cp -R assets/css assets/data assets/images assets/js assets/videos _pages/assets/
-          cp site/*.html _pages/site/
-          cp -R site/assets/css site/assets/data site/assets/images site/assets/js _pages/site/assets/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
