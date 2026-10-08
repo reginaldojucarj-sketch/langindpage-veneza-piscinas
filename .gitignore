@@ -3,7 +3,7 @@
 /assets/sources/hero/*-original.mp4
 /assets/sources/projects/*-original.mp4
 /assets/sources/testimonials/*-original.mp4
-# Local remnants of the application moved to github.com/fesizw/PENA.
+# Other projects must never be added to this repository or kept in this workspace.
 /PENA/
-# Local remnants of the institutional site moved to github.com/fesizw/veneza_site.
 /site/
+/.tmp-backlog-pena/
