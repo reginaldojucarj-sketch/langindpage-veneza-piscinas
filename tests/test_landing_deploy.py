@@ -43,7 +43,7 @@ class FakeFTP:
 class LandingDeploymentTests(unittest.TestCase):
     def test_tracked_public_manifest_and_exact_root(self):
         files = deploy.production_files(ROOT)
-        self.assertEqual(deploy.REMOTE_ROOT, '/public_html/orcamento.venezapiscinas.com.br')
+        self.assertEqual(deploy.REMOTE_ROOT, '/public_html/equipamentos.venezapiscinas.com.br')
         self.assertEqual(files[-1][0], 'index.html')
         names = dict(files)
         self.assertIn('.htaccess', names)

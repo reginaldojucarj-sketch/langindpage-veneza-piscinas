@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 30
     environment:
       name: servhost
-      url: https://orcamento.venezapiscinas.com.br/
+      url: https://equipamentos.venezapiscinas.com.br/
     steps:
       - name: Checkout workflow commit
         uses: actions/checkout@v4
@@ -62,6 +62,6 @@ jobs:
           {
             echo "### Landing publicada e conferida"
             echo "Commit: $RELEASE_SHA"
-            echo "URL: https://orcamento.venezapiscinas.com.br/"
-            echo 'Destino exclusivo: public_html/orcamento.venezapiscinas.com.br'
+            echo "URL: https://equipamentos.venezapiscinas.com.br/"
+            echo 'Destino exclusivo: public_html/equipamentos.venezapiscinas.com.br'
           } >> "$GITHUB_STEP_SUMMARY"

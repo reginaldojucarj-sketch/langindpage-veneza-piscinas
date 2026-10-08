@@ -140,16 +140,21 @@ O conversor seleciona os campos editoriais previstos, mantém apenas `PP` mesmo 
 
 ## Publicação
 
-A URL comercial preferida da landing é `https://orcamento.venezapiscinas.com.br/`,
-no document root `/home/veneza/public_html/orcamento.venezapiscinas.com.br`,
+A URL comercial preferida da landing é `https://equipamentos.venezapiscinas.com.br/`,
+no document root `/home/veneza/public_html/equipamentos.venezapiscinas.com.br`,
 separado do site institucional, da loja e do PENA.
+O endereço anterior, `https://orcamento.venezapiscinas.com.br/`, deve manter
+redirecionamentos permanentes 301 para os mesmos caminhos no novo endereço por
+pelo menos um ano. Instale o `.htaccess` também na pasta antiga somente depois de
+validar DNS, certificado e conteúdo da nova origem. Não remova o domínio antigo.
+Veja a metodologia e os limites da escolha em [PESQUISA-SEO.md](PESQUISA-SEO.md).
 O workflow [deploy-servhost.yml](.github/workflows/deploy-servhost.yml) publica nela
 a cada push na `main`, ou por execução manual na própria `main`. O workflow de Pages
 continua separado. Ambos são somente da landing; não instalam site institucional/PENA.
 
 Configure neste repositório os Actions secrets `SERVHOST_FTP_USERNAME` e
 `SERVHOST_FTP_PASSWORD`. A conta deve alcançar `/home/veneza`, pois o destino FTP é
-fixo em `/public_html/orcamento.venezapiscinas.com.br`. A variável opcional
+fixo em `/public_html/equipamentos.venezapiscinas.com.br`. A variável opcional
 `SERVHOST_FTP_HOST` substitui `rv2.servhost.com.br` somente por um hostname com TLS
 válido. Os secrets do institucional não são compartilhados automaticamente.
 
