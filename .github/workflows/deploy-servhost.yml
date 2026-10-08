@@ -1,0 +1,68 @@
+name: Deploy institutional site to ServHost
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: servhost-institutional-site
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: servhost
+      url: https://www.venezapiscinas.com.br/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Require deployment credentials before contacting the server
+        env:
+          SERVHOST_FTP_USERNAME: ${{ secrets.SERVHOST_FTP_USERNAME }}
+          SERVHOST_FTP_PASSWORD: ${{ secrets.SERVHOST_FTP_PASSWORD }}
+        run: |
+          if [ -z "$SERVHOST_FTP_USERNAME" ] || [ -z "$SERVHOST_FTP_PASSWORD" ]; then
+            echo "::error::Configure repository Actions secrets SERVHOST_FTP_USERNAME and SERVHOST_FTP_PASSWORD."
+            exit 1
+          fi
+
+      - name: Validate public content and JavaScript
+        run: |
+          set -euo pipefail
+          node --test tests/public-posts.test.cjs site/tests/content.test.cjs
+          for script in site/assets/js/*.js; do node --check "$script"; done
+
+      - name: Validate publication scope and transfer handling
+        run: |
+          python3 -m unittest discover -s tests -p 'test_servhost_deploy.py' -v
+          python3 scripts/deploy-servhost-site.py --validate-only
+
+      - name: Validate PHP routes with a synthetic local API
+        run: |
+          set -euo pipefail
+          for file in site/article.php site/admin/index.php site/conhecimento/index.php site/lib/knowledge.php; do
+            php -l "$file"
+          done
+          cd site
+          sh tests/run-http.sh
+
+      - name: Check mobile and tablet layouts without external access
+        run: |
+          docker build -t site-responsive-tests PENA/tests/Browser
+          docker run --rm --network none \
+            --mount "type=bind,source=$PWD/site,target=/site,readonly" \
+            --entrypoint node site-responsive-tests /site/tests/responsive-smoke.mjs
+
+      - name: Publish approved institutional files over FTPS
+        env:
+          SERVHOST_FTP_USERNAME: ${{ secrets.SERVHOST_FTP_USERNAME }}
+          SERVHOST_FTP_PASSWORD: ${{ secrets.SERVHOST_FTP_PASSWORD }}
+        run: python3 scripts/deploy-servhost-site.py

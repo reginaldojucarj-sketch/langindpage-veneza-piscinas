@@ -50,3 +50,8 @@ docker run --rm --network "$network" \
   -e SITE_E2E_ORIGIN=http://pena-site-e2e-server:8092 \
   -e SITE_E2E_REMOTE_ORIGIN=http://pena-site-e2e-server:8093 \
   pena-browser-e2e:ci node /site-tests/browser.mjs
+
+# Static responsive checks use an in-process fixture and block external access.
+docker run --rm --network none \
+  --mount "type=bind,source=$PWD/site,target=/site,readonly" \
+  --entrypoint node pena-browser-e2e:ci /site/tests/responsive-smoke.mjs
