@@ -160,6 +160,8 @@ Trate essas limitações como contexto, não como autorização para refatoraç�
 
 ## Hospedagem disponível para o PENA
 
+Atualização de 08/10/2026: o código Laravel, painel, API, testes e ferramentas do PENA foram movidos para `https://github.com/fesizw/PENA`, clone local em `C:\dev\PENA`. Este repositório mantém somente a landing, o site institucional e seus consumidores da API. Os parágrafos históricos abaixo descrevem a implantação planejada e podem citar o antigo prefixo `PENA/`; não recrie essa pasta nem trate seus caminhos como código atual. O workflow local de testes do site é `.github/workflows/site-tests.yml`, com imagens próprias em `site/tests/`. Desenvolvimento, migrações e release Laravel pertencem ao novo repositório.
+
 O provedor ServHost disponibiliza cPanel para a conta da Veneza Piscinas. O painel mostra acesso SSH por chaves, com uma chave pública `id_rsa` já autorizada; a chave privada não deve ser versionada nem enviada ao chat. A conta possui gerenciador de arquivos, Git Version Control, backup/restauração, bancos MySQL e seletor de versões PHP.
 
 O seletor do cPanel oferece PHP 8.3 e 8.4, mas o conjunto de dependências travado no PENA exige PHP >= 8.4.1. Os domínios existentes ainda aparecem em PHP 7.4, portanto não se deve alterar a versão herdada sem selecionar o domínio correto. O cPanel também mostra SSL ativo, Nginx caching ativo, diretório inicial `/home/veneza`, Application Manager e Setup Node.js/Python/Ruby. A disponibilidade desses recursos não substitui a confirmação de extensões PHP, Composer, document root e permissões no domínio/subdomínio.
