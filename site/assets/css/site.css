@@ -229,7 +229,7 @@ main { overflow: clip; }
 .cta-banner p { max-width: 54ch; margin-top: 12px; color: #d5e7ea; }
 .site-footer { padding: 70px 0 26px; background: var(--deepest); color: #dce9ed; }
 .footer-grid { display: grid; grid-template-columns: 1.55fr 1fr 1fr 1.1fr; gap: 35px; }
-.footer-grid img { width: 210px; padding: 8px; border-radius: 8px; background: #fff; }
+.footer-grid img { width: 210px; height: auto; padding: 8px; border-radius: 8px; background: #fff; }
 .footer-grid h2 { margin-bottom: 18px; color: var(--white); font-size: 1rem; letter-spacing: 0; }
 .footer-grid p { max-width: 35ch; margin-top: 18px; font-size: .88rem; }
 .footer-grid ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
