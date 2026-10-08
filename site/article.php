@@ -65,7 +65,7 @@ if ($post !== null) {
   <?php if ($date !== null): ?><meta property="article:published_time" content="<?= veneza_escape($date) ?>"><?php endif; ?>
   <script type="application/ld+json"><?= $jsonLd ?></script>
   <?php endif; ?>
-  <link rel="stylesheet" href="/assets/css/site.css"><script src="/assets/js/site.js" defer></script><script src="/assets/js/ssr-article.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261008"><script src="/assets/js/site.js" defer></script><script src="/assets/js/ssr-article.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
