@@ -143,11 +143,29 @@ O conversor seleciona os campos editoriais previstos, mantém apenas `PP` mesmo 
 A URL comercial preferida da landing é `https://orcamento.venezapiscinas.com.br/`,
 no document root `/home/veneza/public_html/orcamento.venezapiscinas.com.br`,
 separado do site institucional, da loja e do PENA.
-A publicação nela é independente do workflow de Pages: enviar somente as três páginas
-HTML, `robots.txt`, `sitemap.xml`, `.htaccess` e os arquivos públicos versionados de
-`assets/{css,data,images,js,videos}`. Não publicar `.git`, documentação, ferramentas,
-testes, originais ou mídias locais ignoradas. Conferir no cPanel o document root antes
-de enviar; nunca extrair a landing diretamente na raiz institucional `public_html`.
+O workflow [deploy-servhost.yml](.github/workflows/deploy-servhost.yml) publica nela
+a cada push na `main`, ou por execução manual na própria `main`. O workflow de Pages
+continua separado. Ambos são somente da landing; não instalam site institucional/PENA.
+
+Configure neste repositório os Actions secrets `SERVHOST_FTP_USERNAME` e
+`SERVHOST_FTP_PASSWORD`. A conta deve alcançar `/home/veneza`, pois o destino FTP é
+fixo em `/public_html/orcamento.venezapiscinas.com.br`. A variável opcional
+`SERVHOST_FTP_HOST` substitui `rv2.servhost.com.br` somente por um hostname com TLS
+válido. Os secrets do institucional não são compartilhados automaticamente.
+
+O Action testa artigos públicos, SEO, JavaScript, gerador e publicação isolada antes
+do envio. Publica somente as três páginas HTML, `robots.txt`, `sitemap.xml`, `.htaccess`
+e assets públicos **versionados**, excluindo documentação, fontes, scripts, testes,
+originais e arquivos ignorados. Usa uma conexão FTPS explícita na porta 21, canais
+criptografados, certificado validado e nenhuma tentativa automática. Confere tamanho
+antes de promover cada arquivo temporário e SHA-256 da home, artigos, CSS, logo,
+robots e sitemap em HTTPS. A home é enviada por último. Não há exclusões remotas nem
+alteração da loja, mídias legadas, institucional ou PENA; não é uma transação única
+entre todos os arquivos. O resumo de sucesso registra o commit e a URL conferidos.
+
+O document root precisa existir antes da primeira execução. Falha de rede/blacklist
+ou secrets ausentes deixa o Action em erro, nunca como publicação concluída. Confira
+o resultado em Actions; criar o workflow não comprova que o servidor foi atualizado.
 
 As páginas principal e de artigos indicam essa origem em seus canonicals. O sitemap
 lista somente essas duas páginas; a comparação de fontes tem `noindex`. O `.htaccess`
