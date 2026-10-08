@@ -6,7 +6,7 @@ Os destaques são filtros e motobombas, aquecedores, geradores de cloro e ozôni
 
 Desenvolvida com **HTML, CSS e JavaScript puro**, sem framework, instalação de pacotes ou etapa de build. Os arquivos podem ser servidos diretamente por uma hospedagem estática.
 
-O repositório também contém o [site institucional](site/README.md). O painel e a API PENA foram separados para [fesizw/PENA](https://github.com/fesizw/PENA), aplicação Laravel independente que não é publicada no GitHub Pages e não substitui a landing page.
+Este repositório contém somente a landing comercial e seu leitor estático de artigos. O [site institucional](https://github.com/fesizw/veneza_site) e o [painel/API PENA](https://github.com/fesizw/PENA) têm repositórios independentes. O GitHub Pages publica apenas esta landing; site institucional e PENA são instalados separadamente na ServHost.
 
 ## Páginas e funcionalidades
 
@@ -75,7 +75,6 @@ O Python é apenas uma opção de servidor para desenvolvimento. O site publicad
 │   ├── export-posts.sql         # Consulta de exportação dos artigos
 │   ├── build-posts-data.ps1     # Conversão de JSONL para dados do navegador
 │   └── prepare-hero-images.ps1  # Preparação das imagens de abertura no Windows
-├── site/                      # Site institucional provisório
 └── .github/workflows/
     └── deploy-pages.yml        # Publicação no GitHub Pages
 ```
@@ -141,7 +140,7 @@ O conversor seleciona os campos editoriais previstos, mantém apenas `PP` mesmo 
 
 O workflow [deploy-pages.yml](.github/workflows/deploy-pages.yml) publica o site no **GitHub Pages** em push para `main` ou por acionamento manual de um commit da própria `main`. Execuções manuais em outras branches não publicam.
 
-Ele faz checkout do repositório, configura o Pages e publica apenas os HTMLs da raiz, as pastas públicas `assets/css`, `assets/data`, `assets/images`, `assets/js` e `assets/videos`, os HTMLs de `site/` e as pastas públicas `site/assets/css`, `site/assets/data`, `site/assets/images` e `site/assets/js`, sem compilação. O PENA reside em outro repositório e não integra o artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
+Ele faz checkout do repositório, configura o Pages e publica apenas `index.html`, `posts.html`, `font-showcase.html` e as pastas públicas `assets/css`, `assets/data`, `assets/images`, `assets/js` e `assets/videos`, sem compilação. Site institucional e PENA residem em outros repositórios e não integram o artefato. O repositório precisa estar configurado para publicar o Pages por **GitHub Actions**. A URL da publicação aparece no ambiente `github-pages` da execução.
 
 `assets/sources/` não entra nos novos artefatos do Pages. Isso não remove cópias de artefatos anteriores nem arquivos do histórico Git; uma limpeza de histórico/retenção exigiria decisão separada.
 
@@ -156,4 +155,4 @@ Antes de publicar mudanças, confira no navegador:
 - Busca, filtro por assunto e leitura dos artigos em `posts.html`.
 - Console e painel de rede sem erros de JavaScript ou arquivos locais ausentes.
 
-A landing continua exigindo conferência manual das interações; há um teste automatizado para impedir a publicação de artigos não públicos no snapshot. O site institucional tem testes de integração editorial em `site/tests/`, executados por `.github/workflows/site-tests.yml` com imagens próprias, sem depender do código Laravel. Os testes do painel/API estão no [repositório PENA](https://github.com/fesizw/PENA).
+A landing continua exigindo conferência manual das interações; há um teste automatizado para impedir a publicação de artigos não públicos no seu snapshot. Os testes e a publicação FTPS do site institucional estão em [veneza_site](https://github.com/fesizw/veneza_site). Os testes do painel/API estão no [repositório PENA](https://github.com/fesizw/PENA). O script de exportação e o gerador permanecem aqui para atualizar somente o leitor da landing; a separação preservou o histórico e não alterou o servidor.
