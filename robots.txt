@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://orcamento.venezapiscinas.com.br/sitemap.xml
+Sitemap: https://equipamentos.venezapiscinas.com.br/sitemap.xml
