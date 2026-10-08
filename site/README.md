@@ -14,7 +14,7 @@ Antes do envio, o workflow verifica os snapshots públicos, o JavaScript, as rot
 
 O pacote contém os HTMLs institucionais, as rotas PHP, `lib/`, os recursos públicos e `.htaccess`. O snapshot `assets/data/posts-data.js`, testes, documentação, `PENA/`, fontes de mídia e a landing da raiz não entram nessa publicação. O envio atualiza apenas os arquivos presentes no pacote e não faz limpeza ampla do servidor: `loja`, `api.pena`, `pena.venezapiscinas` e as mídias legadas são preservados.
 
-O `.htaccess` desativa a listagem de diretórios, prioriza `index.html`, define a origem da API pública e restringe os redirecionamentos e rotas ao domínio institucional, com ou sem `www`. A instalação do PENA/API permanece separada e pendente; este workflow não instala dependências, configura o banco nem ativa o sistema Laravel. A Central de Conhecimento depende dessa API para funcionar em produção.
+O `.htaccess` desativa a listagem de diretórios, prioriza `index.html`, define a origem da API pública e restringe os redirecionamentos e rotas ao domínio institucional, com ou sem `www`. O painel e a API estão no [repositório PENA](https://github.com/fesizw/PENA); sua instalação permanece separada e pendente. Este workflow não instala dependências, configura o banco nem ativa o sistema Laravel. A Central de Conhecimento depende dessa API para funcionar em produção.
 
 ## Páginas
 
@@ -84,3 +84,5 @@ Os problemas identificados na revisão e os critérios para a futura integraçã
 Os testes de contrato JavaScript estão em `tests/content.test.cjs`. `tests/run-http.sh` exercita PHP/HTTP com API sintética em loopback, inclusive URL direta, status, redirecionamentos e SEO inicial; `tests/browser.mjs` confere layout, teclado, busca, mídia e sanitização em Chromium. O workflow prepara esses testes sem acessar a API real. Eles não substituem ensaio no Apache, cPanel e domínio de produção.
 
 `tests/responsive-smoke.mjs` verifica as páginas institucionais e um artigo da prévia em 320, 375, 480, 768, 1024 e 1440 px. Confere menu por teclado, ausência de rolagem horizontal, proporção da logo, imagens locais, links e formulário do WhatsApp, sem enviar mensagens ou consultar a API real. O teste faz parte de `tests/run-browser-ci.sh` e também roda antes do deploy da ServHost.
+
+Depois da separação do PENA, os testes usam imagens independentes: `docker build -t site-php-tests -f site/tests/PHP.Dockerfile site/tests` e `docker build -t site-browser-tests site/tests/Browser`, executados na raiz deste repositório. `.github/workflows/site-tests.yml` mantém os contratos PHP/JS, os testes em navegador e o gerador do snapshot. Não é preciso clonar o PENA para testar o site com a API sintética.
