@@ -8,6 +8,8 @@ Desenvolvida com **HTML, CSS e JavaScript puro**, sem framework, instalação de
 
 Este repositório contém somente a landing comercial e seu leitor estático de artigos. O [site institucional](https://github.com/fesizw/veneza_site) e o [painel/API PENA](https://github.com/fesizw/PENA) têm repositórios independentes. O GitHub Pages publica apenas esta landing; site institucional e PENA são instalados separadamente na ServHost.
 
+O institucional referencia o PENA como submódulo Git em seu próprio diretório `PENA/`, fixado em um commit publicado. Esse vínculo existe somente em `veneza_site`: esta landing não contém submódulos nem código do institucional ou do Laravel.
+
 ## Páginas e funcionalidades
 
 | Página | Conteúdo |
