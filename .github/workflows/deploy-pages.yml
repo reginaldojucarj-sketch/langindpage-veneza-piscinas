@@ -28,13 +28,15 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Reject non-public articles in static snapshots
         run: node --test tests/public-posts.test.cjs
+      - name: Verify canonical landing URLs
+        run: node --test tests/landing-seo.test.cjs
       - name: Verify public snapshot generator
         shell: pwsh
         run: ./tests/build-posts-data.test.ps1
       - name: Stage only public static files
         run: |
           mkdir -p _pages/assets
-          cp index.html posts.html font-showcase.html _pages/
+          cp index.html posts.html font-showcase.html robots.txt sitemap.xml _pages/
           cp -R assets/css assets/data assets/images assets/js assets/videos _pages/assets/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
