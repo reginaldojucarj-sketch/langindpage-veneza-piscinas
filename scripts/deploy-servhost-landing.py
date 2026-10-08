@@ -13,8 +13,8 @@ import urllib.request
 import uuid
 
 ROOT = Path(__file__).resolve().parent.parent
-REMOTE_ROOT = "/public_html/orcamento.venezapiscinas.com.br"
-ORIGIN = "https://orcamento.venezapiscinas.com.br"
+REMOTE_ROOT = "/public_html/equipamentos.venezapiscinas.com.br"
+ORIGIN = "https://equipamentos.venezapiscinas.com.br"
 HOST = "rv2.servhost.com.br"
 PAGES = ("index.html", "posts.html", "font-showcase.html", "robots.txt", "sitemap.xml", ".htaccess")
 ASSET_DIRS = ("assets/css/", "assets/data/", "assets/images/", "assets/js/", "assets/videos/")

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
-const origin = 'https://orcamento.venezapiscinas.com.br';
+const origin = 'https://equipamentos.venezapiscinas.com.br';
 const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const home = read('index.html');
 
@@ -47,4 +47,23 @@ test('Pages stages discovery files without copying server configuration', () => 
   assert.ok(workflow.includes('cp index.html posts.html font-showcase.html robots.txt sitemap.xml _pages/'));
   assert.ok(workflow.includes('node --test tests/landing-seo.test.cjs'));
   assert.ok(!workflow.includes('cp .htaccess'));
+});
+
+test('local commercial intent is visible without changing product interaction keys', () => {
+  assert.match(home, /<h1 id="hero-title">Equipamentos para piscinas em Recife,/);
+  assert.ok(home.includes('<h3>Filtros e bombas para piscinas</h3>'));
+  assert.ok(home.includes('Atendimento em Recife e região metropolitana'));
+  assert.ok(home.includes('data-modal-trigger="filtracao"'));
+  assert.ok(home.includes('https://wa.me/5581982983545'));
+});
+
+test('migration redirects only landing hosts and preserves equivalent paths', () => {
+  const config = read('.htaccess');
+  assert.equal((config.match(/\(\?:orcamento\|equipamentos\)/g) || []).length, 2);
+  assert.ok(config.includes(`RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L,NE]`));
+  assert.ok(config.includes(`RewriteRule ^index\\.html$ ${origin}/ [R=301,L,NE]`));
+  assert.ok(!config.includes('QSD'));
+  assert.ok(!config.includes('pena|'));
+  assert.ok(read('.github/workflows/deploy-servhost.yml').includes(`url: ${origin}/`));
+  assert.ok(read('scripts/deploy-servhost-landing.py').includes(`REMOTE_ROOT = "/public_html/${new URL(origin).hostname}"`));
 });
