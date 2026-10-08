@@ -1,0 +1,67 @@
+name: Deploy landing to ServHost
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: servhost-landing
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment:
+      name: servhost
+      url: https://orcamento.venezapiscinas.com.br/
+    steps:
+      - name: Checkout workflow commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Require FTPS credentials
+        env:
+          SERVHOST_FTP_USERNAME: ${{ secrets.SERVHOST_FTP_USERNAME }}
+          SERVHOST_FTP_PASSWORD: ${{ secrets.SERVHOST_FTP_PASSWORD }}
+        run: |
+          if [ -z "$SERVHOST_FTP_USERNAME" ] || [ -z "$SERVHOST_FTP_PASSWORD" ]; then
+            echo "::error::Configure SERVHOST_FTP_USERNAME and SERVHOST_FTP_PASSWORD in this repository."
+            exit 1
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate public articles, SEO and JavaScript
+        run: |
+          set -euo pipefail
+          node --test tests/public-posts.test.cjs tests/landing-seo.test.cjs
+          for script in assets/js/*.js; do node --check "$script"; done
+      - name: Validate public snapshot generator
+        shell: pwsh
+        run: ./tests/build-posts-data.test.ps1
+      - name: Test isolated landing deployment
+        run: |
+          python3 -m unittest discover -s tests -p 'test_landing_deploy.py' -v
+          python3 scripts/deploy-servhost-landing.py --validate-only
+      - name: Publish complete public landing over explicit FTPS
+        env:
+          SERVHOST_FTP_USERNAME: ${{ secrets.SERVHOST_FTP_USERNAME }}
+          SERVHOST_FTP_PASSWORD: ${{ secrets.SERVHOST_FTP_PASSWORD }}
+          SERVHOST_FTP_HOST: ${{ vars.SERVHOST_FTP_HOST }}
+        run: python3 scripts/deploy-servhost-landing.py
+      - name: Record verified publication
+        env:
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          {
+            echo "### Landing publicada e conferida"
+            echo "Commit: $RELEASE_SHA"
+            echo "URL: https://orcamento.venezapiscinas.com.br/"
+            echo 'Destino exclusivo: public_html/orcamento.venezapiscinas.com.br'
+          } >> "$GITHUB_STEP_SUMMARY"
