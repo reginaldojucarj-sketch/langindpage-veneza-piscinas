@@ -2,7 +2,19 @@
 
 Esta pasta é um protótipo autônomo para o futuro repositório do site institucional. A landing page existente na raiz do repositório não foi alterada. A prévia estática usa HTML, CSS e JavaScript puro, sem build. A publicação definitiva dos artigos acrescenta uma pequena camada PHP sem framework para devolver HTML e metadados já renderizados.
 
-No repositório atual, o GitHub Actions publica os HTMLs da raiz, as subpastas públicas `assets/{css,data,images,js,videos}`, os HTMLs de `site/` e `site/assets/{css,data,images,js}` em cada push para `main`. `PENA/` e `assets/sources/` ficam fora dos novos artefatos. Portanto, ao versionar esta pasta na `main`, o protótipo também ficará acessível no subcaminho `/site/` do GitHub Pages existente. Isso não cria o novo repositório nem substitui a landing principal.
+No repositório atual, o workflow de GitHub Pages publica os HTMLs da raiz, as subpastas públicas `assets/{css,data,images,js,videos}`, os HTMLs de `site/` e `site/assets/{css,data,images,js}` em cada push para `main`. `PENA/` e `assets/sources/` ficam fora dos novos artefatos. O site institucional tem um workflow específico para publicação direta na ServHost, cuja ativação depende dos secrets descritos abaixo; a landing da raiz continua separada.
+
+## Publicação automática na ServHost
+
+O workflow [deploy-servhost.yml](../.github/workflows/deploy-servhost.yml) publica o conteúdo institucional de `site/` em cada push para `main`, usando FTPS explícito em `rv2.servhost.com.br` com destino `/public_html`. Um commit local só chega ao servidor depois do push e da execução bem-sucedida do workflow.
+
+Configure em **Settings → Secrets and variables → Actions** do repositório os secrets `SERVHOST_FTP_USERNAME` e `SERVHOST_FTP_PASSWORD`, com as credenciais de uma conta FTP que alcance `/home/veneza/public_html`. Não salve essas credenciais em arquivos versionados. Depois do push, acompanhe o workflow em **Actions**; para repetir uma execução, use **Re-run jobs** ou **Run workflow** selecionando `main`.
+
+Antes do envio, o workflow verifica os snapshots públicos, o JavaScript, as rotas PHP com API sintética e o layout mobile/tablet em Chromium isolado. O envio exige TLS válido, não faz tentativas automáticas repetidas e só é confirmado após comparar o SHA-256 da home, do CSS e da logo servidos por HTTPS.
+
+O pacote contém os HTMLs institucionais, as rotas PHP, `lib/`, os recursos públicos e `.htaccess`. O snapshot `assets/data/posts-data.js`, testes, documentação, `PENA/`, fontes de mídia e a landing da raiz não entram nessa publicação. O envio atualiza apenas os arquivos presentes no pacote e não faz limpeza ampla do servidor: `loja`, `api.pena`, `pena.venezapiscinas` e as mídias legadas são preservados.
+
+O `.htaccess` desativa a listagem de diretórios, prioriza `index.html`, define a origem da API pública e restringe os redirecionamentos e rotas ao domínio institucional, com ou sem `www`. A instalação do PENA/API permanece separada e pendente; este workflow não instala dependências, configura o banco nem ativa o sistema Laravel. A Central de Conhecimento depende dessa API para funcionar em produção.
 
 ## Páginas
 
@@ -45,7 +57,7 @@ Se o Python não estiver disponível, qualquer servidor estático serve **para a
 - Definir domínio, URL canônica, política de privacidade, analytics e requisitos legais quando houver publicação ou coleta de dados.
 - Revisar editorialmente o acervo histórico antes da publicação definitiva; textos antigos podem mencionar preços, normas ou produtos desatualizados.
 - Se forem adicionadas calculadoras ou recomendações automáticas, validar fórmulas e limites com um profissional responsável. O formulário atual apenas organiza uma mensagem para atendimento humano.
-- Ajustar a infraestrutura de publicação do novo repositório. Esta pasta não contém workflow de deploy.
+- Ao separar esta pasta em outro repositório, adaptar o workflow de publicação e configurar os secrets de FTPS nesse novo destino.
 
 ## Arquivos principais
 
@@ -70,3 +82,5 @@ O cPanel ainda redireciona o domínio sem `www` para `www`, enquanto o canonical
 Os problemas identificados na revisão e os critérios para a futura integração estão registrados em [PENDENCIAS-PENA.md](PENDENCIAS-PENA.md).
 
 Os testes de contrato JavaScript estão em `tests/content.test.cjs`. `tests/run-http.sh` exercita PHP/HTTP com API sintética em loopback, inclusive URL direta, status, redirecionamentos e SEO inicial; `tests/browser.mjs` confere layout, teclado, busca, mídia e sanitização em Chromium. O workflow prepara esses testes sem acessar a API real. Eles não substituem ensaio no Apache, cPanel e domínio de produção.
+
+`tests/responsive-smoke.mjs` verifica as páginas institucionais e um artigo da prévia em 320, 375, 480, 768, 1024 e 1440 px. Confere menu por teclado, ausência de rolagem horizontal, proporção da logo, imagens locais, links e formulário do WhatsApp, sem enviar mensagens ou consultar a API real. O teste faz parte de `tests/run-browser-ci.sh` e também roda antes do deploy da ServHost.
