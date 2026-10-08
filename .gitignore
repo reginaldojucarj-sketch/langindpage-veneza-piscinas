@@ -3,3 +3,6 @@
 /assets/sources/hero/*-original.mp4
 /assets/sources/projects/*-original.mp4
 /assets/sources/testimonials/*-original.mp4
+# Local remnants of the application moved to github.com/fesizw/PENA.
+/PENA/
+/site/tests/Browser/node_modules/
