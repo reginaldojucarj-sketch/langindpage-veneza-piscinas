@@ -48,4 +48,4 @@ O arquivo `assets/data/posts-data.js` tem cerca de 933 KB e é carregado nas dua
 
 ## Preparação para a implantação do PENA
 
-O contrato da API está em `README.md`, e o backend PENA foi implementado localmente em `../PENA/`, separado desta pasta. Antes de implantá-lo, confirmar com a equipe a política editorial, URL definitiva da API, CORS, hospedagem das mídias, backup atualizado e tratamento das tabelas MyISAM. Não migrar tabelas nem criar usuários de produção sem cópia de segurança verificável e homologação. O sistema administrativo e a API ainda não fazem parte da publicação do site.
+O contrato da API está em `README.md`, e o backend PENA está no [repositório independente](https://github.com/fesizw/PENA), com painel e API na mesma aplicação. Antes de implantá-lo, confirmar com a equipe a política editorial, URL definitiva da API, CORS, hospedagem das mídias, backup atualizado e tratamento das tabelas MyISAM. Não migrar tabelas nem criar usuários de produção sem cópia de segurança verificável e homologação. O sistema administrativo e a API ainda não fazem parte da publicação do site.
