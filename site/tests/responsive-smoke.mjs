@@ -1,5 +1,5 @@
-// Run with the existing pena-browser-e2e:ci image (no installs or external network):
-// docker run --rm --network none --mount "type=bind,source=<repo>/site,target=/site,readonly" --entrypoint node pena-browser-e2e:ci /site/tests/responsive-smoke.mjs
+// Run with the site's own browser image (no external network):
+// docker run --rm --network none --mount "type=bind,source=<repo>/site,target=/site,readonly" --entrypoint node site-browser-tests /site/tests/responsive-smoke.mjs
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { access, mkdir, readFile } from 'node:fs/promises';

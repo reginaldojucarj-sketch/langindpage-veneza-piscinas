@@ -56,7 +56,7 @@ jobs:
 
       - name: Check mobile and tablet layouts without external access
         run: |
-          docker build -t site-responsive-tests PENA/tests/Browser
+          docker build -t site-responsive-tests site/tests/Browser
           docker run --rm --network none \
             --mount "type=bind,source=$PWD/site,target=/site,readonly" \
             --entrypoint node site-responsive-tests /site/tests/responsive-smoke.mjs
