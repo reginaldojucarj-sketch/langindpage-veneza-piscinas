@@ -60,6 +60,52 @@ class LandingDeploymentTests(unittest.TestCase):
                      'loja/index.html', 'assets/images/bad\nSTOR secret.jpg'):
             self.assertFalse(deploy.approved(name), name)
 
+    def test_pages_artifact_copies_only_tracked_public_files_without_apache_config(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'source'
+            root.mkdir()
+            names = (*deploy.PAGES, 'assets/css/styles.css', 'assets/images/logo.png',
+                     'assets/images/products/README.md', 'assets/sources/secret.jpg',
+                     'assets/videos/movie-original.mp4', 'assets/images/untracked.jpg')
+            for name in names:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(name.encode())
+            tracked = ('\0'.join(names[:-1]) + '\0').encode()
+            output = Path(directory) / 'pages'
+            with mock.patch.object(deploy.subprocess, 'check_output', return_value=tracked):
+                self.assertEqual(deploy.stage_pages(output, root), 7)
+            expected = set(deploy.PAGES) - {'.htaccess'}
+            expected.update(('assets/css/styles.css', 'assets/images/logo.png'))
+            actual = {path.relative_to(output).as_posix() for path in output.rglob('*') if path.is_file()}
+            self.assertEqual(actual, expected)
+            for name in expected:
+                self.assertEqual((output / name).read_bytes(), (root / name).read_bytes())
+
+    def test_pages_staging_refuses_to_reuse_a_directory_with_stale_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'pages'
+            output.mkdir()
+            (output / 'README.md').write_bytes(b'previous artifact')
+            with self.assertRaises(FileExistsError):
+                deploy.stage_pages(output)
+            self.assertEqual((output / 'README.md').read_bytes(), b'previous artifact')
+            self.assertFalse((output / 'index.html').exists())
+
+    def test_pages_mode_never_uses_ftp_or_https_verification(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = str(Path(directory) / 'pages')
+            with mock.patch.object(deploy.sys, 'argv', ['deploy', '--stage-pages', output]), \
+                    mock.patch.dict(deploy.os.environ, {'GITHUB_SHA': '', 'SERVHOST_FTP_USERNAME': '', 'SERVHOST_FTP_PASSWORD': ''}), \
+                    mock.patch.object(deploy, 'ReusingTLS') as connection, \
+                    mock.patch.object(deploy.urllib.request, 'urlopen') as request:
+                deploy.main()
+                connection.assert_not_called()
+                request.assert_not_called()
+            self.assertTrue((Path(output) / 'robots.txt').is_file())
+            self.assertTrue((Path(output) / 'sitemap.xml').is_file())
+            self.assertFalse((Path(output) / '.htaccess').exists())
+
     def test_untracked_files_are_never_staged_and_missing_required_files_fail(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

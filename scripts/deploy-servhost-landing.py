@@ -6,6 +6,7 @@ import hashlib
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 import ssl
 import subprocess
 import sys
@@ -47,6 +48,21 @@ def production_files(root=ROOT):
             raise ValueError("Missing, empty or unsafe tracked landing file")
         files.append((name, path))
     return files
+
+
+def stage_pages(destination, root=ROOT):
+    """Build a fresh Pages artifact from the same tracked public allowlist."""
+    files = [(name, source) for name, source in production_files(root) if name != ".htaccess"]
+    output = Path(destination)
+    if any(path.is_symlink() for path in (output, *output.parents)):
+        raise ValueError("Unsafe Pages staging directory")
+    # Never reuse a directory: stale documentation/untracked files must not survive.
+    output.mkdir(parents=True, exist_ok=False)
+    for name, source in files:
+        target = output / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+    return len(files)
 
 
 class ReusingTLS(ftplib.FTP_TLS):
@@ -105,8 +121,14 @@ def verify_live(files, release):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--validate-only", action="store_true")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--validate-only", action="store_true")
+    modes.add_argument("--stage-pages", metavar="DIRECTORY", help="stage a fresh Pages artifact without network access")
     args = parser.parse_args()
+    if args.stage_pages is not None:
+        count = stage_pages(args.stage_pages)
+        print(f"Staged {count} tracked public landing files for GitHub Pages")
+        return
     files = production_files()
     if args.validate_only:
         print(f"Validated {len(files)} landing files; destination {REMOTE_ROOT}")
