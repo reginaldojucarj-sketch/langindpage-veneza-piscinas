@@ -33,11 +33,10 @@ jobs:
       - name: Verify public snapshot generator
         shell: pwsh
         run: ./tests/build-posts-data.test.ps1
+      - name: Verify isolated public artifact staging
+        run: python3 -m unittest discover -s tests -p 'test_landing_deploy.py' -v
       - name: Stage only public static files
-        run: |
-          mkdir -p _pages/assets
-          cp index.html posts.html font-showcase.html robots.txt sitemap.xml _pages/
-          cp -R assets/css assets/data assets/images assets/js assets/videos _pages/assets/
+        run: python3 scripts/deploy-servhost-landing.py --stage-pages _pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
