@@ -44,8 +44,10 @@ test('sitemap lists only indexable pages and robots advertises it', () => {
 
 test('Pages stages discovery files without copying server configuration', () => {
   const workflow = read('.github/workflows/deploy-pages.yml');
-  assert.ok(workflow.includes('cp index.html posts.html font-showcase.html robots.txt sitemap.xml _pages/'));
+  assert.ok(workflow.includes('scripts/deploy-servhost-landing.py --stage-pages _pages'));
+  assert.ok(workflow.includes("python3 -m unittest discover -s tests -p 'test_landing_deploy.py' -v"));
   assert.ok(workflow.includes('node --test tests/landing-seo.test.cjs'));
+  assert.ok(!workflow.includes('cp -R'));
   assert.ok(!workflow.includes('cp .htaccess'));
 });
 
