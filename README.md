@@ -10,6 +10,16 @@ Este repositório contém somente a landing comercial e seu leitor estático de 
 
 O institucional referencia o PENA como submódulo Git em seu próprio diretório `PENA/`, fixado em um commit publicado. Esse vínculo existe somente em `veneza_site`: esta landing não contém submódulos nem código do institucional ou do Laravel.
 
+## Acesso e documentação
+
+- [Landing comercial publicada](https://equipamentos.venezapiscinas.com.br/) — endereço preferido para campanhas e divulgação.
+- [Índice da documentação](docs/README.md) — roteiro para conteúdo, mídias, manutenção e publicação.
+- [Guia de publicação e verificação](docs/PUBLICACAO.md) — destinos, testes, secrets e diagnóstico sem afetar outros sites.
+- [Marco estável de 09/10/2026](docs/releases/stable-2026-10-09.md) — versão pública conferida, evidências e limites da tag `stable-2026-10-09`.
+- [Acesso ao Swagger da API](https://github.com/fesizw/PENA/blob/main/SWAGGER.md) — documentação mantida no repositório responsável pelo PENA/API, não nesta landing.
+
+A landing publicada foi conferida em **09/10/2026** contra o código público da `main` no commit `32a89fb5af26d76c297785f3dc323a0df2da349d`. Isso não comprova o funcionamento do envio automático: a última execução FTPS consultada estava cancelada. Consulte o resultado do Actions antes de considerar uma próxima atualização publicada.
+
 ## Páginas e funcionalidades
 
 | Página | Conteúdo |
@@ -44,9 +54,9 @@ No Windows, caso o Python esteja disponível pelo launcher, use `py -m http.serv
 
 Abra:
 
-- Página principal: http://localhost:8000/
-- Artigos: http://localhost:8000/posts.html
-- Comparação de fontes: http://localhost:8000/font-showcase.html
+- [Página principal](http://localhost:8000/).
+- [Artigos](http://localhost:8000/posts.html).
+- [Comparação de fontes](http://localhost:8000/font-showcase.html).
 
 Encerre o servidor com `Ctrl+C`. Para testar no celular, conecte os dispositivos à mesma rede e acesse `http://<IP-local-do-computador>:8000`; o firewall precisa permitir a conexão.
 
@@ -74,11 +84,18 @@ O Python é apenas uma opção de servidor para desenvolvimento. O site publicad
 │   ├── videos/                 # Vídeos usados nas páginas
 │   └── sources/                # Originais e referências das mídias
 ├── scripts/
+│   ├── deploy-servhost-landing.py # Seleção pública, preparação Pages e publicação FTPS
 │   ├── export-posts.sql         # Consulta de exportação dos artigos
 │   ├── build-posts-data.ps1     # Conversão de JSONL para dados do navegador
 │   └── prepare-hero-images.ps1  # Preparação das imagens de abertura no Windows
+├── docs/                       # Guias e marcos de versões verificadas
+├── tests/                      # Contratos de artigos, SEO, gerador e publicação
+├── .htaccess                   # Rotas Apache e proteção do destino da landing
+├── robots.txt                  # Descoberta e referência ao sitemap
+├── sitemap.xml                 # URLs públicas indexáveis
 └── .github/workflows/
-    └── deploy-pages.yml        # Publicação no GitHub Pages
+    ├── deploy-pages.yml        # Publicação no GitHub Pages
+    └── deploy-servhost.yml     # Publicação no subdomínio de equipamentos
 ```
 
 A lógica de filtros de catálogo permanece em `catalog-faq.js`, mas a página principal atual não contém os controles desse catálogo. O filtro por assunto está disponível em `posts.html`.
@@ -96,6 +113,8 @@ A lógica de filtros de catálogo permanece em `catalog-faq.js`, mas a página p
 | Busca e exibição de artigos | `assets/js/posts.js`; estilos em `posts.html` |
 
 Ao alterar o telefone de atendimento, revise tanto os links `wa.me` em `index.html` quanto o número usado em `assets/js/product-modal.js`.
+
+O número atual é `+55 81 98298-3545` (`5581982983545` nas URLs). Confira também `posts.html`: os CTAs têm mensagens diferentes conforme o contexto. Preserve o texto comercial, a codificação das mensagens, `rel="noopener"` nas novas abas e os contratos de interação descritos em [AGENTS.md](AGENTS.md).
 
 Mantenha os caminhos relativos para que os arquivos funcionem também quando o site estiver hospedado em um subdiretório. Ao substituir mídias, atualize textos alternativos, legendas e imagens de capa dos vídeos quando necessário.
 
@@ -188,13 +207,35 @@ Ele faz checkout do repositório, configura o Pages e prepara um diretório novo
 
 ## Checklist de revisão
 
+### Testes locais sem publicar
+
+Com Node.js, Python 3 e PowerShell disponíveis, execute na raiz:
+
+```powershell
+node --test tests/public-posts.test.cjs tests/landing-seo.test.cjs
+Get-ChildItem assets/js -Filter *.js | ForEach-Object { node --check $_.FullName; if ($LASTEXITCODE -ne 0) { throw "JavaScript inválido" } }
+powershell -NoProfile -ExecutionPolicy Bypass -File tests/build-posts-data.test.ps1
+python -B -m unittest discover -s tests -p test_landing_deploy.py -v
+python -B scripts/deploy-servhost-landing.py --validate-only
+```
+
+Esses comandos não enviam arquivos, não precisam dos secrets FTP e não acessam o banco. Se algum teste falhar, não faça o release. Não execute o script de deploy sem `--validate-only` como forma de testar a rede.
+
+### Conferência no navegador
+
 Antes de publicar mudanças, confira no navegador:
 
-- Layout em desktop e celular, incluindo menu e ausência de rolagem horizontal inesperada.
+- Layout em desktop, tablet e celular, incluindo 320–480 px, menu e ausência de rolagem horizontal inesperada.
 - Carrosséis, modais de produtos, galeria ampliada e reprodução dos depoimentos.
-- Navegação por teclado, fechamento dos modais com `Esc` e abertura das respostas do FAQ.
+- Navegação por teclado, foco visível e retorno ao acionador ao fechar modais com `Esc`; respostas do FAQ e redução de movimento.
 - Número de destino e mensagens dos links de WhatsApp.
 - Busca, filtro por assunto e leitura dos artigos em `posts.html`.
 - Console e painel de rede sem erros de JavaScript ou arquivos locais ausentes.
 
-A landing continua exigindo conferência manual das interações; há um teste automatizado para impedir a publicação de artigos não públicos no seu snapshot. Os testes e a publicação FTPS do site institucional estão em [veneza_site](https://github.com/fesizw/veneza_site). Os testes do painel/API estão no [repositório PENA](https://github.com/fesizw/PENA). O script de exportação e o gerador permanecem aqui para atualizar somente o leitor da landing; a separação preservou o histórico e não alterou o servidor.
+A landing continua exigindo conferência manual das interações. Os testes automatizados cobrem o snapshot público, os canonicals/SEO, o gerador e o isolamento da publicação; não substituem a revisão visual ou garantem conversão comercial. Os testes e a publicação FTPS do site institucional estão em [veneza_site](https://github.com/fesizw/veneza_site). Os testes do painel/API estão no [repositório PENA](https://github.com/fesizw/PENA). O script de exportação e o gerador permanecem aqui para atualizar somente o leitor da landing; a separação preservou o histórico e não alterou o servidor.
+
+### Branches e versões
+
+Siga o Gitflow descrito em [AGENTS.md](AGENTS.md): branch focada a partir de `develop`, testes, commit da mudança, merge em `develop`, validação integrada e merge de release em `main`. Não faça commits diretamente nas branches de integração, não reescreva o histórico e não misture código de outros repositórios.
+
+Uma tag marca um commit revisado; não executa nem comprova, por si só, o deploy. As publicações daqui são acionadas por push em `main` ou execução manual na própria `main`. Registre o commit público efetivamente conferido e as limitações nos [marcos de versão](docs/releases/stable-2026-10-09.md).
