@@ -61,6 +61,17 @@ class LandingDeploymentTests(unittest.TestCase):
                      'loja/index.html', 'assets/images/bad\nSTOR secret.jpg'):
             self.assertFalse(deploy.approved(name), name)
 
+    def test_apache_preserves_cpanel_php84_handler_without_executing_landing_php(self):
+        config = (ROOT / '.htaccess').read_text()
+        self.assertIn('# php -- BEGIN cPanel-generated handler, do not edit', config)
+        self.assertIn('<IfModule mime_module>\n  AddHandler application/x-httpd-ea-php84 .php .php8 .phtml\n</IfModule>', config)
+        self.assertIn('# php -- END cPanel-generated handler, do not edit', config)
+        self.assertIn('<FilesMatch "\\.(?:php[0-9]?|phtml|phar)$">\n  Require all denied\n</FilesMatch>', config)
+        self.assertIn('Options -Indexes', config)
+        self.assertIn('DirectoryIndex index.html', config)
+        self.assertEqual(config.count('AddHandler '), 1)
+        self.assertIn('.htaccess', dict(deploy.production_files(ROOT)))
+
     def test_pages_artifact_copies_only_tracked_public_files_without_apache_config(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'source'
