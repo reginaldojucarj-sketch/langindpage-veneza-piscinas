@@ -1484,6 +1484,7 @@ h1 span {
 }
 
 .whatsapp-float svg {
+  display: block;
   flex: 0 0 32px;
   width: 32px;
   height: 32px;
@@ -2215,6 +2216,7 @@ h1 span {
   }
 
   .whatsapp-float svg {
+    flex-basis: 29px;
     width: 29px;
     height: 29px
   }
