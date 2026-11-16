@@ -30,7 +30,7 @@ body {
   overflow-x: hidden;
   color: var(--ink);
   background-color: #e8faff;
-  background-image: linear-gradient(180deg, rgba(218, 247, 253, .18), rgba(11, 154, 190, .12)), url("../images/backgrounds/textura-agua-piscina.jpg");
+  background-image: linear-gradient(180deg, rgba(218, 247, 253, .18), rgba(11, 154, 190, .12)), url("../images/backgrounds/textura-agua-piscina-hd.avif");
   background-repeat: no-repeat, no-repeat;
   background-size: cover, cover;
   background-position: center, center;
