@@ -11,6 +11,23 @@ DirectoryIndex index.html
 
 RewriteEngine On
 
+<IfModule mod_headers.c>
+  <If "%{HTTP_HOST} =~ m#^(?:www\.)?(?:equipamentos|orcamento)\.venezapiscinas\.com\.br\.?(:[0-9]+)?$#i">
+    Header always set Strict-Transport-Security "max-age=604800" "expr=%{HTTPS} == 'on'"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Content-Security-Policy "default-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://pena.venezapiscinas.com.br https://venezapiscinas.com.br https://www.venezapiscinas.com.br; media-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com"
+  </If>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/xml
+  </IfModule>
+</IfModule>
+
 # Normalize the home page in one hop on the two landing hosts only.
 RewriteCond %{HTTP_HOST} ^(?:www\.)?(?:orcamento|equipamentos)\.venezapiscinas\.com\.br$ [NC]
 RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]

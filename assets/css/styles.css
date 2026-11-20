@@ -632,6 +632,10 @@ h1 span {
   font-size: .93rem
 }
 
+.priority-card p.priority-card__description--cloro {
+  color: #082f49;
+}
+
 .featured h3 {
   font-size: clamp(1.55rem, 3vw, 2.35rem)
 }
@@ -1128,6 +1132,26 @@ h1 span {
   place-items: center;
   overflow: hidden;
   background: #061f2b
+}
+
+.testimonial-media--flavio {
+  --testimonial-poster: url('../images/testimonials/depoimento-flavio-capitulino-poster.jpg');
+}
+
+.testimonial-media--rio-ave-1 {
+  --testimonial-poster: url('../images/testimonials/depoimento-grupo-rio-ave-01-poster.jpg');
+}
+
+.testimonial-media--rio-ave-2 {
+  --testimonial-poster: url('../images/testimonials/depoimento-grupo-rio-ave-02-poster.jpg');
+}
+
+.testimonial-media--nautilus {
+  --testimonial-poster: url('../images/testimonials/depoimento-parceria-nautilus-poster.jpg');
+}
+
+.testimonial-media--sodramar {
+  --testimonial-poster: url('../images/testimonials/depoimento-parceria-sodramar-poster.jpg');
 }
 
 .testimonial-media::before {

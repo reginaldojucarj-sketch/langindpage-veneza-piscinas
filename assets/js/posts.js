@@ -5,6 +5,7 @@
     ? window.VENEZA_POSTS.filter((post) => post && post.status === 'PP')
     : [];
   const legacyBase = 'https://pena.venezapiscinas.com.br/';
+  const siteHosts = new Set(['pena.venezapiscinas.com.br', 'venezapiscinas.com.br', 'www.venezapiscinas.com.br']);
   const grid = document.getElementById('post-grid');
   const search = document.getElementById('search');
   const category = document.getElementById('category');
@@ -26,7 +27,9 @@
     if (!value) return null;
     try {
       const url = new URL(value, legacyBase);
-      return ['http:', 'https:'].includes(url.protocol) ? url.href : null;
+      if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+      if (url.protocol === 'http:' && !url.port && siteHosts.has(url.hostname)) url.protocol = 'https:';
+      return url.href;
     } catch { return null; }
   };
   const summary = (post) => plainText(post.description || post.snippet || post.html).slice(0, 185);
@@ -34,8 +37,14 @@
   const indexed = posts.map((post) => ({
     post,
     summary: summary(post),
-    searchText: normalize([post.title, post.description, post.snippet, post.keywords, post.author, post.category, post.categories, plainText(post.html)].join(' '))
+    searchText: normalize([post.title, post.description, post.snippet, post.keywords, post.author, post.category, post.categories].join(' '))
   }));
+
+  function matchesText(record, term) {
+    if (!term || record.searchText.includes(term)) return true;
+    record.fullSearchText ??= record.searchText + ' ' + normalize(plainText(record.post.html));
+    return record.fullSearchText.includes(term);
+  }
 
   [...new Set(posts.flatMap(categoryNames))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach((name) => {
     const option = document.createElement('option');
@@ -96,8 +105,8 @@
   function renderList() {
     const term = normalize(search.value.trim());
     const selectedCategory = category.value;
-    const filtered = indexed.filter(({ post, searchText }) =>
-      (!term || searchText.includes(term)) && (!selectedCategory || categoryNames(post).includes(selectedCategory))
+    const filtered = indexed.filter((record) =>
+      (!selectedCategory || categoryNames(record.post).includes(selectedCategory)) && matchesText(record, term)
     );
     const fragment = document.createDocumentFragment();
     filtered.forEach((item) => fragment.append(cardFor(item)));
@@ -127,7 +136,9 @@
       const url = safeURL(node.getAttribute('src'));
       if (!url) return result;
       const parsed = new URL(url);
-      if ((parsed.hostname === 'www.youtube.com' || parsed.hostname === 'www.youtube-nocookie.com') && parsed.pathname.startsWith('/embed/')) {
+      if (parsed.protocol === 'https:' && !parsed.port
+        && (parsed.hostname === 'www.youtube.com' || parsed.hostname === 'www.youtube-nocookie.com')
+        && parsed.pathname.startsWith('/embed/')) {
         const frame = document.createElement('div');
         frame.className = 'media-frame';
         const iframe = document.createElement('iframe');
