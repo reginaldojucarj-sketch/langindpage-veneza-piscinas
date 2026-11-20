@@ -1,15 +1,17 @@
 (function () {
   'use strict';
 
+  let reportWhatsAppClick = function (navigate) { if (navigate) navigate(); };
+
   if (window.location.origin === 'https://equipamentos.venezapiscinas.com.br') {
-    const preferenceKey = 'veneza-ads-measurement';
+    const preferenceKey = 'veneza-whatsapp-measurement';
     let measurementEnabled = false;
     let tagLoaded = false;
     const settings = document.createElement('details');
     const summary = document.createElement('summary');
     summary.textContent = 'Preferências de medição';
     const description = document.createElement('p');
-    description.textContent = 'Permita que o Google Ads meça cliques para abrir o WhatsApp.';
+    description.textContent = 'Permita que o Google Analytics e o Google Ads meçam cliques para abrir o WhatsApp.';
     const preference = document.createElement('button');
     preference.type = 'button';
     settings.append(summary, description, preference);
@@ -29,18 +31,21 @@
         window.dataLayer = window.dataLayer || [];
         window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
         window.gtag('consent', 'default', {
+          analytics_storage: 'denied',
           ad_storage: 'denied',
           ad_user_data: 'denied',
           ad_personalization: 'denied'
         });
         window.gtag('js', new Date());
         window.gtag('config', 'AW-882259007', { allow_ad_personalization_signals: false });
+        window.gtag('config', 'G-FF129KT040', { send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false });
         const tag = document.createElement('script');
         tag.async = true;
         tag.src = 'https://www.googletagmanager.com/gtag/js?id=AW-882259007';
         document.head.append(tag);
       }
       if (tagLoaded) window.gtag('consent', 'update', {
+        analytics_storage: measurementEnabled ? 'granted' : 'denied',
         ad_storage: measurementEnabled ? 'granted' : 'denied',
         ad_user_data: measurementEnabled ? 'granted' : 'denied',
         ad_personalization: 'denied'
@@ -58,7 +63,7 @@
     });
     updateMeasurement();
 
-    function reportWhatsAppClick(navigate) {
+    reportWhatsAppClick = function (navigate) {
       if (!measurementEnabled) {
         if (navigate) navigate();
         return;
@@ -75,8 +80,15 @@
         parameters.event_callback = finish;
         parameters.event_timeout = 500;
       }
+      window.gtag('event', 'whatsapp_click', {
+        send_to: 'G-FF129KT040',
+        page_location: window.location.origin + window.location.pathname,
+        page_referrer: '',
+        event_callback: parameters.event_callback,
+        event_timeout: parameters.event_timeout
+      });
       window.gtag('event', 'conversion', parameters);
-    }
+    };
 
     document.addEventListener('click', function (event) {
       if (event.defaultPrevented || !(event.target instanceof Element)) return;
@@ -91,6 +103,39 @@
       }
     });
   }
+  document.documentElement.classList.add('has-js');
+  document.documentElement.classList.add('has-js');
+
+  document.querySelectorAll('.solution-dialog, .product-spec-dialog').forEach(function (dialog) {
+    let pressedOutside = false;
+    function onBackdrop(event) {
+      if (event.target !== dialog) return false;
+      const bounds = dialog.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom;
+    }
+    dialog.addEventListener('pointerdown', function (event) { pressedOutside = onBackdrop(event); });
+    dialog.addEventListener('click', function (event) {
+      if (pressedOutside && onBackdrop(event)) dialog.close();
+      pressedOutside = false;
+    });
+  });
+  document.documentElement.classList.add('has-js');
+
+  document.querySelectorAll('.solution-dialog, .product-spec-dialog').forEach(function (dialog) {
+    let pressedOutside = false;
+    function onBackdrop(event) {
+      if (event.target !== dialog) return false;
+      const bounds = dialog.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom;
+    }
+    dialog.addEventListener('pointerdown', function (event) { pressedOutside = onBackdrop(event); });
+    dialog.addEventListener('click', function (event) {
+      if (pressedOutside && onBackdrop(event)) dialog.close();
+      pressedOutside = false;
+    });
+  });
 
   const siteHeader = document.querySelector('.site-header');
   const productNavigation = siteHeader ? siteHeader.querySelector('.main-nav') : null;
