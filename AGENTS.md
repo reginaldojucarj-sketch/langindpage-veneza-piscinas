@@ -38,7 +38,7 @@ Não há framework, gerenciador de pacotes ou compilação. O site usa HTML, CSS
 | `assets/js/project-gallery.js` | Rotação, ampliação, zoom, teclado e gestos da galeria de projetos. |
 | `assets/js/testimonials.js` | Controles customizados e coordenação dos vídeos de depoimentos. |
 | `assets/js/site-ui.js` | Menu responsivo, rolagem, efeitos de entrada, botão de topo e comportamento do CTA flutuante. |
-| `posts.html` | Página complementar de artigos; seus estilos estão embutidos no próprio HTML. |
+| `posts.html` | Página complementar de artigos; estilos em `assets/css/posts.css`. |
 | `assets/js/posts.js` | Busca, categorias, sanitização e leitor modal dos artigos. |
 | `assets/data/posts-data.js` | Snapshot gerado dos artigos em `window.VENEZA_POSTS`; não editar manualmente se houver uma nova exportação. |
 | `assets/images/` e `assets/videos/` | Mídias finais publicadas. |
@@ -73,7 +73,7 @@ Ao adicionar interação a um elemento que não é nativamente interativo, prefi
 - Largura mínima suportada pelo `body`: 320 px.
 - O CSS é monolítico e contém ajustes principais em 1000, 900, 720, 600 e 480 px, além de casos de baixa altura/orientação. Procure regras posteriores antes de concluir que um seletor não tem override.
 - Preserve estilos de `:focus-visible` e blocos de `prefers-reduced-motion`.
-- Evite estilos inline novos; há um caso legado no card de gerador de cloro, mas a regra geral é centralizar estilos em `assets/css/styles.css`.
+- Mantenha os estilos em arquivos CSS locais, pois a política de segurança da landing bloqueia estilos inline.
 
 ## Fluxo de branches e commits
 
@@ -150,7 +150,7 @@ Há um teste automatizado de segurança dos snapshots; as interações da landin
 O estado atual tem estas particularidades:
 
 - `assets/css/styles.css` é grande e acumulativo; verifique cascata e overrides antes de adicionar regras.
-- `posts.html` mantém CSS próprio embutido e não herda automaticamente mudanças visuais da landing.
+- `posts.html` mantém CSS próprio e não herda automaticamente mudanças visuais da landing. O atalho de teclado para o conteúdo usa `assets/css/skip-link.css` nas páginas.
 - Produtos e contatos têm dados duplicados entre HTML e JavaScript.
 - `catalog-faq.js` ainda contém lógica de filtro de catálogo sem marcação correspondente na landing.
 - A origem comercial preferida é `https://equipamentos.venezapiscinas.com.br/`. A landing tem canonical, Open Graph, Twitter Card e dados estruturados WebSite; `posts.html` tem canonical próprio, e `font-showcase.html` usa `noindex`. Preserve a coerência com `robots.txt`, `sitemap.xml` e `tests/landing-seo.test.cjs`.

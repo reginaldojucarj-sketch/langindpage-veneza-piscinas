@@ -1,0 +1,19 @@
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  inset-block-start: 12px;
+  inset-inline-start: 12px;
+  max-width: calc(100% - 24px);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #092f42;
+  color: #fff;
+  font-weight: 700;
+  transform: translateY(calc(-100% - 20px));
+}
+
+.skip-link:focus {
+  outline: 3px solid #ffdc73;
+  outline-offset: 2px;
+  transform: none;
+}

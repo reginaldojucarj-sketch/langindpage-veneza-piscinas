@@ -70,7 +70,7 @@ O Python é apenas uma opção de servidor para desenvolvimento. O site publicad
 ├── posts.html                   # Estrutura e estilos do arquivo de artigos
 ├── font-showcase.html           # Comparação de fontes
 ├── assets/
-│   ├── css/styles.css           # Estilos da página principal e responsividade
+│   ├── css/                     # Estilos locais da landing, dos artigos e do comparativo
 │   ├── js/
 │   │   ├── carousels.js         # Carrosséis da página principal
 │   │   ├── catalog-faq.js       # FAQ e lógica de filtros de catálogo
@@ -110,7 +110,7 @@ A lógica de filtros de catálogo permanece em `catalog-faq.js`, mas a página p
 | Fotos e vídeos dos projetos | Marcação da galeria em `index.html` e arquivos em `assets/images/projects/` e `assets/videos/projects/` |
 | Depoimentos | Marcação em `index.html` e mídias correspondentes |
 | Clientes e marcas parceiras | Seções `#clientes` e `#parceiros` em `index.html`; logos em `assets/images/clients/` e `assets/images/partners/` |
-| Busca e exibição de artigos | `assets/js/posts.js`; estilos em `posts.html` |
+| Busca e exibição de artigos | `assets/js/posts.js`; estilos em `assets/css/posts.css` |
 
 Ao alterar o telefone de atendimento, revise tanto os links `wa.me` em `index.html` quanto o número usado em `assets/js/product-modal.js`.
 
