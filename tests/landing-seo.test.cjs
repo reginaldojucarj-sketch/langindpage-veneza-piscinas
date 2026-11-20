@@ -32,6 +32,51 @@ test('structured site identity and social metadata use the same origin', () => {
   assert.ok(home.includes('name="twitter:card" content="summary_large_image"'));
 });
 
+test('article archive shares its canonical URL, title, description and a local image', () => {
+  const posts = read('posts.html');
+  assert.ok(posts.includes(`property="og:url" content="${origin}/posts.html"`));
+  assert.ok(posts.includes('name="twitter:card" content="summary_large_image"'));
+  assert.equal(posts.match(/property="og:title" content="([^"]+)"/)[1], posts.match(/<title>(.+)<\/title>/)[1]);
+  assert.equal(posts.match(/property="og:description" content="([^"]+)"/)[1], posts.match(/name="description" content="([^"]+)"/)[1]);
+  const image = new URL(posts.match(/property="og:image" content="([^"]+)"/)[1]);
+  assert.equal(image.origin, origin);
+  assert.ok(fs.statSync(path.join(root, image.pathname)).isFile());
+});
+
+test('landing pages allow a keyboard shortcut to main content without inline styles', () => {
+  for (const [name, target] of [['index.html', 'inicio'], ['posts.html', 'conteudo'], ['font-showcase.html', 'conteudo']]) {
+    const page = read(name);
+    assert.match(page, new RegExp(`<body>\\s*<a class="skip-link" href="#${target}"`));
+    assert.match(page, new RegExp(`<main[^>]+id="${target}"[^>]+tabindex="-1"`));
+    assert.ok(page.includes('href="assets/css/skip-link.css"'));
+    assert.doesNotMatch(page, /<style\b|\sstyle=/);
+  }
+});
+
+test('the landing sends restrictive headers and can compress its text assets', () => {
+  const config = read('.htaccess');
+  assert.match(config, /<If "%\{HTTP_HOST\} =~ m#\^.+equipamentos\|orcamento/);
+  for (const header of ['Strict-Transport-Security', 'X-Frame-Options', 'X-Content-Type-Options', 'Referrer-Policy', 'Content-Security-Policy']) {
+    assert.ok(config.includes(`Header always set ${header} "`));
+  }
+  assert.match(config, /frame-ancestors 'none'; form-action 'none'; script-src 'self'/);
+  assert.doesNotMatch(config, /unsafe-inline|includeSubDomains/);
+  assert.match(config, /AddOutputFilterByType DEFLATE [^\n]+text\/javascript/);
+});
+
+test('all hero and testimonial videos defer loading, preserving format fallbacks and controls', () => {
+  const hero = home.match(/<video class="hero-photo"[\s\S]*?<\/video>/g);
+  assert.equal(hero.length, 4);
+  for (const video of hero) {
+    assert.match(video, /preload="none"/);
+    assert.match(video, /data-src="[^"]+\.webm"[\s\S]+data-src="[^"]+\.mp4"/);
+    assert.doesNotMatch(video, /<source\s+src=/);
+  }
+  const testimonials = home.match(/<video class="testimonial-video"[^>]+>/g);
+  assert.equal(testimonials.length, 5);
+  for (const video of testimonials) assert.match(video, /controls playsinline preload="none"/);
+});
+
 test('sitemap lists only indexable pages and robots advertises it', () => {
   const urls = [...read('sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
   assert.deepEqual(urls, [origin + '/', origin + '/posts.html']);

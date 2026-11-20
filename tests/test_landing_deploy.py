@@ -50,6 +50,8 @@ class LandingDeploymentTests(unittest.TestCase):
         self.assertIn('.htaccess', names)
         self.assertIn('assets/videos/piscina-aquecida-pingo.webm', names)
         self.assertIn('assets/data/posts-data.js', names)
+        for stylesheet in ('font-showcase.css', 'posts.css', 'skip-link.css'):
+            self.assertIn('assets/css/' + stylesheet, names)
         self.assertTrue(all(deploy.approved(name) for name in names))
         self.assertFalse(any(name.endswith('.md') or 'sources/' in name for name in names))
 

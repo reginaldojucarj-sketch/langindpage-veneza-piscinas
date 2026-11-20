@@ -11,6 +11,8 @@
     const heroDots = heroCarousel.querySelectorAll('.carousel-dot');
     const previousButton = heroCarousel.querySelector('.carousel-prev');
     const nextButton = heroCarousel.querySelector('.carousel-next');
+    const savesData = navigator.connection?.saveData === true;
+    let heroVisible = !('IntersectionObserver' in window);
     let activeSlideIndex = 0;
     let heroTimer;
 
@@ -27,6 +29,14 @@
     }
 
     function playHeroVideo(video) {
+      const sources = video.querySelectorAll('source[data-src]');
+      if (sources.length) {
+        sources.forEach(function (source) {
+          source.src = source.dataset.src;
+          source.removeAttribute('data-src');
+        });
+        video.load();
+      }
       video.currentTime = 0;
       const playback = video.play();
 
@@ -61,7 +71,7 @@
 
     function startHeroCarousel() {
       stopHeroCarousel();
-      if (document.hidden || prefersReducedMotion) return;
+      if (document.hidden || !heroVisible || prefersReducedMotion || savesData) return;
 
       heroTimer = window.setTimeout(function () {
         showHeroSlide(activeSlideIndex + 1);
@@ -107,6 +117,14 @@
       if (document.hidden) stopHeroCarousel();
       else startHeroCarousel();
     });
+
+    if ('IntersectionObserver' in window) {
+      const heroObserver = new IntersectionObserver(function ([entry]) {
+        heroVisible = entry.isIntersecting;
+        startHeroCarousel();
+      }, { threshold: 0.15 });
+      heroObserver.observe(heroCarousel);
+    }
 
     heroCarousel.classList.add('is-ready');
     showHeroSlide(0);

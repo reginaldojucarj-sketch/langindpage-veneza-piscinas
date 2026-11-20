@@ -31,10 +31,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261116-fundo">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261120-review">
+  <link rel="stylesheet" href="assets/css/skip-link.css">
 </head>
 
 <body>
+  <a class="skip-link" href="#inicio">Pular para o conteúdo</a>
   <header class="site-header">
     <div class="container nav-shell">
       <a class="brand" href="#inicio" aria-label="Veneza Piscinas — voltar ao início"><img
@@ -69,7 +71,7 @@
       </nav>
     </div>
   </header>
-  <main id="inicio">
+  <main id="inicio" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
         <div class="hero-panel glass">
@@ -92,30 +94,30 @@
                 <video class="hero-photo"
                   poster="assets/images/hero/piscina-vista-ilha-pingo.jpg"
                   aria-label="Pingo convida para entrar na piscina com vista para uma ilha" aria-hidden="true"
-                  muted playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
-                  <source src="assets/videos/piscina-vista-ilha-pingo.webm" type="video/webm">
-                  <source src="assets/videos/piscina-vista-ilha-pingo.mp4" type="video/mp4">
+                  muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                  <source data-src="assets/videos/piscina-vista-ilha-pingo.webm" type="video/webm">
+                  <source data-src="assets/videos/piscina-vista-ilha-pingo.mp4" type="video/mp4">
                 </video>
                 <video class="hero-photo"
                   poster="assets/images/hero/piscina-iluminada-pingo-poster.jpg"
                   aria-label="Pingo mergulha e acena em uma piscina com iluminação colorida" aria-hidden="true"
-                  muted playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
-                  <source src="assets/videos/piscina-iluminada-pingo.webm" type="video/webm">
-                  <source src="assets/videos/piscina-iluminada-pingo.mp4" type="video/mp4">
+                  muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                  <source data-src="assets/videos/piscina-iluminada-pingo.webm" type="video/webm">
+                  <source data-src="assets/videos/piscina-iluminada-pingo.mp4" type="video/mp4">
                 </video>
                 <video class="hero-photo"
                   poster="assets/images/hero/piscina-aquecida-pingo-poster.jpg"
                   aria-label="Pingo mergulha e acena em uma piscina aquecida à noite" aria-hidden="true"
-                  muted playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
-                  <source src="assets/videos/piscina-aquecida-pingo.webm" type="video/webm">
-                  <source src="assets/videos/piscina-aquecida-pingo.mp4" type="video/mp4">
+                  muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                  <source data-src="assets/videos/piscina-aquecida-pingo.webm" type="video/webm">
+                  <source data-src="assets/videos/piscina-aquecida-pingo.mp4" type="video/mp4">
                 </video>
                 <video class="hero-photo"
                   poster="assets/images/hero/piscina-hotel-vista-mar-pingo.jpg"
                   aria-label="Pingo convida para entrar na piscina de hotel com vista para o mar" aria-hidden="true"
-                  muted playsinline webkit-playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
-                  <source src="assets/videos/piscina-hotel-pingo.webm" type="video/webm">
-                  <source src="assets/videos/piscina-hotel-pingo.mp4" type="video/mp4">
+                  muted playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback>
+                  <source data-src="assets/videos/piscina-hotel-pingo.webm" type="video/webm">
+                  <source data-src="assets/videos/piscina-hotel-pingo.mp4" type="video/mp4">
                 </video>
                 <button class="carousel-arrow carousel-prev carousel-control" type="button"
                   aria-label="Slide anterior"><svg viewBox="0 0 24 24" aria-hidden="true">
@@ -189,7 +191,7 @@
             aria-controls="product-modal"><span class="card-label">Produto</span>
             <div class="priority-card__content"><span class="priority-number">03</span>
               <h3>Gerador de cloro</h3>
-              <p style="color: #082f49;">O gerador de cloro utiliza a eletrólise do sal (cloreto de sódio) para produzir o
+              <p class="priority-card__description--cloro">O gerador de cloro utiliza a eletrólise do sal (cloreto de sódio) para produzir o
                 cloro necessário à desinfecção da piscina. Isso simplifica o tratamento e ajuda a manter a água protegida.
               </p><span class="priority-discover">Ver marcas e equipamentos <span aria-hidden="true">→</span></span>
             </div>
@@ -438,9 +440,8 @@
                 pública no Google</span></cite>
           </article>
           <article class="quote quote--video">
-            <div class="testimonial-media"
-              style="--testimonial-poster: url('../images/testimonials/depoimento-flavio-capitulino-poster.jpg')">
-              <video class="testimonial-video" controls playsinline preload="metadata"
+            <div class="testimonial-media testimonial-media--flavio">
+              <video class="testimonial-video" controls playsinline preload="none"
                 poster="assets/images/testimonials/depoimento-flavio-capitulino-poster.jpg"
                 aria-label="Depoimento em vídeo de Flávio Capitulino" controlslist="nodownload">
                 <source src="assets/videos/testimonials/depoimento-flavio-capitulino.mp4" type="video/mp4">
@@ -449,9 +450,8 @@
             <cite>Flávio Capitulino<span>Depoimento em vídeo</span></cite>
           </article>
           <article class="quote quote--video">
-            <div class="testimonial-media"
-              style="--testimonial-poster: url('../images/testimonials/depoimento-grupo-rio-ave-01-poster.jpg')">
-              <video class="testimonial-video" controls playsinline preload="metadata"
+            <div class="testimonial-media testimonial-media--rio-ave-1">
+              <video class="testimonial-video" controls playsinline preload="none"
                 poster="assets/images/testimonials/depoimento-grupo-rio-ave-01-poster.jpg"
                 aria-label="Primeiro depoimento em vídeo do Grupo Rio Ave" controlslist="nodownload">
                 <source src="assets/videos/testimonials/depoimento-grupo-rio-ave-01.mp4" type="video/mp4">
@@ -460,9 +460,8 @@
             <cite>Grupo Rio Ave<span>Depoimento em vídeo · Parte 1</span></cite>
           </article>
           <article class="quote quote--video">
-            <div class="testimonial-media"
-              style="--testimonial-poster: url('../images/testimonials/depoimento-grupo-rio-ave-02-poster.jpg')">
-              <video class="testimonial-video" controls playsinline preload="metadata"
+            <div class="testimonial-media testimonial-media--rio-ave-2">
+              <video class="testimonial-video" controls playsinline preload="none"
                 poster="assets/images/testimonials/depoimento-grupo-rio-ave-02-poster.jpg"
                 aria-label="Segundo depoimento em vídeo do Grupo Rio Ave" controlslist="nodownload">
                 <source src="assets/videos/testimonials/depoimento-grupo-rio-ave-02.mp4" type="video/mp4">
@@ -471,9 +470,8 @@
             <cite>Grupo Rio Ave<span>Depoimento em vídeo · Parte 2</span></cite>
           </article>
           <article class="quote quote--video">
-            <div class="testimonial-media"
-              style="--testimonial-poster: url('../images/testimonials/depoimento-parceria-nautilus-poster.jpg')">
-              <video class="testimonial-video" controls playsinline preload="metadata"
+            <div class="testimonial-media testimonial-media--nautilus">
+              <video class="testimonial-video" controls playsinline preload="none"
                 poster="assets/images/testimonials/depoimento-parceria-nautilus-poster.jpg"
                 aria-label="Depoimento em vídeo sobre a parceria com a Nautilus" controlslist="nodownload">
                 <source src="assets/videos/testimonials/depoimento-parceria-nautilus.mp4" type="video/mp4">
@@ -482,9 +480,8 @@
             <cite>Nautilus<span>Relacionamento com fornecedores</span></cite>
           </article>
           <article class="quote quote--video">
-            <div class="testimonial-media"
-              style="--testimonial-poster: url('../images/testimonials/depoimento-parceria-sodramar-poster.jpg')">
-              <video class="testimonial-video" controls playsinline preload="metadata"
+            <div class="testimonial-media testimonial-media--sodramar">
+              <video class="testimonial-video" controls playsinline preload="none"
                 poster="assets/images/testimonials/depoimento-parceria-sodramar-poster.jpg"
                 aria-label="Depoimento em vídeo sobre a parceria com a Sodramar" controlslist="nodownload">
                 <source src="assets/videos/testimonials/depoimento-parceria-sodramar.mp4" type="video/mp4">
@@ -847,7 +844,7 @@
     </svg>
   </a>
   <script src="assets/js/catalog-faq.js" defer></script>
-  <script src="assets/js/carousels.js" defer></script>
+  <script src="assets/js/carousels.js?v=20261120-review" defer></script>
   <script src="assets/js/project-gallery.js" defer></script>
   <script src="assets/js/product-modal.js" defer></script>
   <script src="assets/js/testimonials.js" defer></script>
