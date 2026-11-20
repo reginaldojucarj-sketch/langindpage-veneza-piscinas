@@ -1,6 +1,97 @@
 (function () {
   'use strict';
 
+  if (window.location.origin === 'https://equipamentos.venezapiscinas.com.br') {
+    const preferenceKey = 'veneza-ads-measurement';
+    let measurementEnabled = false;
+    let tagLoaded = false;
+    const settings = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = 'Preferências de medição';
+    const description = document.createElement('p');
+    description.textContent = 'Permita que o Google Ads meça cliques para abrir o WhatsApp.';
+    const preference = document.createElement('button');
+    preference.type = 'button';
+    settings.append(summary, description, preference);
+    const footer = document.querySelector('footer');
+    if (footer) footer.append(settings);
+
+    try {
+      measurementEnabled = localStorage.getItem(preferenceKey) === 'allowed';
+    } catch {
+      // The preference can still apply to this page when storage is unavailable.
+    }
+
+    function updateMeasurement() {
+      preference.textContent = measurementEnabled ? 'Desativar medição' : 'Permitir medição';
+      if (measurementEnabled && !tagLoaded) {
+        tagLoaded = true;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+        window.gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied'
+        });
+        window.gtag('js', new Date());
+        window.gtag('config', 'AW-882259007', { allow_ad_personalization_signals: false });
+        const tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://www.googletagmanager.com/gtag/js?id=AW-882259007';
+        document.head.append(tag);
+      }
+      if (tagLoaded) window.gtag('consent', 'update', {
+        ad_storage: measurementEnabled ? 'granted' : 'denied',
+        ad_user_data: measurementEnabled ? 'granted' : 'denied',
+        ad_personalization: 'denied'
+      });
+    }
+
+    preference.addEventListener('click', function () {
+      measurementEnabled = !measurementEnabled;
+      try {
+        localStorage.setItem(preferenceKey, measurementEnabled ? 'allowed' : 'denied');
+      } catch {
+        // Keep the choice in memory for this page.
+      }
+      updateMeasurement();
+    });
+    updateMeasurement();
+
+    function reportWhatsAppClick(navigate) {
+      if (!measurementEnabled) {
+        if (navigate) navigate();
+        return;
+      }
+      const parameters = { send_to: 'AW-882259007/c_ykCLiYrbwdEL_o2KQD' };
+      if (navigate) {
+        let navigated = false;
+        const finish = function () {
+          if (navigated) return;
+          navigated = true;
+          navigate();
+        };
+        window.setTimeout(finish, 500);
+        parameters.event_callback = finish;
+        parameters.event_timeout = 500;
+      }
+      window.gtag('event', 'conversion', parameters);
+    }
+
+    document.addEventListener('click', function (event) {
+      if (event.defaultPrevented || !(event.target instanceof Element)) return;
+      const link = event.target.closest('a[href^="https://wa.me/"], a[href^="https://api.whatsapp.com/"]');
+      if (!link) return;
+      if (measurementEnabled && (!link.target || link.target === '_self') &&
+          !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+        event.preventDefault();
+        reportWhatsAppClick(function () { window.location.assign(link.href); });
+      } else {
+        reportWhatsAppClick();
+      }
+    });
+  }
+
   const siteHeader = document.querySelector('.site-header');
   const productNavigation = siteHeader ? siteHeader.querySelector('.main-nav') : null;
   const productMenuToggle = siteHeader ? siteHeader.querySelector('.compact-products-toggle') : null;
